@@ -1,6 +1,5 @@
 import git from 'isomorphic-git';
 import yaml from 'yaml';
-import { unstable_cache } from 'next/cache';
 import * as http from 'isomorphic-git/http/node';
 import * as fs from 'fs';
 import * as path from 'path'
@@ -35,7 +34,7 @@ async function fsExists(filepath: string): Promise<boolean> {
     }
 }
 
-export async function tryFetchRepository() {
+async function trySyncRepository() {
     const token = process.env.GITHUB_APIKEY;
     const url = process.env.DATA_REPOSITORY;
     if (!url) {
@@ -45,7 +44,7 @@ export async function tryFetchRepository() {
     const dest = getContentPath();
     const auth = getGitAuth(token);
 
-    const exists = await fsExists(path.join(dest, '.git'))
+    const exists = await fsExists(path.join(dest, '.git'));
     if (exists) {
         console.log('Pulling repository data...');
         await git.pull({
@@ -54,7 +53,7 @@ export async function tryFetchRepository() {
             url,
             dir: dest,
             singleBranch: true,
-            author: { name: 'directory' },
+            author: { name: 'directory' },  // for some reason git author name is need, but it doesn't matter
         });
         return {};
     }
@@ -65,12 +64,6 @@ export async function tryFetchRepository() {
 
     return {};
 }
-
-export const tryFetchCachedRepository = unstable_cache(
-    tryFetchRepository,
-    ['repo:status'],
-    { revalidate: 10 },
-);
 
 export interface ItemData {
     name: string;
@@ -90,21 +83,24 @@ async function getMeta(base: string, filename: string) {
 }
 
 export async function fetchItems() {
-    //console.log('Fetching items...');
+    await trySyncRepository();
     const dest = path.join(getContentPath(), 'data');
     const files = await fs.promises.readdir(dest);
 
-    const items = files.map(async (filename) => getMeta(dest, filename));
+    const items = files
+        .filter((filename) => path.extname(filename) === '.yml')
+        .map(async (filename) => getMeta(dest, filename));
 
     return Promise.all(items);
 }
 
 export async function fetchItem(slug: string) {
-    //console.log('Fetching item details...');
+    await trySyncRepository();
+    const dataDir = 'data';
     const base = getContentPath();
-    const metaPath = path.join(base, 'data');
-    const mdxPath = path.join(base, 'details', `${slug}.mdx`);
-    const mdPath = path.join(base, 'details', `${slug}.md`);
+    const metaPath = path.join(base, dataDir);
+    const mdxPath = path.join(base, dataDir, `${slug}.mdx`);
+    const mdPath = path.join(base, dataDir, `${slug}.md`);
 
     try {
         const meta = await getMeta(metaPath, `${slug}.yml`);

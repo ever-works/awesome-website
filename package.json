@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/react": "^2.6.14",
     "@tailwindcss/typography": "^0.5.16",
+    "framer-motion": "^12.4.0",
     "isomorphic-git": "^1.29.0",
     "next": "15.1.4",
     "next-mdx-remote": "^5.0.0",
