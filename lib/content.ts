@@ -14,12 +14,19 @@ export interface Category {
     count?: number;
 }
 
+export interface Tag {
+    id: string;
+    name: string;
+    count?: number;
+}
+
 export interface ItemData {
     name: string;
     slug: string;
     description: string;
     source_url: string;
     category: string | Category | Category[] | string[];
+    tags: string[] | Tag[];
     featured?: boolean;
     updated_at: string; // raw string timestamp
     updatedAt: Date;  // timestamp
@@ -58,6 +65,19 @@ async function readCategories(): Promise<Map<string, Category>> {
     }
 }
 
+async function readTags(): Promise<Map<string, Tag>> {
+    try {
+        const raw = await fs.promises.readFile(path.join(getContentPath(), 'tags.yml'), 'utf-8');
+        const list: Tag[] = yaml.parse(raw);
+        return new Map(list.map(tag => [tag.id, tag]));
+    } catch (err) {
+        if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {
+            return new Map();
+        }
+        throw err;
+    }
+}
+
 function populateCategory(category: string | Category, categories: Map<string, Category>) {
     const id = typeof category === 'string' ? category : category.id;
     const name = typeof category === 'string' ? category : category.name;
@@ -74,11 +94,28 @@ function populateCategory(category: string | Category, categories: Map<string, C
     return result;
 }
 
+function populateTag(tag: string | Tag, tags: Map<string, Tag>) {
+    const id = typeof tag === 'string' ? tag : tag.id;
+    const name = typeof tag === 'string' ? tag : tag.name;
+    const result: Tag = { id, name };
+
+    const populated = tags.get(id);
+    if (populated) {
+        result.name = populated.name;
+        populated.count = (populated.count || 0) + 1;
+    } else {
+        tags.set(id, { ...result, count: 1 });
+    }
+
+    return result;
+}
+
 export async function fetchItems(options: { lang?: string } = {}) {
     await trySyncRepository();
     const dest = path.join(getContentPath(), 'data');
     const files = await fs.promises.readdir(dest);
     const categories = await readCategories();
+    const tags = await readTags();
 
     const items = await Promise.all(
         files.map(async (slug) => {
@@ -87,6 +124,10 @@ export async function fetchItems(options: { lang?: string } = {}) {
                 if (options.lang && options.lang !== 'en') {
                     const translation = await parseTranslation(base, `${slug}.${options.lang}.yml`);
                     if (translation) Object.assign(item, translation);
+                }
+
+                if (Array.isArray(item.tags)) {
+                    item.tags = item.tags.map(tag => populateTag(tag, tags));
                 }
                 
                 if (Array.isArray(item.category)) {
@@ -107,6 +148,7 @@ export async function fetchItems(options: { lang?: string } = {}) {
             return b.updatedAt.getDate() - a.updatedAt.getDate();
         }),
         categories: Array.from(categories.values()),
+        tags: Array.from(tags.values()),
     };
 }
 
@@ -119,6 +161,7 @@ export async function fetchItem(slug: string, options: { lang?: string } = {}) {
     const mdPath = path.join(base, dataDir, `${slug}.md`);
 
     const categories = await readCategories();
+    const tags = await readTags();
 
     try {
         const meta = await parseItem(metaPath, `${slug}.yml`);
@@ -126,6 +169,10 @@ export async function fetchItem(slug: string, options: { lang?: string } = {}) {
             console.log('fetching translation', slug, options.lang);
             const translation = await parseTranslation(metaPath, `${slug}.${options.lang}.yml`);
             if (translation) Object.assign(meta, translation);
+        }
+
+        if (Array.isArray(meta.tags)) {
+            meta.tags = meta.tags.map(tag => populateTag(tag, tags));
         }
 
         if (Array.isArray(meta.category)) {
@@ -159,7 +206,7 @@ export async function fetchItem(slug: string, options: { lang?: string } = {}) {
     }
 }
 
-function eqCategory(category: string | Category, id: string) {
+function eqID(category: string | { id: string }, id: string) {
     if (typeof category === 'string') {
         return category === id;
     }
@@ -169,15 +216,31 @@ function eqCategory(category: string | Category, id: string) {
 
 export async function fetchByCategory(raw: string) {
     const category = decodeURI(raw);
-    const { categories, items, total } = await fetchItems();
+    const { categories, items, total, tags } = await fetchItems();
     return {
         categories,
+        tags,
         total,
         items: items.filter(item => {
             if (Array.isArray(item.category)) {
-                return item.category.some(cat => eqCategory(cat, category));
+                return item.category.some(c => eqID(c, category));
             }
-            return eqCategory(item.category, category);
+            return eqID(item.category, category);
+        }),
+    }
+}
+
+export async function fetchByTag(raw: string) {
+    const tag = decodeURI(raw);
+    const { categories, items, total, tags } = await fetchItems();
+    return {
+        categories,
+        tags,
+        total,
+        items: items.filter(item => {
+            if (Array.isArray(item.tags)) {
+                return item.tags.some(t => eqID(t, tag));
+            }
         }),
     }
 }
