@@ -1,7 +1,7 @@
 'use client'
 
-import { Category } from "@/lib/content";
-import { Accordion, AccordionItem, Autocomplete, AutocompleteItem, Button, cn, Link, Pagination } from "@heroui/react";
+import { Category, Tag } from "@/lib/content";
+import { Accordion, AccordionItem, Button, cn, Link, Pagination } from "@heroui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -56,31 +56,6 @@ export function Categories(props: { total: number, categories: Category[] }) {
   );
 }
 
-export function Sort() {
-  return (
-    <div className="flex flex-wrap md:flex-nowrap">
-      <Autocomplete variant="bordered" size="sm" className="max-w-xs" label="Sort">
-        <AutocompleteItem>Newest</AutocompleteItem>
-        <AutocompleteItem>Oldest</AutocompleteItem>
-      </Autocomplete>
-    </div>
-  );
-}
-
-export function Filters() {
-  return (
-    <div className="flex flex-wrap md:flex-nowrap">
-      <Autocomplete size="sm" variant="bordered" className="max-w-xs" label="Filters">
-        <AutocompleteItem>Featured</AutocompleteItem>
-      </Autocomplete>
-    </div>
-  );
-}
-
-export function Reset() {
-  return (<Button radius="sm" size="lg" className="text-sm" variant="bordered">Reset</Button>);
-}
-
 export function Paginate({ basePath, initialPage, total }: { basePath: string, initialPage: number, total: number }) {
   const router = useRouter();
 
@@ -97,4 +72,25 @@ export function Paginate({ basePath, initialPage, total }: { basePath: string, i
       total={total}
       onChange={redirect}
     />);
+}
+
+export function Tags(props: { tags: Tag[] }) {
+  const pathname = usePathname();
+
+  return (
+    <div className="w-fill flex gap-2 flex-wrap">
+    { props.tags.map(tag => (
+        <Button 
+          key={tag.id}
+          variant={pathname.startsWith(encodeURI(`/tags/${tag.id}`)) ? 'solid' : 'bordered'}
+          color="default"
+          size="sm"
+          as={Link}
+          href={`/tags/${tag.id}`}
+        >{
+            tag.name
+        }</Button>
+    ))}
+</div>
+  );
 }
