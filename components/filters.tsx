@@ -1,18 +1,29 @@
-'use client'
+"use client";
 
 import { Category, Tag } from "@/lib/content";
 import { Accordion, AccordionItem, Button, cn, Link, Pagination } from "@heroui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-function BlockLink({ href, isActive, children }: PropsWithChildren<{ href: string, isActive: boolean }>) {
+function BlockLink({
+  href,
+  isActive,
+  children,
+}: PropsWithChildren<{ href: string; isActive: boolean }>) {
   return (
     <Button
-      className={cn('text-black font-medium text-left justify-start', { 'bg-primary-50 data-[hover]:bg-primary-100': isActive })}
-      radius="sm" variant='light' as={Link} href={href}>
+      className={cn(
+        "text-black dark:text-white font-medium text-left justify-start",
+        { "bg-primary-50 data-[hover]:bg-primary-100": isActive }
+      )}
+      radius="sm"
+      variant="light"
+      as={Link}
+      href={href}
+    >
       {children}
     </Button>
-  )
+  );
 }
 
 export function CategoriesList({ categories, total }: { total: number, categories: Category[] }) {
@@ -56,11 +67,19 @@ export function Categories(props: { total: number, categories: Category[] }) {
   );
 }
 
-export function Paginate({ basePath, initialPage, total }: { basePath: string, initialPage: number, total: number }) {
+export function Paginate({
+  basePath,
+  initialPage,
+  total,
+}: {
+  basePath: string;
+  initialPage: number;
+  total: number;
+}) {
   const router = useRouter();
 
   function redirect(page: number) {
-    const path = basePath + ((page === 1) ? '' : `/${page}`);
+    const path = basePath + (page === 1 ? "" : `/${page}`);
     router.push(path);
   }
 
