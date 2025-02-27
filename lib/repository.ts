@@ -44,8 +44,9 @@ export async function pullChanges(url: string, dest: string, auth: GitAuth) {
 }
 
 export async function trySyncRepository() {
-    const token = process.env.GITHUB_APIKEY;
+    const token = process.env.GH_TOKEN;
     const url = process.env.DATA_REPOSITORY;
+
     if (!url) {
         throw new Error("'DATA_REPOSITORY' must be definied as environment variable.");
     }
@@ -54,6 +55,7 @@ export async function trySyncRepository() {
     const auth = getGitAuth(token);
 
     const exists = await fsExists(path.join(dest, '.git'));
+
     if (exists && !shouldSync()) {
         return;
     }
