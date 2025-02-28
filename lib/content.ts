@@ -12,6 +12,7 @@ import { unstable_cache } from 'next/cache';
 interface Identifiable {
     id: string;
     name: string;
+    icon_url?: string;
 }
 
 export interface Category extends Identifiable {

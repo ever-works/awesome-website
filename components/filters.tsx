@@ -13,7 +13,7 @@ function BlockLink({
   return (
     <Button
       className={cn(
-        "text-black dark:text-white font-medium text-left justify-start",
+        "text-black dark:text-white font-medium text-left justify-start items-center",
         { "bg-primary-50 data-[hover]:bg-primary-100": isActive }
       )}
       radius="sm"
@@ -40,6 +40,7 @@ export function CategoriesList({ categories, total }: { total: number, categorie
       return (<BlockLink isActive={pathname.startsWith(encodeURI(href))}
         key={category.id}
         href={href}>
+          { category.icon_url && <img src={category.icon_url} className="w-5 h-5" alt="" /> }
           {category.name} ({category.count || 0})
       </BlockLink>)
     })}
@@ -106,9 +107,10 @@ export function Tags(props: { tags: Tag[] }) {
           size="sm"
           as={Link}
           href={`/tags/${tag.id}`}
-        >{
-            tag.name
-        }</Button>
+        >
+          { tag.icon_url && <img src={tag.icon_url} className="w-4 h-4" alt="" /> }
+          { tag.name}
+        </Button>
     ))}
 </div>
   );
