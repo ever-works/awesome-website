@@ -2,14 +2,10 @@
 
 import { useConfig } from "@/app/[locale]/config";
 import { Link } from "@/i18n/navigation";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Button,
-} from "@heroui/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 import { useTranslations } from "next-intl";
+import { ProfileButton } from "./profile-button";
+import { SessionProps } from "@/lib/types";
 
 export const AcmeLogo = () => {
   return (
@@ -24,7 +20,7 @@ export const AcmeLogo = () => {
   );
 };
 
-export default function Header() {
+export default function Header({ session }: SessionProps) {
   const t = useTranslations("common");
   const config = useConfig();
 
@@ -54,14 +50,8 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">{t("LOGIN")}</Link>
-        </NavbarItem>
-
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            {t("SIGN_UP")}
-          </Button>
+          <ProfileButton session={session} />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
