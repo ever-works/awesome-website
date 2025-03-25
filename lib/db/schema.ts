@@ -58,21 +58,12 @@ export const sessions = pgTable("sessions", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
-export const verificationTokens = pgTable(
-  "verificationTokens",
-  {
-    identifier: text("identifier").notNull(),
-    token: text("token").notNull(),
-    expires: timestamp("expires", { mode: "date" }).notNull(),
-  },
-  (verificationToken) => [
-    {
-      compositePk: primaryKey({
-        columns: [verificationToken.identifier, verificationToken.token],
-      }),
-    },
-  ]
-);
+export const verificationTokens = pgTable("verificationTokens", {
+  identifier: text("identifier").notNull(),
+  email: text("email").notNull(),
+  token: text("token").notNull(),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+});
 
 export const authenticators = pgTable(
   "authenticators",
@@ -105,6 +96,15 @@ export const activityLogs = pgTable("activityLogs", {
   ipAddress: varchar("ipAddress", { length: 45 }),
 });
 
+export const passwordResetTokens = pgTable("passwordResetTokens", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  email: text("email").notNull(),
+  token: text("token").notNull().unique(),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+});
+
 export type NewUser = typeof users.$inferInsert;
 export type ActivityLog = typeof activityLogs.$inferSelect;
 export type NewActivityLog = typeof activityLogs.$inferInsert;
@@ -113,6 +113,7 @@ export enum ActivityType {
   SIGN_UP = "SIGN_UP",
   SIGN_IN = "SIGN_IN",
   SIGN_OUT = "SIGN_OUT",
+  VERIFY_EMAIL = "VERIFY_EMAIL",
   UPDATE_PASSWORD = "UPDATE_PASSWORD",
   DELETE_ACCOUNT = "DELETE_ACCOUNT",
   UPDATE_ACCOUNT = "UPDATE_ACCOUNT",

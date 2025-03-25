@@ -35,12 +35,36 @@ export interface ItemData {
     updatedAt: Date;  // timestamp
 }
 
+export interface AuthOptions {
+    credentials?: boolean;
+    google?: boolean;
+    github?: boolean;
+    microsoft?: boolean;
+    fb?: boolean;
+    x?: boolean
+}
+
+export type NovuMail = {
+    provider: "novu";
+    template_id?: string;
+    default_from: string;
+    backend_url?: string;
+}
+
+export type ResendMail = {
+    provider: "resend";
+    default_from: string;
+}
+
 export interface Config {
     company_name?: string;
     copyright_year?: number;
     content_table?: boolean;
     item_name?: string;
     items_name?: string;
+    app_url?: string;
+    auth?: false | AuthOptions
+    mail?: NovuMail | ResendMail;
 }
 
 interface FetchOptions {

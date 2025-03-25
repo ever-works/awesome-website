@@ -3,13 +3,13 @@
 import { User, LogOut, Settings, HelpCircle } from "lucide-react";
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { useState } from "react";
 import { signOutAction } from "@/app/[locale]/auth/actions";
 import { SessionProps } from "@/lib/types";
+import { Link } from "@/i18n/navigation";
 
 export function ProfileButton({ session }: SessionProps) {
-  const t = useTranslations("common");
+  const t = useTranslations();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const user = session?.user;
@@ -86,7 +86,7 @@ export function ProfileButton({ session }: SessionProps) {
 
   return (
     <Button as={Link} color="primary" href="/auth/signin" variant="flat">
-      {t("LOGIN")}
+      {t("auth.LOGIN")}
     </Button>
   );
 }
