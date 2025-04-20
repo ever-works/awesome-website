@@ -44,4 +44,7 @@ async function main() {
   });
 }
 
-main()
+main().catch(err => {
+  console.error('Failed to clone repository:', err);
+  process.exit(1);
+});
