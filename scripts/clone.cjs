@@ -1,9 +1,9 @@
 const { loadEnvConfig } = require("@next/env");
 const git = require("isomorphic-git")
 const http = require("isomorphic-git/http/node")
-const fs = require("fs")
-const path = require("path")
-const os = require('os')
+const fs = require("node:fs")
+const path = require("node:path")
+const os = require('node:os')
 
 loadEnvConfig(process.cwd());
 
