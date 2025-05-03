@@ -25,7 +25,7 @@ export function Avatar({ src, alt = "", fallback, size = "sm", className }: Avat
 
   if (src && !imageError) {
     return (
-      <div className={"relative rounded-full overflow-hidden" + sizeMap[size] + className}>
+      <div className={`relative rounded-full overflow-hidden ${sizeMap[size]} ${className ?? ""}`}>
         <Image
           src={src}
           alt={alt}
@@ -41,7 +41,9 @@ export function Avatar({ src, alt = "", fallback, size = "sm", className }: Avat
 
   return (
     <div
-      className={"rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 flex items-center justify-center text-white font-medium" + sizeMap[size] + className}
+      className={`rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 flex items-center justify-center text-white font-medium ${sizeMap[size]} ${
+        className ?? ""
+      }`}
       title={alt}
     >
       {fallback || alt.charAt(0).toUpperCase()}
