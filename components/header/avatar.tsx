@@ -17,7 +17,11 @@ const sizeMap = {
 
 export function Avatar({ src, alt = "", fallback, size = "sm", className }: AvatarProps) {
   const [imageError, setImageError] = useState(false);
-  const dimensions = parseInt(sizeMap[size].split(" ")[0].replace("h-", "")) * 4; // Convert tailwind sizes to pixels
+  const tailwindUnit = Number.parseInt(
+    sizeMap[size].split(" ")[0].replace("h-", ""),
+    10
+  );
+  const dimensions = tailwindUnit * 4;
 
   if (src && !imageError) {
     return (

@@ -17,8 +17,7 @@ import { ActionState } from "@/lib/auth/middleware";
 import { signInWithProvider } from "../actions";
 
 export function SocialLogin() {
-
-
+  
   const t = useTranslations("common");
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
@@ -88,8 +87,7 @@ export function SocialLogin() {
             type="button"
             isIconOnly
             className="hover:opacity-80 transition-opacity"
-            onPress={() => handleProviderSignIn(provider.provider)}
-          >
+            onPress={() => handleProviderSignIn(provider.provider)}  >
             {provider.icons}
           </Button>
         ))}
