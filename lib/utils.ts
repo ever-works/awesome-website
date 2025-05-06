@@ -1,5 +1,6 @@
 import { Category } from "./content";
 
+
 export function getItemPath(slug: string) {
   return `/items/${slug}`;
 }

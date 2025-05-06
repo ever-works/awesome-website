@@ -7,6 +7,7 @@ import { useState } from "react";
 import { signOutAction } from "@/app/[locale]/auth/actions";
 import { SessionProps } from "@/lib/types";
 import { Link } from "@/i18n/navigation";
+import { Avatar } from "./avatar";
 
 export function ProfileButton({ session }: SessionProps) {
   const t = useTranslations();
@@ -31,9 +32,13 @@ export function ProfileButton({ session }: SessionProps) {
             onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
           >
             <span className="sr-only">Open user menu</span>
-            <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white">
-              {user.name?.charAt(0)}
-            </div>
+            <Avatar
+              src={user.image}
+              alt={user.name || "User"}
+              fallback={user.name?.charAt(0)}
+              size="sm"
+              className="ring-2 ring-white ring-offset-2 ring-offset-indigo-600 transition-transform hover:scale-105"
+            />
           </button>
         </div>
 

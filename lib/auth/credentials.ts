@@ -7,6 +7,12 @@ const SALT_ROUNDS = 10;
 
 export enum AuthProviders {
   CREDENTIALS = "credentials",
+  GOOGLE = "google",
+  FACEBOOK = "facebook",
+  GITHUB = "github",
+  TWITTER = "twitter",
+  X = "x",
+  MICROSOFT = "microsoft",
 }
 
 export async function hashPassword(password: string) {

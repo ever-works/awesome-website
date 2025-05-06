@@ -57,6 +57,34 @@ export const signInAction = validatedAction(signInSchema, async (data) => {
   }
 });
 
+export const signInWithProvider = validatedAction(
+  z.object({
+    provider: z.enum([
+      AuthProviders.GOOGLE,
+      AuthProviders.FACEBOOK,
+      AuthProviders.GITHUB,
+      AuthProviders.X,
+      AuthProviders.MICROSOFT,
+    ]),
+  }),
+  async (data) => {
+    try {
+      await signIn(data.provider, {
+        redirect: false,
+      });
+
+      return { success: true };
+    } catch (error) {
+      console.error(error);
+      return {
+        error:
+          "Invalid email or password. Please check your credentials and try again.",
+        ...data,
+      };
+    }
+  }
+);
+
 const signUpSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
