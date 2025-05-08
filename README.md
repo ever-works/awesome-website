@@ -3,7 +3,12 @@
 ## ⭐️ What is it?
 
 Welcome to the **Ever Works Directory Website Template**, a cutting-edge, full-stack directory website solution built with [Next.js 15](https://nextjs.org/).  
+
 This versatile template is an essential component of the [Ever Works Platform](https://ever.works), offering seamless integration while maintaining the flexibility to function as a standalone solution.
+
+## 🔗 Links
+
+- Demo: [https://demo.ever.works](https://demo.ever.works)
 
 ## Project Overview
 
@@ -205,7 +210,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000/).
 - Protect routes via middleware
 - Customize auth pages in `app/[locale]/auth`
 
-## 🔗 Resources / Links
+## 🔗 Resources
 
 - [Next.js Docs](https://nextjs.org/docs)
 - [NextAuth.js Guide](https://authjs.dev/)
