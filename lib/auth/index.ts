@@ -15,14 +15,21 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
   adapter: drizzle,
   callbacks: {
     authorized: ({ auth }) => auth?.user != null,
-    signIn: async ({ user, account, profile }) => {
-      // Allow all OAuth sign-ins
-      if (account?.provider !== "credentials") {
+    signIn: async ({ user, account }) => {
+      try {
+        if (account?.provider !== "credentials") {
+          return true;
+        }
+
+        if (!user?.email) {
+          return false;
+        }
         return true;
+      } catch (error: any) {
+        throw new Error("Failed to check for existing user", error);
       }
-      return true;
     },
-    jwt: async ({ token, user, account, profile, trigger }) => {
+    jwt: async ({ token, user, account }) => {
       // Link accounts with the same email
       if (user?.id) {
         token.userId = user.id;
