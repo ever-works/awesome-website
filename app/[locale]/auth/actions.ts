@@ -25,27 +25,30 @@ import {
   updateUserPassword,
   updateUserVerification,
 } from "@/lib/db/queries";
-import { signIn, signOut } from "@/lib/auth";
+import { signIn } from "@/lib/auth";
 import {
   generatePasswordResetToken,
   generateVerificationToken,
 } from "@/lib/db/tokens";
 import { sendPasswordResetEmail, sendVerificationEmail } from "@/lib/mail";
+import { authServiceFactory } from "@/lib/auth/services";
 
 const PASSWORD_MIN_LENGTH = 8;
+const authProviderTypes = ['supabase', 'next-auth', 'both'] as const;
 
 const signInSchema = z.object({
   email: z.string().email().min(3).max(255),
   password: z.string().min(PASSWORD_MIN_LENGTH).max(100),
+  authProvider: z.enum(authProviderTypes).default('next-auth'),
 });
 
 export const signInAction = validatedAction(signInSchema, async (data) => {
   try {
-    await signIn(AuthProviders.CREDENTIALS, {
-      ...data,
-      redirect: false,
-    });
-
+    const authService = authServiceFactory(data.authProvider);
+    const { error } = await authService.signIn(data.email, data.password);
+    if (error) {
+      throw error;
+    }
     return { success: true };
   } catch (error) {
     console.error(error);
@@ -57,28 +60,44 @@ export const signInAction = validatedAction(signInSchema, async (data) => {
   }
 });
 
+const signInWithProviderSchema = z.object({
+  authProvider: z.enum(authProviderTypes).default('next-auth'),
+  redirect: z.union([z.boolean(), z.string()]).transform(val => 
+    typeof val === 'string' ? val === 'true' : val
+  ).default(true),
+  callbackUrl: z.string().default('/dashboard'),
+  provider: z.enum([
+    AuthProviders.GOOGLE,
+    AuthProviders.FACEBOOK,
+    AuthProviders.GITHUB,
+    AuthProviders.TWITTER,
+  ]),
+})
+
 export const signInWithProvider = validatedAction(
-  z.object({
-    provider: z.enum([
-      AuthProviders.GOOGLE,
-      AuthProviders.FACEBOOK,
-      AuthProviders.GITHUB,
-      AuthProviders.X,
-      AuthProviders.MICROSOFT,
-    ]),
-  }),
+ signInWithProviderSchema,
   async (data) => {
     try {
-      await signIn(data.provider, {
-        redirect: false,
+      const authService = authServiceFactory(data.authProvider);
+      
+      const result = await authService.signInWithOAuth(data.provider, {
+        ...data,
+        callbackUrl: data.callbackUrl
       });
-
-      return { success: true };
+      if (result.url) {
+        return { 
+          success: true,
+          url: result.url
+        };
+      }
+      
+      return { 
+        success: true
+      };
     } catch (error) {
       console.error(error);
       return {
-        error:
-          "Invalid email or password. Please check your credentials and try again.",
+        error: "Authentication failed. Please try again.",
         ...data,
       };
     }
@@ -89,10 +108,18 @@ const signUpSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   password: z.string().min(PASSWORD_MIN_LENGTH),
+  authProvider: z.enum(authProviderTypes).default('next-auth'),
 });
 
 export const signUp = validatedAction(signUpSchema, async (data) => {
   const { name, email, password } = data;
+  const authService = authServiceFactory(data.authProvider);
+  if (data.authProvider === 'supabase') {
+    const { error } = await authService.signUp(email, password);
+    if (error) {
+      throw error;
+    }
+  }
 
   const existingUser = await getUserByEmail(email).catch(() => null);
 
@@ -185,13 +212,13 @@ export const updatePassword = validatedActionWithUser(
 
 const deleteAccountSchema = z.object({
   password: z.string().min(PASSWORD_MIN_LENGTH).max(100),
+  provider: z.enum(authProviderTypes).default('next-auth'),
 });
 
 export const deleteAccount = validatedActionWithUser(
   deleteAccountSchema,
   async (data, _, user) => {
-    const { password } = data;
-
+    const { password, provider } = data;
     const dbUser = await getUserByEmail(user.email!).catch(() => null);
     if (!dbUser) {
       return { error: "User not found" };
@@ -208,8 +235,12 @@ export const deleteAccount = validatedActionWithUser(
     await logActivity(dbUser.id, ActivityType.DELETE_ACCOUNT);
 
     await softDeleteUser(dbUser.id);
-
-    await signOut();
+    const authService = authServiceFactory(provider);
+    const { error } = await authService.signOut();
+    
+    if (error) {
+      return { error: `Failed to sign out: ${error}` };
+    }
 
     redirect("/auth/signin");
   }
@@ -229,7 +260,6 @@ export const updateAccount = validatedActionWithUser(
     if (!dbUser) {
       return { error: "User not found" };
     }
-
     await Promise.all([
       updateUser({ name, email }, dbUser.id),
       logActivity(dbUser.id, ActivityType.UPDATE_ACCOUNT),
@@ -239,9 +269,12 @@ export const updateAccount = validatedActionWithUser(
   }
 );
 
-export async function signOutAction() {
-  return signOut({ redirectTo: "/auth/signin" });
-}
+export const signOutAction = async (provider?: string) => {
+  const authService = authServiceFactory(provider||'next-auth');
+  const { error } = await authService.signOut();
+  if (error) return { error };
+  return { success: true };
+};
 
 const forgotPasswordSchema = z.object({
   email: z.string().email(),

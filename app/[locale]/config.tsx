@@ -1,12 +1,21 @@
 'use client'
 
 import type { Config } from "@/lib/content";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
+import { getAuthConfig } from "@/lib/auth/config";
 
 const ConfigContext = createContext<Config>({});
 
+// Initialize auth config once during module load
+const initialAuthConfig = getAuthConfig();
+
 export function ConfigProvider({ config, children }: { config: Config, children: React.ReactNode }) {
-    return <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>;
+ 
+    const enhancedConfig = useMemo(() => {
+        return { ...config, authConfig: initialAuthConfig };
+    }, [config]);
+    
+    return <ConfigContext.Provider value={enhancedConfig}>{children}</ConfigContext.Provider>;
 }
 
 export function useConfig() {
