@@ -10,12 +10,10 @@ loadEnvConfig(process.cwd());
 const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
 
-if (!url) {
-  throw new Error("'DATA_REPOSITORY' must be defined as environment variable.");
-}
-
-if (!token) {
-  throw new Error("'GH_TOKEN' must be defined as environment variable.");
+if (!url || !token) {
+  console.warn("Warning: 'DATA_REPOSITORY' or 'GH_TOKEN' environment variables are missing.");
+  console.warn("Content repository will not be cloned. Some content may not be available.");
+  process.exit(0); // Exit gracefully without error
 }
 
 
@@ -45,6 +43,6 @@ async function main() {
 }
 
 main().catch(err => {
-  console.error('Failed to clone repository:', err);
-  process.exit(1);
+  console.warn("Continuing build without content repository.", err);
+  process.exit(0);
 });
