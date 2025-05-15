@@ -1,10 +1,14 @@
+"use client";
+
+import { useLayoutTheme } from "@/components/context/LayoutThemeContext";
 import { Categories, Paginate, Tags } from "@/components/filters";
 import Item from "@/components/item";
 import { Link } from "@/i18n/navigation";
-import { Category, ItemData, Tag } from "@/lib/content";
-import { PER_PAGE, totalPages } from "@/lib/paginate";
 import { getItemPath } from "@/lib/utils";
-import { getTranslations } from "next-intl/server";
+import { PER_PAGE, totalPages } from "@/lib/paginate";
+import { useTranslations } from "next-intl";
+import { layoutComponents } from "@/components/layouts";
+import { Category, ItemData, Tag } from "@/lib/content";
 
 type ListingProps = {
   total: number;
@@ -16,8 +20,11 @@ type ListingProps = {
   items: ItemData[];
 };
 
-export async function Listing(props: ListingProps) {
-  const t = await getTranslations("listing");
+export default function Listing(props: ListingProps) {
+  const { layoutKey } = useLayoutTheme();
+  const t = useTranslations("listing");
+
+  const LayoutComponent = layoutComponents[layoutKey];
 
   return (
     <div className="container mx-auto p-8">
@@ -33,19 +40,21 @@ export async function Listing(props: ListingProps) {
         <Categories total={props.total} categories={props.categories} />
         <div className="w-full">
           <Tags tags={props.tags} />
-          <div className="py-8 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-            {props.items
-              .slice(props.start, props.start + PER_PAGE)
-              .map((item) => (
-                <Link
-                  className="hover:opacity-90"
-                  prefetch={false}
-                  href={getItemPath(item.slug)}
-                  key={item.slug}
-                >
-                  <Item {...item} />
-                </Link>
-              ))}
+          <div className="py-8 w-full">
+            <LayoutComponent>
+              {props.items
+                .slice(props.start, props.start + PER_PAGE)
+                .map((item) => (
+                  <Link
+                    className="hover:opacity-90"
+                    prefetch={false}
+                    href={getItemPath(item.slug)}
+                    key={item.slug}
+                  >
+                    <Item {...item} />
+                  </Link>
+                ))}
+            </LayoutComponent>
           </div>
           <div className="mt-8 flex items-center justify-center">
             <Paginate
@@ -59,3 +68,5 @@ export async function Listing(props: ListingProps) {
     </div>
   );
 }
+
+export type { ListingProps };
