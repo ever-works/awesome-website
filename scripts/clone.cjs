@@ -11,7 +11,7 @@ const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
 
 if (!url) {
-  console.warn("Warning: 'DATA_REPOSITORY' or 'GH_TOKEN' environment variables are missing.");
+  console.warn("Warning: 'DATA_REPOSITORY' environment variable is missing.");
   console.warn("Content repository will not be cloned. Some content may not be available.");
   process.exit(0); // Exit gracefully without error
 }
