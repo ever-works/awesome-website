@@ -35,7 +35,6 @@ async function main() {
   console.log("Cloning content repository to", dest);
 
   const cloneOptions = {
-    onAuth: () => auth,
     fs,
     http,
     url,
