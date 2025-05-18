@@ -10,7 +10,7 @@ loadEnvConfig(process.cwd());
 const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
 
-if (!url || !token) {
+if (!url) {
   console.warn("Warning: 'DATA_REPOSITORY' or 'GH_TOKEN' environment variables are missing.");
   console.warn("Content repository will not be cloned. Some content may not be available.");
   process.exit(0); // Exit gracefully without error
@@ -32,14 +32,22 @@ const dest = getContentPath();
 async function main() {
   await fs.promises.mkdir(dest, { recursive: true });
 
-  await git.clone({
+  console.log("Cloning content repository to", dest);
+
+  const cloneOptions = {
     onAuth: () => auth,
     fs,
     http,
     url,
     dir: dest,
     singleBranch: true,
-  });
+  }
+
+  if (token) {
+    cloneOptions.onAuth = () => auth;
+  }
+
+  await git.clone(cloneOptions);
 }
 
 main().catch(err => {
