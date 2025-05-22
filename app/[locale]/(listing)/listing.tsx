@@ -9,6 +9,7 @@ import { PER_PAGE, totalPages } from "@/lib/paginate";
 import { useTranslations } from "next-intl";
 import { layoutComponents } from "@/components/layouts";
 import { Category, ItemData, Tag } from "@/lib/content";
+import ViewToggle from "@/components/ViewToggle";
 
 type ListingProps = {
   total: number;
@@ -21,7 +22,7 @@ type ListingProps = {
 };
 
 export default function Listing(props: ListingProps) {
-  const { layoutKey } = useLayoutTheme();
+  const { layoutKey, setLayoutKey } = useLayoutTheme();
   const t = useTranslations("listing");
 
   const LayoutComponent = layoutComponents[layoutKey];
@@ -36,11 +37,15 @@ export default function Listing(props: ListingProps) {
           {t("THIS_IS_A_DEMO_DIRECTORY_WEBSITE")}
         </p>
       </div>
-      <div className="flex flex-col md:flex-row w-full gap-5">
+      <div className="flex flex-col md:flex-row w-full gap-5 ">
         <Categories total={props.total} categories={props.categories} />
         <div className="w-full">
           <Tags tags={props.tags} />
-          <div className="py-8 w-full">
+          <div className="w-full">
+            <ViewToggle
+              activeView={layoutKey}
+              onViewChange={(newView) => setLayoutKey(newView)}
+            />
             <LayoutComponent>
               {props.items
                 .slice(props.start, props.start + PER_PAGE)
