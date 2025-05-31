@@ -1,14 +1,17 @@
-# Ever Works Directory Website Template
+# Awesome Website
 
 ## ⭐️ What is it?
 
-Welcome to the **Ever Works Directory Website Template**, a cutting-edge, full-stack directory website solution built with [Next.js 15](https://nextjs.org/).  
+Awesome - meta collection of awesome directories - https://dir.works
 
-This versatile template is an essential component of the [Ever Works Platform](https://ever.works), offering seamless integration while maintaining the flexibility to function as a standalone solution.
+It's built with **[Ever Works Directory Website Template](https://github.com/ever-co/ever-works-website-template)**, a cutting-edge, full-stack directory website solution. This versatile template is an essential component of the [Ever Works Platform](https://ever.works), offering seamless integration while maintaining the flexibility to function as a standalone solution.
 
 ## 🔗 Links
 
-- Demo: [https://demo.ever.works](https://demo.ever.works)
+- Website: <https://dir.works>
+- Directory Repo: <https://github.com/ever-works/awesome>
+- Data Repo: <https://github.com/ever-works/awesome-data>
+- Template Repo: <https://github.com/ever-co/ever-works-website-template>
 
 ## Project Overview
 
@@ -251,7 +254,7 @@ You can also view a full list of our [contributors tracked by Github](https://gi
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ever-co/ever-works-website-template&type=Date)](https://star-history.com/#ever-co/ever-works-website-template&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=ever-works/awesome-website&type=Date)](https://star-history.com/#ever-works/awesome-website&Date)
 
 ## ❤️ Powered By
 
@@ -270,4 +273,3 @@ You can also view a full list of our [contributors tracked by Github](https://gi
 ## ©️ Copyright
 
 #### Copyright © 2024-present, Ever Co. LTD. All rights reserved
-
