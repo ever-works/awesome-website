@@ -2,7 +2,7 @@
 
 ## ⭐️ What is it?
 
-Awesome - meta collection of awesome directories - https://dir.works
+[Awesome](https://dir.works) - meta collection of awesome directories - https://dir.works
 
 It's built with **[Ever Works Directory Website Template](https://github.com/ever-co/ever-works-website-template)**, a cutting-edge, full-stack directory website solution. This versatile template is an essential component of the [Ever Works Platform](https://ever.works), offering seamless integration while maintaining the flexibility to function as a standalone solution.
 
