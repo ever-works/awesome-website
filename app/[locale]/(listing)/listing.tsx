@@ -1,15 +1,7 @@
-"use client";
-
-import { useLayoutTheme } from "@/components/context/LayoutThemeContext";
-import { Categories, Paginate, Tags } from "@/components/filters";
-import Item from "@/components/item";
-import { Link } from "@/i18n/navigation";
-import { getItemPath } from "@/lib/utils";
-import { PER_PAGE, totalPages } from "@/lib/paginate";
-import { useTranslations } from "next-intl";
-import { layoutComponents } from "@/components/layouts";
+import { FilterProvider } from "@/components/filters";
+import { getTranslations } from "next-intl/server";
 import { Category, ItemData, Tag } from "@/lib/content";
-import ViewToggle from "@/components/ViewToggle";
+import GlobelsClient from "./globels-client";
 
 type ListingProps = {
   total: number;
@@ -21,56 +13,48 @@ type ListingProps = {
   items: ItemData[];
 };
 
-export default function Listing(props: ListingProps) {
-  const { layoutKey, setLayoutKey } = useLayoutTheme();
-  const t = useTranslations("listing");
-
-  const LayoutComponent = layoutComponents[layoutKey];
+export default async function Listing(props: ListingProps) {
+  const t = await getTranslations("listing");
 
   return (
-    <div className="container mx-auto p-8">
-      <div className="py-16 flex flex-col gap-2">
-        <h1 className="text-4xl font-bold text-center">
-          {t("BEST_DIRECTORY_WEBSITE_TEMPLATE")}
-        </h1>
-        <p className="text-lg text-foreground-600 text-center">
-          {t("THIS_IS_A_DEMO_DIRECTORY_WEBSITE")}
-        </p>
-      </div>
-      <div className="flex flex-col md:flex-row w-full gap-5">
-        <Categories total={props.total} categories={props.categories} />
-        <div className="w-full">
-          <Tags tags={props.tags} />
-          <div className="w-full">
-            <ViewToggle
-              activeView={layoutKey}
-              onViewChange={(newView) => setLayoutKey(newView)}
-            />
-            <LayoutComponent>
-              {props.items
-                .slice(props.start, props.start + PER_PAGE)
-                .map((item) => (
-                  <Link
-                    className="hover:opacity-90"
-                    prefetch={false}
-                    href={getItemPath(item.slug)}
-                    key={item.slug}
-                  >
-                    <Item {...item} isWrappedInLink={true} />
-                  </Link>
-                ))}
-            </LayoutComponent>
+    <FilterProvider>
+      <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Gradient orbs */}
+          <div className="absolute top-0 -left-4 w-72 h-72 bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-600/20 dark:to-purple-600/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+          <div className="absolute top-0 -right-4 w-72 h-72 bg-gradient-to-r from-purple-500/10 to-pink-500/10 dark:from-purple-600/20 dark:to-pink-600/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-600/20 dark:to-cyan-600/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        {/* Main Content */}
+        <div className="relative z-10">
+          {/* Header Section */}
+          <div className="container mx-auto px-6 py-12">
+            <div className="text-center mb-12">
+              {/* Introducing line */}
+              <div className="flex items-center justify-center mb-6">
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium">
+                  <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+                  {t("INTRODUCING_EVER_WORKS")}
+                </div>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent transition-colors duration-300">
+                {t("THE_BEST")} <br className="hidden md:block" />
+                <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent">
+                  {t("DIRECTORY_WEBSITE_TEMPLATE")}
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed transition-colors duration-300">
+                {t("DEMO_DESCRIPTION")}
+              </p>
+            </div>
           </div>
-          <div className="mt-8 flex items-center justify-center">
-            <Paginate
-              basePath={props.basePath}
-              initialPage={props.page}
-              total={totalPages(props.items.length)}
-            />
-          </div>
+          <GlobelsClient {...props} />
         </div>
       </div>
-    </div>
+    </FilterProvider>
   );
 }
 
