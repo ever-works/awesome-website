@@ -95,7 +95,7 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
   };
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1.5">
       <Tooltip
         content={t("ALL_CATEGORIES")}
         placement="right"
@@ -103,7 +103,7 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
         closeDelay={100}
         classNames={{
           content:
-            "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-2 py-1 rounded text-xs font-medium",
+            "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-2.5 py-1.5 rounded-lg text-sm font-medium shadow-lg",
         }}
       >
         <div>
@@ -111,11 +111,11 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
             isActive={pathname === "/" || pathname.startsWith("/discover")}
             href="/"
           >
-            <div className="flex items-center justify-between w-full  px-3 py-2">
-              <span className="font-medium truncate pr-2">
+            <div className="flex items-center justify-between w-full px-3 py-2 group">
+              <span className="font-medium truncate pr-2 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300">
                 {t("ALL_CATEGORIES")}
               </span>
-              <span className="text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-2 py-1 rounded-full transition-colors duration-300 flex-shrink-0">
+              <span className="text-xs font-semibold bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full transition-all duration-300 flex-shrink-0 group-hover:scale-105 border border-blue-200/50 dark:border-blue-700/50">
                 {totalItems}
               </span>
             </div>
@@ -140,24 +140,24 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
             isDisabled={!isTextTruncated}
             classNames={{
               content:
-                "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-2 py-1 rounded text-xs font-medium max-w-xs",
+                "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-2.5 py-1.5 rounded-lg text-sm font-medium shadow-lg max-w-xs",
             }}
           >
             <div>
               <BlockLink isActive={isActive} href={href}>
-                <div className="flex items-center justify-between w-full px-3 py-2">
+                <div className="flex items-center justify-between w-full px-3 py-2 group">
                   <span
-                    className="font-medium truncate pr-2"
+                    className="font-medium truncate pr-2 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300"
                     title={isTextTruncated ? category.name : undefined}
                   >
                     {displayName}
                   </span>
                   <span
                     className={cn(
-                      "text-xs font-semibold px-2 py-1 rounded-full transition-colors duration-300 flex-shrink-0",
+                      "text-xs font-semibold px-2 py-0.5 rounded-full transition-all duration-300 flex-shrink-0 group-hover:scale-105",
                       isActive
-                        ? "bg-white/20 text-white"
-                        : "bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200"
+                        ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md border border-blue-400/50"
+                        : "bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200/50 dark:border-gray-700/50"
                     )}
                   >
                     {category.count}
