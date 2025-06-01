@@ -17,20 +17,7 @@ import Link from "next/link";
 import { LayoutSwitcher } from "../layout-switcher";
 import { NavigationControls } from "../navigation-controls";
 import { ProfileButton } from "./profile-button";
-
-export const AcmeLogo = () => {
-  return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-      <path
-        clipRule="evenodd"
-        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-        fill="currentColor"
-        fillRule="evenodd"
-        className="fill-black dark:fill-white"
-      />
-    </svg>
-  );
-};
+import { IconEverworksSimple } from "../icons/Icons";
 
 export default function Header({ session }: SessionProps) {
   const t = useTranslations("common");
@@ -50,11 +37,12 @@ export default function Header({ session }: SessionProps) {
     >
       <div className="flex items-center justify-between w-full container mx-auto px-4">
         <NavbarBrand>
-          <Link href="/" className="flex items-center">
-            <div className="p-2 rounded-lg  text-white mr-3">
-              <AcmeLogo />
+          <Link href="/" className="flex items-center group">
+            <div className="relative  font-bold">
+              <IconEverworksSimple className="w-10 h-10 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
+             
             </div>
-            <p className="font-bold">{config.company_name}</p>
+            <p className="font-bold text-lg md:text-xl">{config.company_name}</p>
           </Link>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
