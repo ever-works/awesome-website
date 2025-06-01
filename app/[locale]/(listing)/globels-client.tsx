@@ -26,9 +26,11 @@ export default function GlobelsClient(props: ListingProps) {
   return layoutHome === "Home_1" ? (
     <div className=" px-4 pb-12">
       <div className="flex flex-col md:flex-row w-full gap-5">
-        <Categories total={props.total} categories={props.categories} />
+        <div className="md:sticky md:top-4 md:self-start">
+          <Categories total={props.total} categories={props.categories} />
+        </div>
         <div className="w-full">
-          <Tags tags={props.tags} />
+            <Tags tags={props.tags} />
           <ListingClient {...props} />
           <div className="flex items-center justify-center">
             <Paginate
