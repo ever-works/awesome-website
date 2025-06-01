@@ -26,12 +26,12 @@ export function ThemeToggler({ compact = false }: ThemeTogglerProps) {
       <div className="flex items-center gap-1.5">
         <div className="flex items-center gap-1">
           {theme === "light" ? (
-            <Sun className="h-4 w-4 text-yellow-500 dark:text-yellow-400" />
+            <Sun className="h-10 w-10 text-yellow-500 dark:text-yellow-1000" />
           ) : (
-            <Moon className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+            <Moon className="h-10 w-10 text-blue-500 dark:text-blue-400" />
           )}
           <Switch
-            size="sm"
+            size="lg"
             color="primary"
             isSelected={theme === "dark"}
             onValueChange={(isSelected) => setTheme(isSelected ? "dark" : "light")}

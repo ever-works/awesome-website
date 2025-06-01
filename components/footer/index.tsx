@@ -4,10 +4,9 @@ import { useConfig } from "@/app/[locale]/config";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ArrowUp } from "lucide-react";
-import Image from "next/image";
 import { ThemeToggler } from "../theme-toggler";
 import { FiFacebook, FiLinkedin } from "react-icons/fi";
-import { IconGithub, IconX } from "../icons/Icons";
+import { IconEverworks, IconEverworksSimple, IconGithub, IconX } from "../icons/Icons";
 
 /**
  * Footer component for the application
@@ -144,16 +143,10 @@ function BrandLink({ t }: { t: any }) {
           <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">
             {t("BUILT_WITH")}
           </span>
-          <div className="relative">
-            <Image
-              src="/small-logo.png"
-              alt="Works"
-              width={20}
-              height={20}
-              className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
-            />
+          <div className="relative w-5 h-5">
+            <IconEverworksSimple className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
+          </div> 
           <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">
             Works
           </span>
@@ -288,23 +281,7 @@ function FooterBottom({
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 mb-6">
           <div className="flex items-center gap-6">
             {/* Enhanced Logo with glow effect */}
-            <div className="relative group">
-              <Image
-                src="/logo-white.svg"
-                alt={config.company_name || "Ever"}
-                width={100}
-                height={36}
-                className="hidden dark:block opacity-90 group-hover:opacity-100 transition-opacity duration-300"
-              />
-              <Image
-                src="/logo.svg"
-                alt={config.company_name || "Ever"}
-                width={100}
-                height={36}
-                className="block dark:hidden opacity-90 group-hover:opacity-100 transition-opacity duration-300"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
+           
 
             {/* Enhanced Copyright text */}
             <div className="text-gray-600 dark:text-gray-400">
@@ -341,7 +318,11 @@ function FooterBottom({
 
         {/* Enhanced Disclaimer and utilities */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pt-6 border-t border-white/10 dark:border-gray-700/20">
-          <div className="text-sm text-gray-500 dark:text-gray-500 max-w-3xl">
+        <div className="relative group">
+              <IconEverworks className=" !h-52 !font-bold md:h-20 lg:h-24 opacity-90 group-hover:opacity-100 transition-all duration-300" />
+              
+            </div>
+          <div className="text-sm font-medium text-gray-500 dark:text-gray-500 max-w-3xl">
             *{t("DISCLAIMER")}
           </div>
           
