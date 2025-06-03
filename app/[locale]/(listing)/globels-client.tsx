@@ -6,6 +6,8 @@ import { sortByNumericProperty } from "@/lib/utils";
 import { totalPages } from "@/lib/paginate";
 import { ListingClient } from "./listing-client";
 import { HomeTwoLayout, useHomeTwoLogic } from "@/components/home-two";
+import { useStickyState } from "@/hooks/use-sticky-state";
+import { useEffect } from "react";
 
 type ListingProps = {
   total: number;
@@ -19,11 +21,33 @@ type ListingProps = {
 
 export default function GlobelsClient(props: ListingProps) {
   const { layoutHome } = useLayoutTheme();
+
+  const { isSticky, sentinelRef, targetRef } = useStickyState({
+    threshold: 0,
+    rootMargin: "-20px 0px 0px 0px",
+    debug: false,
+  });
+
   const homeTwoLogic = useHomeTwoLogic({
     ...props,
   });
   const sortedTags = sortByNumericProperty(props.tags);
   const sortedCategories = sortByNumericProperty(props.categories);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const container = document.getElementById("sticky-tags-container");
+      if (container) {
+        if (isSticky) {
+          const isDarkMode =
+            document.documentElement.classList.contains("dark");
+          container.style.backgroundColor = isDarkMode ? "#111827" : "#ffffff";
+        } else {
+          container.style.backgroundColor = "transparent";
+        }
+      }
+    }
+  }, [isSticky]);
 
   return layoutHome === "Home_1" ? (
     <div className=" px-4 pb-12">
@@ -32,7 +56,18 @@ export default function GlobelsClient(props: ListingProps) {
           <Categories total={props.total} categories={sortedCategories} />
         </div>
         <div className="w-full">
-          <Tags tags={sortedTags} />
+          <div ref={sentinelRef} className="md:h-4 md:w-full" />
+          <div
+            ref={targetRef}
+            className={`md:sticky md:top-4 z-10 transition-all duration-300 ${
+              isSticky
+                ? "bg-white dark:bg-gray-900 shadow-lg rounded-lg p-4 mb-4"
+                : "bg-transparent p-0"
+            }`}
+            id="sticky-tags-container"
+          >
+            <Tags tags={sortedTags} />
+          </div>
           <ListingClient {...props} />
           <div className="flex items-center justify-center">
             <Paginate
