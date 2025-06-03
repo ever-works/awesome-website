@@ -1,9 +1,8 @@
 "use client";
 import { useLayoutTheme } from "@/components/context";
 import { Categories, Paginate, Tags } from "@/components/filters";
-import { Tag } from "@/lib/content";
-import { Category } from "@/lib/content";
-import { ItemData } from "@/lib/content";
+import { Tag, Category, ItemData } from "@/lib/content";
+import { sortByNumericProperty } from "@/lib/utils";
 import { totalPages } from "@/lib/paginate";
 import { ListingClient } from "./listing-client";
 import { HomeTwoLayout, useHomeTwoLogic } from "@/components/home-two";
@@ -23,14 +22,17 @@ export default function GlobelsClient(props: ListingProps) {
   const homeTwoLogic = useHomeTwoLogic({
     ...props,
   });
+  const sortedTags = sortByNumericProperty(props.tags);
+  const sortedCategories = sortByNumericProperty(props.categories);
+
   return layoutHome === "Home_1" ? (
     <div className=" px-4 pb-12">
       <div className="flex flex-col md:flex-row w-full gap-5">
         <div className="md:sticky md:top-4 md:self-start">
-          <Categories total={props.total} categories={props.categories} />
+          <Categories total={props.total} categories={sortedCategories} />
         </div>
         <div className="w-full">
-            <Tags tags={props.tags} />
+          <Tags tags={sortedTags} />
           <ListingClient {...props} />
           <div className="flex items-center justify-center">
             <Paginate
@@ -45,6 +47,8 @@ export default function GlobelsClient(props: ListingProps) {
   ) : layoutHome === "Home_2" ? (
     <HomeTwoLayout
       {...props}
+      categories={sortedCategories}
+      tags={sortedTags}
       filteredAndSortedItems={homeTwoLogic.items}
       paginatedItems={homeTwoLogic.paginatedItems}
     />
@@ -52,6 +56,8 @@ export default function GlobelsClient(props: ListingProps) {
     <div>
       <HomeTwoLayout
         {...props}
+        categories={sortedCategories}
+        tags={sortedTags}
         filteredAndSortedItems={homeTwoLogic.items}
         paginatedItems={homeTwoLogic.paginatedItems}
       />

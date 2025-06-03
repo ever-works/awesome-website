@@ -1,4 +1,7 @@
-import { fetchByCategory, fetchItems } from "@/lib/content";
+import {
+  fetchByCategory,
+  fetchItems,
+} from "@/lib/content";
 import { paginateMeta, totalPages } from "@/lib/paginate";
 import { LOCALES } from "@/lib/constants";
 import Listing from "../../listing";
@@ -41,6 +44,7 @@ export default async function CategoryListing({
   const { items, categories, total, tags } = await fetchByCategory(category, {
     lang: locale,
   });
+
 
   return (
     <Listing

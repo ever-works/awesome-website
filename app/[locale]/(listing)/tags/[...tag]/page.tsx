@@ -42,7 +42,6 @@ export default async function TagListing({
   const { items, categories, total, tags } = await fetchByTag(tag, {
     lang: locale,
   });
-
   return (
     <Listing
       categories={categories}
