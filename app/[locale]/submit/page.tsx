@@ -7,11 +7,12 @@ import { PaymentSection } from "@/components/payment/payment-section";
 import { DetailsForm } from "@/components/directory/details-form";
 import { PricingSection } from "@/components/pricing/pricing-section";
 import { ReviewSection } from "@/components/directory/review-section";
+import { Container } from "@/components/ui/container";
 
 type FormStep = "pricing" | "details" | "payment" | "public";
 type PricingPlan = "free" | "pro" | "sponsor";
 
-function DirectoryPage() {
+function SubmitPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<FormStep>("pricing");
@@ -31,7 +32,6 @@ function DirectoryPage() {
       details: { free: "public", pro: "payment", sponsor: "payment" },
       payment: { free: "public", pro: "public", sponsor: "public" },
       public: { free: "public", pro: "public", sponsor: "public" },
-      
     },
     prev: {
       pricing: { free: "pricing", pro: "pricing", sponsor: "pricing" },
@@ -46,8 +46,8 @@ function DirectoryPage() {
     const params = new URLSearchParams();
     if (step !== "pricing") params.set("step", step);
     if (plan) params.set("plan", plan);
-    
-    const url = params.toString() ? `/directory?${params.toString()}` : "/directory";
+
+    const url = params.toString() ? `/submit?${params.toString()}` : "/submit";
     router.replace(url);
   };
 
@@ -108,7 +108,7 @@ function DirectoryPage() {
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 py-20">
-      <div className="container mx-auto px-4">
+      <Container className="container max-w-7xl px-4">
         {currentStep === "pricing" ? (
           <PricingSection onSelectPlan={handleSelectPlan} />
         ) : (
@@ -140,9 +140,9 @@ function DirectoryPage() {
             )}
           </>
         )}
-      </div>
+      </Container>
     </div>
   );
 }
 
-export default DirectoryPage;
+export default SubmitPage;

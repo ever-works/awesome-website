@@ -35,7 +35,7 @@ export function ItemDetail({
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.05),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.1),transparent_50%)]"></div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 container max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1">
             <div className="mb-8">
@@ -337,7 +337,7 @@ export function ItemDetail({
                     </a>
                   ))
                 ) : (
-                  <div className="w-full text-center py-8 text-gray-500 dark:text-gray-400">
+                  <div className="w-full text-center py-4 sm:py-6 text-gray-500 dark:text-gray-400">
                     <svg
                       className="w-8 h-8 mx-auto mb-3 opacity-50"
                       fill="none"
