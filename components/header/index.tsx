@@ -2,7 +2,6 @@
 
 import { useConfig } from "@/app/[locale]/config";
 import {
-  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -10,9 +9,6 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
 } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { SessionProps } from "@/lib/types";
@@ -49,37 +45,49 @@ const NAVIGATION_CONFIG: Array<{
   staticLabel?: string;
 }> = [
   {
+    key: "home",
+    href: "/",
+    translationKey: "HOME",
+    translationNamespace: "common",
+  },
+  {
     key: "discover",
-    href: "#",
+    href: "/discover",
     translationKey: "DISCOVER",
     translationNamespace: "common",
   },
-  {
-    key: "about",
-    href: "#",
-    translationKey: "ABOUT",
-    translationNamespace: "common",
-  },
-  {
-    key: "github",
-    href: "#",
-    staticLabel: "GitHub",
-  },
+  // {
+  //   key: "about",
+  //   href: "#",
+  //   translationKey: "ABOUT",
+  //   translationNamespace: "common",
+  // },
+  // {
+  //   key: "github",
+  //   href: "#",
+  //   staticLabel: "GitHub",
+  // },
   {
     key: "categories",
-    href: "/categories",
+    href: "/categorie",
     translationKey: "CATEGORY",
     translationNamespace: "common",
   },
   {
     key: "tags",
-    href: "/tags",
+    href: "/tag",
     translationKey: "TAG",
     translationNamespace: "common",
   },
   {
+    key: "pricing",
+    href: "/pricing",
+    translationKey: "PRICING",
+    translationNamespace: "common",
+  },
+  {
     key: "submit",
-    href: "/submit",
+    href: "/submit?step=details&plan=free",
     translationKey: "SUBMIT",
     translationNamespace: "common",
   },
@@ -88,7 +96,7 @@ const NAVIGATION_CONFIG: Array<{
 const STYLES = {
   navbar: "border-b border-gray-100 dark:border-gray-800",
   container:
-    "flex items-center justify-between w-full container max-w-7xl px-4 sm:px-6 py-2 h-16",
+    "flex items-center justify-between w-full max-w-7xl px-4 sm:px-6 py-2 h-16 mx-auto",
   brand: "flex items-center group",
   brandIcon: "relative font-bold mr-2 sm:mr-4",
   brandIconSvg:
@@ -96,16 +104,16 @@ const STYLES = {
   brandText: "font-bold text-base sm:text-lg md:text-xl",
   navContent: "hidden md:flex gap-4 mx-8",
   layoutButton:
-    "p-0 bg-transparent data-[hover=true]:bg-transparent text-gray-700 dark:text-gray-300 hover:text-theme-primary",
+    "p-0 bg-transparent data-[hover=true]:bg-transparent text-gray-700 dark:text-gray-300 hover:text-blue-500",
   popoverContent:
     "p-0 w-full md:w-[420px] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden",
   popoverInner: "p-4 sm:p-6 space-y-6",
   popoverHeader: "text-center",
-  popoverTitle: "text-lg font-semibold text-theme-primary mb-1",
+  popoverTitle: "text-lg font-semibold text-blue-500 mb-1",
   popoverSection: "space-y-4",
   linkBase: "transition-colors font-medium",
-  linkActive: "text-theme-primary border-b-2 border-theme-primary pb-1",
-  linkInactive: "text-gray-700 dark:text-gray-300 hover:text-theme-primary",
+  linkActive: "text-blue-500 border-b-2 border-blue-500 pb-1",
+  linkInactive: "text-gray-700 dark:text-gray-300 hover:text-blue-500",
   navbarMenuToggle: "text-gray-700 dark:text-gray-300 md:hidden",
   mobileMenuItem: "py-2 w-full",
 } as const;
@@ -136,19 +144,15 @@ export default function Header({ session }: SessionProps) {
     }));
   }, [t, tListing]);
 
-  const chevronIcon = useMemo(
-    () => <ChevronDown fill="currentColor" size={16} />,
-    []
-  );
-
   const isActiveLink = useCallback(
     (href: string): boolean => {
-      if (href === "/") {
-        return pathname === "/" || pathname === "";
+      const cleanedPathname = pathname.split('?')[0]; 
+      const cleanedHref = href.split('?')[0];
+      if (cleanedHref === "/") {
+        return cleanedPathname === "/" || cleanedPathname === "";
       }
-      if (href === "#") return false;
-
-      return pathname === href || pathname.startsWith(`${href}/`);
+      if (cleanedHref === "#") return false;
+      return cleanedPathname === cleanedHref || cleanedPathname.startsWith(`${cleanedHref}/`);
     },
     [pathname]
   );
@@ -177,37 +181,6 @@ export default function Header({ session }: SessionProps) {
       </NavbarBrand>
     ),
     [config.company_name]
-  );
-
-  const renderLayoutPopover = useCallback(
-    () => (
-      <Popover placement="bottom" offset={10}>
-        <NavbarItem>
-          <PopoverTrigger>
-            <Button
-              disableRipple
-              className={STYLES.layoutButton}
-              endContent={chevronIcon}
-              radius="sm"
-              variant="light"
-            >
-              {t("LAYOUT")}
-            </Button>
-          </PopoverTrigger>
-        </NavbarItem>
-        <PopoverContent className={STYLES.popoverContent}>
-          <div className={STYLES.popoverInner}>
-            <div className={STYLES.popoverHeader}>
-              <h3 className={STYLES.popoverTitle}>{t("LAYOUT")}</h3>
-            </div>
-            <div className={STYLES.popoverSection}>
-              <LayoutSwitcher inline />
-            </div>
-          </div>
-        </PopoverContent>
-      </Popover>
-    ),
-    [t, chevronIcon]
   );
 
   const renderNavigationItem = useCallback(
@@ -261,7 +234,6 @@ export default function Header({ session }: SessionProps) {
         {renderBrand()}
 
         <NavbarContent className={STYLES.navContent} justify="center">
-          {renderLayoutPopover()}
           {renderNavigationItems()}
         </NavbarContent>
 

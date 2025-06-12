@@ -4,8 +4,8 @@ import { Categories, Paginate, Tags } from "@/components/filters";
 import { Tag, Category, ItemData } from "@/lib/content";
 import { sortByNumericProperty } from "@/lib/utils";
 import { totalPages } from "@/lib/paginate";
-import { ListingClient } from "./listing-client";
 import { HomeTwoLayout, useHomeTwoLogic } from "@/components/home-two";
+import { ListingClient } from "@/components/shared-card/listing-client";
 
 type ListingProps = {
   total: number;
