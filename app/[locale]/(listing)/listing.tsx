@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import { Category, ItemData, Tag } from "@/lib/content";
 import GlobalsClient from "./globals-client";
 import Hero from "@/components/hero";
-import { Container } from "@/components/ui/container";
 
 type ListingProps = {
   total: number;
@@ -23,7 +22,7 @@ export default async function Listing(props: ListingProps) {
       <Hero
         badgeText={t("INTRODUCING_EVER_WORKS")}
         title={
-          <div className="max-w-5xl font-bold text-balance text-3xl sm:text-4xl md:text-5xl">
+          <div className=" font-bold text-balance text-3xl sm:text-4xl md:text-5xl text-center">
             {t("THE_BEST")} <br className="hidden md:block" />
             <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent">
               {t("DIRECTORY_WEBSITE_TEMPLATE")}
@@ -33,9 +32,7 @@ export default async function Listing(props: ListingProps) {
         description={t("DEMO_DESCRIPTION")}
         className="min-h-screen text-center"
       >
-        <Container className="mt-4 px-4">
           <GlobalsClient {...props} />
-        </Container>
       </Hero>
     </FilterProvider>
   );
