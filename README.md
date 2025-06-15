@@ -9,6 +9,7 @@ This versatile template is an essential component of the [Ever Works Platform](h
 ## 🔗 Links
 
 - Demo: [https://demo.ever.works](https://demo.ever.works)
+- Ever Works website: [https://ever.works](https://ever.works) (WIP)
 
 ## Project Overview
 
