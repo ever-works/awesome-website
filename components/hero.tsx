@@ -34,7 +34,7 @@ export default function Hero({
   return (
     <div
       className={cn(
-        "w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 relative py-14",
+        "w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 relative",
         className
       )}
     >
