@@ -44,7 +44,10 @@
     "PRICING": "Pricing",
     "COPY_LINK": "Copy Link",
     "LINK_COPIED": "Link copied to clipboard!",
-    "SHARE_ERROR": "Error sharing content"
+    "SHARE_ERROR": "Error sharing content",
+    "SHARE_ON_X": "Share on X",
+    "SHARE_ON_FACEBOOK": "Share on Facebook",
+    "SHARE_ON_LINKEDIN": "Share on LinkedIn"
   },
   "listing": {
     "ALL": "All",

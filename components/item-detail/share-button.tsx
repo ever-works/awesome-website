@@ -45,7 +45,9 @@ export const ShareButton = ({ url, title }: { url: string; title: string }) => {
             break;
         }
       } catch (error) {
-        toast.error(t("SHARE_ERROR"));
+        toast.error(t("SHARE_ERROR"), {
+            description: error instanceof Error ? error.message : "Unknown error",
+        });
         setIsCopying(false);
       }
       setIsOpen(false);
