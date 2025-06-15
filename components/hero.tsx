@@ -57,8 +57,8 @@ export default function Hero({
             {badgeText && (
               <div className="flex items-center justify-center mb-3 sm:mb-4">
                 <div className="flex items-center text-gray-900 dark:text-gray-200 bg-gray-200 dark:bg-[#1F2937] py-2 px-4 rounded-full gap-2 text-sm font-medium">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                  {badgeText}
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                {badgeText}
                 </div>
               </div>
             )}

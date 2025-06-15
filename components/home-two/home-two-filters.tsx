@@ -1,10 +1,11 @@
 "use client";
 
 import { Category, Tag, ItemData } from "@/lib/content";
-import { HomeTwoCategories, HomeTwoSortSelector, HomeTwoTagsSelector } from ".";
+import { HomeTwoSortSelector, HomeTwoTagsSelector } from ".";
 import ViewToggle from "@/components/view-toggle";
 import { useFilters } from "@/hooks/use-filters";
 import { SearchInput } from "../ui/search-input";
+import { Categories } from "./home-two-categories";
 
 type Home2FiltersProps = {
   categories: Category[];
@@ -42,7 +43,7 @@ export function HomeTwoFilters({
           />
         </div>
       </div>
-      <HomeTwoCategories categories={categories} />
+      <Categories categories={categories} />
     </div>
   );
 }
