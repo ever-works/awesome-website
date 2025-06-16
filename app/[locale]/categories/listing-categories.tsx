@@ -133,7 +133,7 @@ function HomeTwoLayout({
           basePath={`/categories/category`}
           resetPath={`/categories`}
           enableSticky={false}
-          maxVisibleTags={10}
+          maxVisibleTags={4}
         />
       </div>
       <div className="md:h-4 md:w-full" />
