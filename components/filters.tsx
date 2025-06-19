@@ -685,10 +685,10 @@ export function Tags(props: {
                 prefetch={false}
                 href={props.resetPath || props.basePath || "/"}
                 className={cn(
-                  "px-3 py-1 h-8 font-medium transition-all duration-300 flex-shrink-0 group",
+                  "px-3 py-1 h-8 font-medium transition-all duration-300 flex-shrink-0 group capitalize",
                   !isAnyTagActive
                     ? "bg-theme-primary-500 text-white border-theme-primary-500 shadow-sm"
-                    : "border border-dark--theme-200 dark:border-dark--theme-800 bg-theme-primary",
+                    : "border border-dark--theme-200 dark:border-dark--theme-800",
                   "hover:shadow-md hover:border-theme-primary-200 dark:hover:border-theme-primary-800"
                 )}
               >
@@ -735,9 +735,9 @@ export function Tags(props: {
                 className={cn(
                   "px-3 py-1 h-8 font-medium transition-all duration-200",
                   !isAnyTagActive
-                    ? "bg-primary-500 text-white border-primary-500 shadow-sm"
+                    ? "bg-theme-primary-500 text-white border-theme-primary-500 shadow-sm"
                     : "border border-dark--theme-200 dark:border-dark--theme-800",
-                  "hover:shadow-md hover:border-primary-200 dark:hover:border-primary-800"
+                  "hover:shadow-md hover:border-theme-primary-200 dark:hover:border-theme-primary-800"
                 )}
               >
                 {!isAnyTagActive && (
