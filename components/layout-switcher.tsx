@@ -134,7 +134,7 @@ export function LayoutSwitcher({ inline = false }: LayoutSwitcherProps) {
   const layoutContent = (
     <div className="space-y-4">
       {availableLayouts.map(
-        ({ key, name, description, color, icon, preview, isActive }) => {
+        ({ key, name, description, icon, preview, isActive }) => {
           return (
             <button
               key={key}
