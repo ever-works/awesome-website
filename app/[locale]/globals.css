@@ -58,7 +58,7 @@
     --theme-secondary-950: #0d3810;
     
     /* Theme Accent - Darker Blue palette */
-    --theme-accent: #0548f1;
+    --theme-accent: #3d70ef;
     --theme-accent-50: #e3f2fd;
     --theme-accent-100: #bbdefb;
     --theme-accent-200: #90caf9;
@@ -777,5 +777,39 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Custom select dropdown styles with theme colors */
+select option:checked,
+select option:hover {
+  background-color: var(--theme-primary) !important;
+  color: white !important;
+}
+
+/* For dark mode */
+.dark select option:checked,
+.dark select option:hover {
+  background-color: var(--theme-primary) !important;
+  color: white !important;
+}
+
+/* Style for the selected option in the dropdown */
+select option:focus {
+  background-color: var(--theme-primary) !important;
+  color: white !important;
+}
+
+/* Additional styles for better compatibility */
+select option:active {
+  background-color: var(--theme-primary) !important;
+  color: white !important;
+}
+
+/* Webkit specific styles for better browser support */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select option:checked {
+    background: var(--theme-primary) linear-gradient(0deg, var(--theme-primary) 0%, var(--theme-primary) 100%);
+    color: white !important;
   }
 }

@@ -416,7 +416,7 @@ export function ResultsHeader({
             {t("SHOWING")} {start + 1}-
             {Math.min(start + pageSize, filteredCount)}
             {config.enableSorting && sortBy !== SORT_OPTIONS.POPULARITY && (
-              <span className="ml-2 text-blue-500 dark:text-blue-400">
+              <span className="ml-2 text-theme-primary-500 dark:text-theme-primary-400">
                 {t("SORTED_BY")} {getSortLabel(sortBy)}
               </span>
             )}
@@ -433,7 +433,7 @@ export function ItemsList({
   onItemClick,
   renderCustomItem,
   animationDelay = 100,
-  className = "",
+  className = "space-y-4",
 }: {
   items: ItemData[];
   LayoutComponent: React.ComponentType<{ children: React.ReactNode }>;

@@ -53,7 +53,7 @@ export default function Item(props: ItemProps) {
 
       {/* Content container */}
       <div className="relative z-10">
-        <CardHeader className="flex gap-4 p-6 pb-4">
+        <CardHeader className="flex gap-4  pb-4">
           <div className="flex flex-col flex-grow gap-4 min-w-0">
             <div className="flex justify-between items-start gap-3">
               <div className="flex items-center gap-4">
@@ -76,7 +76,7 @@ export default function Item(props: ItemProps) {
                 </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-semibold leading-tight text-gray-900 dark:text-white mb-1 transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+                <h3 className="text-xl sm:text-base font-semibold leading-tight text-gray-900 dark:text-white mb-1 transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
                   {props.name}
                 </h3>
                 <div className="w-0 h-0.5 bg-gray-300 dark:bg-gray-600 group-hover:w-12 transition-all duration-500 ease-out" />
@@ -100,7 +100,7 @@ export default function Item(props: ItemProps) {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="bg-theme-primary-10 px-3 py-2 text-xs font-semibold rounded-full bg-gradient-to-r from-theme-primary-100 to-theme-primary-100 text-theme-primary border border-theme-primary-500 dark:from-theme-primary-900/30 dark:to-theme-primary-900/30 dark:text-theme-primary dark:border-theme-primary-500 transition-all duration-300 hover:scale-105 hover:shadow-md capitalize shadow-sm">
+              <span className="bg-theme-primary-10 px-3 py-2 text-xs font-semibold rounded-full bg-gradient-to-r from-theme-primary-100 to-theme-primary-100 text-theme-primary  dark:from-theme-primary-900/30 dark:to-theme-primary-900/30 dark:text-theme-primary border-theme-primary-10 transition-all duration-300 hover:scale-105 hover:shadow-md capitalize shadow-sm border dark:border-gray-600/30">
                 {getCategoriesName(props.category)}
               </span>
               {props.tags &&
