@@ -72,7 +72,7 @@ const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({
   return (
     <div 
       className={cn(
-        "space-y-3 p-4 bg-gray-50/50 dark:bg-gray-800/30 rounded-xl",
+        "space-y-3 p-4 bg-gray-50/50 dark:bg-gray-800/30 rounded-xl h-[140px]",
         "border border-gray-200/30 dark:border-gray-700/30",
         disabled && "opacity-50 cursor-not-allowed",
         className
@@ -94,10 +94,10 @@ const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({
               onClick={() => handlePaginationChange(option.id)}
               disabled={disabled}
               className={cn(
-                "px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300",
+                "px-3 py-2 rounded-xl font-medium text-sm transition-all duration-300",
                 "flex items-center justify-center gap-2",
                 isActive
-                  ? "bg-gradient-to-br from-theme-primary-500 to-theme-primary-600 text-white shadow-lg shadow-theme-primary-500/25 ring-2 ring-theme-primary-400/50"
+                  ? "bg-gradient-to-br from-theme-primary-500 to-theme-primary-600 text-white shadow-lg  ring-2 ring-theme-primary-400/50"
                   : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700",
                 disabled && "cursor-not-allowed hover:bg-white dark:hover:bg-gray-800"
               )}
