@@ -57,10 +57,10 @@ export function ItemDetail({
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent tracking-tight leading-tight mb-2">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-theme-primary-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent tracking-tight leading-tight mb-2">
                     {meta.name}
                   </h1>
-                  <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transform transition-all duration-500 group-hover:w-32"></div>
+                  <div className="h-1 w-24 bg-gradient-to-r from-theme-primary-500 to-theme-purple-500 rounded-full transform transition-all duration-500 group-hover:w-32"></div>
                 </div>
               </div>
 
@@ -72,13 +72,13 @@ export function ItemDetail({
                 <a
                   target="_blank"
                   href={meta.source_url}
-                  className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-800 dark:hover:to-blue-900 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transform hover:-translate-y-0.5 overflow-hidden"
+                  className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-theme-primary-600 to-theme-primary-700 hover:from-theme-primary-700 hover:to-theme-primary-800 dark:from-theme-primary-700 dark:to-theme-primary-800 dark:hover:from-theme-primary-800 dark:hover:to-theme-primary-900 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-theme-primary-500/25 transform hover:-translate-y-0.5 overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   <span className="mr-2 text-lg">🌐</span>
                   <span className="relative">{t("common.VISIT_WEBSITE")}</span>
                 </a>
-                <button className="group inline-flex items-center px-6 py-3 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                <button className="group inline-flex items-center px-6 py-3 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-theme-primary-300 dark:hover:border-theme-primary-600 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                   <svg
                     className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110"
                     fill="currentColor"
@@ -95,9 +95,9 @@ export function ItemDetail({
 
             <div className="bg-white/95 dark:bg-gray-900/95 rounded-2xl p-8 mb-8 border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1">
               <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-xl">
+                <div className="p-3 bg-gradient-to-br from-theme-primary-100 to-theme-purple-100 dark:from-theme-primary-900/30 dark:to-theme-purple-900/30 rounded-xl">
                   <svg
-                    className="w-6 h-6 text-blue-600 dark:text-blue-400"
+                    className="w-6 h-6 text-theme-primary-600 dark:text-theme-primary-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -192,7 +192,7 @@ export function ItemDetail({
                   </span>
                   <a
                     href={meta.source_url}
-                    className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 duration-300 font-semibold hover:underline group-hover:scale-105 transition-transform"
+                    className="text-theme-primary-600 hover:text-theme-primary-700 dark:text-theme-primary-400 dark:hover:text-theme-primary-300 duration-300 font-semibold hover:underline group-hover:scale-105 transition-transform"
                   >
                     {meta.source_url
                       ? (() => {

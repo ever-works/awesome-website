@@ -6,7 +6,12 @@ import { applyThemeWithPalettes } from "@/lib/theme-color-manager";
 // Constants
 const DEFAULT_LAYOUT: LayoutKey = "classic";
 const DEFAULT_THEME = "everworks";
-const DEFAULT_LAYOUT_HOME: LayoutHome = "Home_1";
+export enum LayoutHome {
+  HOME_ONE = 'Home_One',
+  HOME_TWO = 'Home_Two',
+  HOME_THREE = 'Home_Three',
+}
+const DEFAULT_LAYOUT_HOME: LayoutHome = LayoutHome.HOME_ONE;
 const STORAGE_KEYS = {
   LAYOUT: "layoutKey",
   THEME: "themeKey",
@@ -26,7 +31,6 @@ export interface ThemeConfig {
 
 export type ThemeKey = "everworks" | "corporate" | "material" | "funny" | "modern";
 
-export type LayoutHome = "Home_1" | "Home_2" | "Home_3";
 
 interface LayoutThemeContextType {
   layoutKey: LayoutKey;

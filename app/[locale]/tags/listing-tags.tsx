@@ -5,7 +5,7 @@ import { totalPages } from "@/lib/paginate";
 import { sortByNumericProperty } from "@/lib/utils";
 import { useMemo } from "react";
 import SortMenu, { SortOption } from "@/components/sort-menu";
-import { useLayoutTheme } from "@/components/context/LayoutThemeContext";
+import { LayoutHome, useLayoutTheme } from "@/components/context/LayoutThemeContext";
 import ViewToggle from "@/components/view-toggle";
 import { useTranslations } from "next-intl";
 import Hero from "@/components/hero";
@@ -28,7 +28,7 @@ type ListingTagsProps = {
 
 function ListingTags(props: ListingTagsProps) {
   const { searchTerm, setSearchTerm, setSortBy, sortBy } = useFilters();
-  const { layoutKey, setLayoutKey, layoutHome = "Home_1" } = useLayoutTheme();
+  const { layoutKey, setLayoutKey, layoutHome = LayoutHome.HOME_ONE } = useLayoutTheme();
   const t = useTranslations("listing");
   const { isSticky } = useStickyHeader({ enableSticky: true });
 
@@ -63,7 +63,7 @@ function ListingTags(props: ListingTagsProps) {
             className="w-full"
           />
         </div>
-        
+
         {/* Sort and View in one row */}
         <div className="flex items-center justify-between gap-2">
           <SortMenu
@@ -104,7 +104,7 @@ function ListingTags(props: ListingTagsProps) {
           </div>
         </div>
       </div>
-      
+
       {/* Tags - Always visible */}
       <div className="mt-3 sm:mt-4">
         <Tags
@@ -112,7 +112,7 @@ function ListingTags(props: ListingTagsProps) {
           basePath={`/tags/tag`}
           resetPath={`/tags`}
           enableSticky={false}
-          maxVisibleTags={5}
+          maxVisibleTags={6}
         />
       </div>
     </div>
@@ -129,24 +129,31 @@ function ListingTags(props: ListingTagsProps) {
       description="Browse all tags in our directory"
       className="min-h-screen text-center"
     >
-        {layoutHome === "Home_2" && renderFilters()}
+      {layoutHome === LayoutHome.HOME_TWO && renderFilters()}
 
-        <div className="flex flex-col md:flex-row items-start gap-8 ">
-          {layoutHome === "Home_1" && (
-            <div className="hidden md:block md:sticky md:top-4 md:self-start  z-10 w-full md:max-w-64">
-              <TagsItemsColumn tag={sortedTags} total={sortedTags.length} />
-            </div>
-          )}
-          <ListingClient {...props} config={CardPresets.showViewToggle} />
-        </div>
+      <div className="flex flex-col md:flex-row items-start gap-8 ">
+        {layoutHome === LayoutHome.HOME_ONE && (
+          <div className="hidden md:block md:sticky md:top-4 md:self-start  z-10 w-full md:max-w-64">
+            <TagsItemsColumn tag={sortedTags} total={sortedTags.length} />
+          </div>
+        )}
+        <ListingClient
+          {...props}
+          config={
+            layoutHome === LayoutHome.HOME_ONE
+              ? CardPresets.fullListing
+              : CardPresets.showViewToggle
+          }
+        />
+      </div>
 
-        <footer className="flex items-center justify-center mt-12">
-          <Paginate
-            basePath={props.basePath}
-            initialPage={props.page}
-            total={totalPages(props.items.length)}
-          />
-        </footer>
+      <footer className="flex items-center justify-center mt-12">
+        <Paginate
+          basePath={props.basePath}
+          initialPage={props.page}
+          total={totalPages(props.items.length)}
+        />
+      </footer>
     </Hero>
   );
 }

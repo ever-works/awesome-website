@@ -18,7 +18,7 @@ export function HomeTwoSortSelector({ sortBy, setSortBy, className }: ISortSelec
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           setSortBy && setSortBy(e.target.value)
         }
-        className="appearance-none bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-2 sm:px-3 py-1.5 pr-8 sm:pr-10 text-xs sm:text-sm text-theme-primary-600 dark:text-theme-primary-400 w-full min-w-[100px] sm:min-w-[120px] focus:outline-none focus:ring-2 focus:ring-theme-primary-500 focus:border-transparent transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+        className="appearance-none bg-gray-100 dark:bg-gray-800 border-2 border-theme-primary-500/50 dark:border-theme-primary-500/50 rounded-lg px-2 sm:px-3 py-1.5 pr-8 sm:pr-10 text-xs sm:text-sm text-gray-900 dark:text-white font-medium w-full min-w-[100px] sm:min-w-[120px] focus:outline-none focus:ring-2 focus:ring-theme-primary-500 focus:border-theme-primary-500 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-theme-primary-600 dark:hover:border-theme-primary-400"
         aria-label="Sort by"
       >
         <option value="popularity">{t("listing.POPULARITY")}</option>
@@ -27,7 +27,7 @@ export function HomeTwoSortSelector({ sortBy, setSortBy, className }: ISortSelec
         <option value="date-desc">{t("listing.NEWEST")}</option>
         <option value="date-asc">{t("listing.OLDEST")}</option>
       </select>
-      <ChevronDown className="pointer-events-none absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-gray-500 dark:text-gray-400" />
+      <ChevronDown className="pointer-events-none absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-theme-primary-500" />
     </div>
   );
 }

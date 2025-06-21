@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 import { fetchItems } from '@/lib/content'
 import { LOCALES } from '@/lib/constants'
-import { headers } from 'next/headers'
 
 // Types
 type RouteConfig = {
@@ -103,30 +102,9 @@ const PAGINATION_ROUTES = [
   '/tags/paging',
 ]
 
-// Error handling
-class SitemapError extends Error {
-  constructor(message: string, public readonly cause?: unknown) {
-    super(message)
-    this.name = 'SitemapError'
-  }
-}
-
 // Helper functions
-const getBaseUrl = async (): Promise<string> => {
-  try {
-    const headersList = await headers()
-    const host = headersList.get('host')
-    
-    if (!host) {
-      throw new SitemapError('Host header not found')
-    }
-
-    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https'
-    return `${protocol}://${host}`
-  } catch (error) {
-    console.warn('Failed to get base URL from headers:', error)
-    return process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_BASE_URL
-  }
+const getBaseUrl = (): string => {
+  return process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_BASE_URL
 }
 
 const createSitemapEntry = (
@@ -198,7 +176,7 @@ const generateDynamicRoutes = async (baseUrl: string): Promise<SitemapEntry[]> =
 // Main sitemap generator
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
-    const baseUrl = await getBaseUrl()
+    const baseUrl = getBaseUrl()
 
     const [
       staticRoutes,
@@ -206,9 +184,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       localeRoutes,
       dynamicRoutes,
     ] = await Promise.all([
-      generateStaticRoutes(baseUrl),
-      generatePaginationRoutes(baseUrl),
-      generateLocaleRoutes(baseUrl),
+      Promise.resolve(generateStaticRoutes(baseUrl)),
+      Promise.resolve(generatePaginationRoutes(baseUrl)),
+      Promise.resolve(generateLocaleRoutes(baseUrl)),
       generateDynamicRoutes(baseUrl),
     ])
 
@@ -221,7 +199,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch (error) {
     console.error('Error generating sitemap:', error)
     // Return basic sitemap with static routes in case of error
-    const baseUrl = await getBaseUrl()
+    const baseUrl = getBaseUrl()
     return generateStaticRoutes(baseUrl)
   }
 } 

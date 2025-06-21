@@ -10,7 +10,7 @@ import { ListingClient } from "@/components/shared-card/listing-client";
 import { useStickyHeader } from "@/hooks/use-sticky-state";
 import { CardPresets } from "@/components/shared-card";
 import ViewToggle from "@/components/view-toggle";
-import { useLayoutTheme } from "@/components/context";
+import { LayoutHome, useLayoutTheme } from "@/components/context";
 import { SearchInput } from "@/components/ui/search-input";
 import { useFilters } from "@/hooks/use-filters";
 import SortMenu, { SortOption } from "@/components/sort-menu";
@@ -186,7 +186,7 @@ function HomeTwoLayout({
 }
 
 function ListingCategories(props: ListingCategoriesProps) {
-  const { layoutHome = "Home_1" } = useLayoutTheme();
+  const { layoutHome = LayoutHome.HOME_ONE } = useLayoutTheme();
   const t = useTranslations("listing");
   const { categories, total, page, basePath, items, start, tags } = props;
   const { isSticky } = useStickyHeader({ enableSticky: true });
@@ -212,7 +212,7 @@ function ListingCategories(props: ListingCategoriesProps) {
       description="Browse all categories in our directory"
       className="min-h-screen text-center"
     >
-      {layoutHome === "Home_1" && (
+      {layoutHome === LayoutHome.HOME_ONE && (
         <HomeOneLayout
           total={total}
           sortedCategories={sortedCategories}
@@ -224,7 +224,7 @@ function ListingCategories(props: ListingCategoriesProps) {
           tags={tags}
         />
       )}
-      {layoutHome === "Home_2" && (
+      {layoutHome === LayoutHome.HOME_TWO && (
         <HomeTwoLayout
           sortedCategories={sortedCategories}
           isSticky={isSticky}
