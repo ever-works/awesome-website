@@ -253,7 +253,7 @@ export function FilterStats({
         </span>{" "}
         {tCommon("ITEMS")}
         {hasActiveFilters && (
-          <span className="text-primary-600 dark:text-primary-400">
+          <span className="text-theme-primary-500 dark:text-theme-primary-400">
             {" "}
             {t("FILTERED")}
           </span>
@@ -262,8 +262,8 @@ export function FilterStats({
 
       {(searchTerm || selectedTags.length > 0) && (
         <div className="flex items-center gap-2 text-xs">
-          <Filter className="w-3 h-3 text-blue-500 dark:text-blue-400" />
-          <span className="text-blue-500 dark:text-blue-400 font-medium">
+          <Filter className="w-3 h-3 text-theme-primary-500 dark:text-theme-primary-400" />
+          <span className="text-theme-primary-500 dark:text-theme-primary-400 font-medium">
             {searchTerm && t("SEARCH")}
             {searchTerm && selectedTags.length > 0 && " + "}
             {selectedTags.length > 0 &&
@@ -299,7 +299,7 @@ export function ActiveFiltersDisplay({
       </p>
       <div className="flex flex-wrap gap-2 justify-center">
         {searchTerm && (
-          <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs border border-blue-200 dark:border-blue-700/50">
+          <span className="px-2 py-1 bg-theme-primary-10 dark:bg-theme-primary-900/30 text-white  rounded text-xs">
             {t("SEARCH_COLON")} &quot;{searchTerm}&quot;
           </span>
         )}
@@ -308,7 +308,7 @@ export function ActiveFiltersDisplay({
           return tagName ? (
             <span
               key={tagId}
-              className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs border border-blue-200 dark:border-blue-700/50"
+              className="px-2 py-1 bg-theme-primary-100 dark:bg-theme-primary-900/30 text-white rounded text-xs"
             >
               {t("TAG_COLON")} {tagName}
             </span>
