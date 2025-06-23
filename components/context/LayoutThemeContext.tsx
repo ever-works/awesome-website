@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { LayoutKey } from "@/components/layouts";
+import { LayoutKey, layoutComponents } from "@/components/layouts";
 import { applyThemeWithPalettes } from "@/lib/theme-color-manager";
 
 // Constants
@@ -197,7 +197,11 @@ export const LayoutThemeProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as ThemeKey;
     const savedLayoutHome = localStorage.getItem(STORAGE_KEYS.LAYOUT_HOME) as LayoutHome;
 
-    if (savedLayout && savedLayout !== layoutManager.layoutKey) {
+    if (
+      savedLayout &&
+      Object.keys(layoutComponents).includes(savedLayout) &&
+      savedLayout !== layoutManager.layoutKey
+    ) {
       layoutManager.setLayoutKey(savedLayout);
     }
 

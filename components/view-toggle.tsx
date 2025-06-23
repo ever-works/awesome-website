@@ -1,12 +1,13 @@
 "use client";
 
-import { IconClassic, IconGrid, IconCard } from "@/components/icons/Icons";
+import { IconClassic, IconGrid, IconMasonry } from "@/components/icons/Icons";
 import { useState } from "react";
 import { Tooltip } from "@heroui/tooltip";
+import { LayoutKey } from "./layouts";
 
 type ViewToggleProps = {
-  activeView?: "classic" | "grid" | "cards";
-  onViewChange?: (view: "classic" | "grid" | "cards") => void;
+  activeView?: LayoutKey;
+  onViewChange?: (view: LayoutKey) => void;
 };
 
 export default function ViewToggle({
@@ -17,7 +18,7 @@ export default function ViewToggle({
     ViewToggleProps["activeView"] | null
   >(null);
 
-  const handleViewChange = (view: "classic" | "grid" | "cards") => {
+  const handleViewChange = (view: LayoutKey) => {
     if (onViewChange) {
       onViewChange(view);
     }
@@ -91,9 +92,8 @@ export default function ViewToggle({
             </div>
           </button>
         </Tooltip>
-
         <Tooltip
-          content="Card view"
+          content="Masonry view"
           showArrow
           placement="top"
           delay={300}
@@ -104,23 +104,23 @@ export default function ViewToggle({
         >
           <button
             className={`${
-              activeView === "cards"
+              activeView === "masonry"
                 ? "bg-theme-primary text-white shadow-md transform scale-105"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-700/50"
             } rounded-md p-1 transition-all duration-300 ease-out transform ${
-              isHovering === "cards" && activeView !== "cards"
+              isHovering === "masonry" && activeView !== "masonry"
                 ? "scale-110 shadow-sm"
                 : ""
             } focus:outline-none focus:ring-1 focus:ring-theme-primary dark:focus:ring-theme-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-gray-800 flex items-center justify-center`}
-            onClick={() => handleViewChange("cards")}
-            onMouseEnter={() => setIsHovering("cards")}
+            onClick={() => handleViewChange("masonry")}
+            onMouseEnter={() => setIsHovering("masonry")}
             onMouseLeave={() => setIsHovering(null)}
-            aria-label="Switch to card view"
+            aria-label="Switch to masonry view"
           >
             <div
               className={`transition-all duration-300 w-4 h-4 flex items-center justify-center ${activeView === "cards" ? "drop-shadow-sm" : ""}`}
             >
-              <IconCard />
+              <IconMasonry />
             </div>
           </button>
         </Tooltip>

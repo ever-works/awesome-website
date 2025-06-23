@@ -448,7 +448,7 @@ export function ItemsList({
         {items.map((item, index) => (
           <div
             key={item.slug}
-            className="group animate-fadeInUp"
+            className="group animate-fadeInUp h-full"
             style={{
               animationDelay: `${index * animationDelay}ms`,
               animationFillMode: "both",
@@ -458,7 +458,7 @@ export function ItemsList({
               renderCustomItem(item, index)
             ) : (
               <Link
-                className="block duration-300"
+                className="block duration-300 h-full"
                 prefetch={false}
                 href={getItemPath(item.slug)}
                 onClick={() => onItemClick?.(item)}

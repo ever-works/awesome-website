@@ -126,6 +126,21 @@ export const IconDirectory = () => {
   );
 };
 
+
+export const IconMasonry = () => {
+  return (
+    <svg
+      className="w-5 h-5 inline text-gray-600 dark:text-gray-400"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M3 3h6v6H3V3zm0 8h6v6H3v-6zm8-8h10v4H11V3zm0 6h10v4H11V9zm0 6h10v6H11v-6z"/>
+    </svg>
+  );
+};
+
+
 interface IconEverworksSimpleProps extends SVGProps<SVGSVGElement> {
     width?: string;
     height?: string;

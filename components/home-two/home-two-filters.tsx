@@ -6,13 +6,14 @@ import ViewToggle from "@/components/view-toggle";
 import { useFilters } from "@/hooks/use-filters";
 import { SearchInput } from "../ui/search-input";
 import { Categories } from "./home-two-categories";
+import { LayoutKey } from "../layouts";
 
 type Home2FiltersProps = {
   categories: Category[];
   tags: Tag[];
   items: ItemData[];
-  layoutKey: "classic" | "grid" | "cards";
-  setLayoutKey: (layoutKey: "classic" | "grid" | "cards") => void;
+  layoutKey: LayoutKey;
+  setLayoutKey: (layoutKey: LayoutKey) => void;
   className?: string;
 };
 

@@ -29,7 +29,7 @@ export default function Item(props: ItemProps) {
   return (
     <Card
       className={cn(
-        "group relative border-0 rounded-2xl transition-all duration-700 transform hover:-translate-y-3 backdrop-blur-xl overflow-hidden",
+        "group relative border-0 rounded-2xl transition-all duration-700 transform hover:-translate-y-3 backdrop-blur-xl overflow-hidden h-full",
         "bg-white/80 dark:bg-gray-900/80 shadow-lg hover:shadow-2xl",
         "ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-gray-300/70 dark:hover:ring-gray-600/70",
         "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/60 before:via-transparent before:to-gray-50/40",
@@ -76,7 +76,7 @@ export default function Item(props: ItemProps) {
                 </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-xl sm:text-base font-semibold leading-tight text-gray-900 dark:text-white mb-1 transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+                <h3 className="text-lg sm:text-base font-semibold leading-tight text-gray-900 dark:text-white mb-1 transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
                   {props.name}
                 </h3>
                 <div className="w-0 h-0.5 bg-gray-300 dark:bg-gray-600 group-hover:w-12 transition-all duration-500 ease-out" />
