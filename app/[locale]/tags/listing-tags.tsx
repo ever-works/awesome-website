@@ -113,6 +113,7 @@ function ListingTags(props: ListingTagsProps) {
           resetPath={`/tags`}
           enableSticky={false}
           maxVisibleTags={6}
+          total={props.total}
         />
       </div>
     </div>
@@ -134,7 +135,7 @@ function ListingTags(props: ListingTagsProps) {
       <div className="flex flex-col md:flex-row items-start gap-8 ">
         {layoutHome === LayoutHome.HOME_ONE && (
           <div className="hidden md:block md:sticky md:top-4 md:self-start  z-10 w-full md:max-w-64">
-            <TagsItemsColumn tag={sortedTags} total={sortedTags.length} />
+            <TagsItemsColumn tag={sortedTags} total={props.total} />
           </div>
         )}
         <ListingClient

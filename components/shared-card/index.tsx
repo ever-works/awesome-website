@@ -523,7 +523,7 @@ export function SharedCard(props: ExtendedCardProps) {
           {config.showStats && (
             <FilterStats
               filteredCount={filtered.length}
-              totalCount={props.items.length}
+              totalCount={props.total}
               searchTerm={searchTerm}
               selectedTags={selectedTags}
               hasActiveFilters={hasActiveFilters}

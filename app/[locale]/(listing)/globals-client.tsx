@@ -31,7 +31,7 @@ export default function GlobalsClient(props: ListingProps) {
             <Categories total={props.total} categories={sortedCategories} />
           </div>
           <div className="w-full">
-            <Tags tags={sortedTags} enableSticky={true} maxVisibleTags={5} />
+            <Tags tags={sortedTags} enableSticky={true} maxVisibleTags={5} total={props.total} />
             <ListingClient {...props} />
             <div className="flex items-center justify-center">
               <Paginate
