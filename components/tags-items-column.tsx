@@ -88,7 +88,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
               }
             >
               <div className="px-1.5 sm:px-2 pb-2">
-                <TagsList {...props} />
+                <TagsList {...props} total={props.total} />
               </div>
             </AccordionItem>
           </Accordion>
@@ -203,7 +203,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
           <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-sm dark:shadow-lg transition-colors duration-300">
             <div className="p-3 lg:p-4 border-b border-gray-200 dark:border-gray-700/50">
               <h2 className="text-base lg:text-lg font-semibold text-gray-900 dark:text-gray-200 transition-colors duration-300 capitalize">
-                {t("TAGS")}
+                {t("SORT_BY")}
               </h2>
             </div>
             <div className="p-3 lg:p-4">
@@ -211,7 +211,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="block w-full px-2 lg:px-3 py-1.5 lg:py-2 bg-gray-50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-600/50 rounded-lg text-sm lg:text-base text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent appearance-none cursor-pointer transition-colors duration-300"
+                  className="block w-full px-2 lg:px-3 py-1.5 lg:py-2 bg-gray-50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-600/50 rounded-lg text-sm lg:text-base text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-theme-primary-500 dark:focus:ring-theme-primary-400 focus:border-transparent appearance-none cursor-pointer transition-colors duration-300"
                 >
                   <option value="popularity">{t("POPULARITY")}</option>
                   <option value="name-asc">{t("NAME_A_Z")}</option>
@@ -230,11 +230,9 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
     );
   }
 
-  export function TagsList({ tag }: { tag: Tag[] }) {
+  export function TagsList({ tag, total }: { tag: Tag[]; total: number }) {
     const t = useTranslations("listing");
     const pathname = usePathname();
-  
-    const totalItems = tag.reduce((sum, cat) => sum + (cat.count || 0), 0);
   
     const truncateText = (text: string, maxLength: number = 20) => {
       if (text.length <= maxLength) return text;
@@ -243,7 +241,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
     return (
       <div className="space-y-1.5 max-h-lvh">
         <Tooltip
-          content={t("ALL")}
+          content={t("ALL_TAGS")}
           placement="right"
           delay={300}
           closeDelay={100}
@@ -259,7 +257,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
             >
               <div className="flex items-center justify-between w-full group">
                 <span className="font-medium truncate pr-2 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300">
-                  {t("ALL")}
+                  {t("ALL_CATEGORIES")}
                 </span>
                 <span
                   className={cn(
@@ -269,7 +267,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
                       : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                   )}
                 >
-                  {totalItems}
+                  {total}
                 </span>
               </div>
             </BlockLink>
@@ -286,11 +284,10 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
             return (
               <Tooltip
                 key={tag.id}
-                content={displayName}
+                content={tag.name}
                 placement="right"
                 delay={300}
                 closeDelay={100}
-                isDisabled={!isTextTruncated}
                 classNames={{
                   content:
                     "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-2 lg:px-2.5 py-1 lg:py-1.5 rounded-lg text-xs lg:text-sm font-medium shadow-lg max-w-[200px] lg:max-w-xs",

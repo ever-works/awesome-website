@@ -124,7 +124,7 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
           <BlockLink isActive={pathname === "/categories"} href="/categories">
             <div className="flex items-center justify-between w-full group">
               <span className="font-medium truncate pr-2 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300">
-                {t("ALL")}
+                {t("ALL_CATEGORIES")}
               </span>
               <span
                 className={cn(
@@ -152,7 +152,7 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
           return (
             <Tooltip
               key={category.id}
-              content={displayName}
+              content={category.name}
               placement="right"
               delay={300}
               closeDelay={100}
@@ -354,7 +354,7 @@ export function Categories(props: { total: number; categories: Category[] }) {
         <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-sm dark:shadow-lg transition-colors duration-300">
           <div className="p-4 border-b border-gray-200 dark:border-gray-700/50">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-200 transition-colors duration-300">
-              {t("CATEGORIES")}
+              {t("SORT_BY")}
             </h2>
           </div>
           <div className="p-4">
@@ -477,6 +477,7 @@ export function Tags(props: {
   resetPath?: string;
   enableSticky?: boolean;
   maxVisibleTags?: number;
+  total?: number;
 }) {
   const [showAllTags, setShowAllTags] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -504,7 +505,6 @@ export function Tags(props: {
 
   const MAX_VISIBLE_TAGS = props.maxVisibleTags || 8;
   const hasMoreTags = props.tags.length > MAX_VISIBLE_TAGS;
-
   const renderTag = (tag: Tag, index: number) => {
     const basePath = props.basePath
       ? `${props.basePath}/${tag.id}`
@@ -716,7 +716,7 @@ export function Tags(props: {
                       : "text-dark-500 dark:text-dark-400"
                   )}
                 >
-                  ({props.tags.length})
+                  ({props.total})
                 </span>
               </Button>
               {visibleTags.map(renderTag)}
