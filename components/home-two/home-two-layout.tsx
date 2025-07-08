@@ -22,11 +22,12 @@ type Home2LayoutProps = {
 };
 
 export function HomeTwoLayout(props: Home2LayoutProps) {
-  const { layoutKey, setLayoutKey } = useLayoutTheme();
+  const { layoutKey, setLayoutKey, paginationType } = useLayoutTheme();
   const { isSticky, sentinelRef, targetRef } = useStickyState({
     threshold: 0,
     rootMargin: "-20px 0px 0px 0px",
   });
+
 
   return (
     <div className="min-h-screen transition-colors duration-300">
@@ -54,6 +55,7 @@ export function HomeTwoLayout(props: Home2LayoutProps) {
             basePath={props.basePath}
             initialPage={props.page}
             total={totalPages(props.filteredAndSortedItems.length)}
+            paginationType={paginationType}
           />
         </div>
       </div>

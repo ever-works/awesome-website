@@ -20,10 +20,12 @@ type ListingProps = {
 };
 
 export default function GlobalsClient(props: ListingProps) {
-  const { layoutHome =LayoutHome.HOME_ONE } = useLayoutTheme();
+  const { layoutHome = LayoutHome.HOME_ONE, paginationType } = useLayoutTheme();
   const homeTwoLogic = useHomeTwoLogic(props);
   const sortedTags = sortByNumericProperty(props.tags);
   const sortedCategories = sortByNumericProperty(props.categories);
+
+
 
   if (layoutHome === LayoutHome.HOME_ONE) {
     return (
@@ -40,6 +42,7 @@ export default function GlobalsClient(props: ListingProps) {
                 basePath={props.basePath}
                 initialPage={props.page}
                 total={totalPages(props.items.length)}
+                paginationType={paginationType}
               />
             </div>
           </div>
