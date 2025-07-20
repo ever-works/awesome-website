@@ -11,7 +11,6 @@ import {
   NavbarMenuToggle,
 } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import { SessionProps } from "@/lib/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useCallback, useState } from "react";
@@ -109,19 +108,12 @@ const STYLES = {
   linkInactive: "text-gray-700 dark:text-gray-300 hover:text-theme-primary",
 };
 
-export default function Header({ session }: SessionProps) {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = useTranslations("common");
   const tListing = useTranslations("listing");
   const config = useConfig();
   const pathname = usePathname();
-
-  const authProviders = useMemo(() => {
-    const auth = config.auth;
-    return Object.keys(auth || {}).filter((key) =>
-      auth ? !!auth[key as keyof typeof auth] : false
-    );
-  }, [config.auth]);
 
   const navigationItems = useMemo((): NavigationItem[] => {
     return NAVIGATION_CONFIG.map((item) => ({
@@ -200,18 +192,16 @@ export default function Header({ session }: SessionProps) {
         <NavbarItem className="hidden sm:flex">
           <NavigationControls />
         </NavbarItem>
-        {authProviders.length > 0 && (
-          <NavbarItem>
-            <ProfileButton session={session} />
-          </NavbarItem>
-        )}
+        <NavbarItem>
+          <ProfileButton/>
+        </NavbarItem>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className={STYLES.navbarMenuToggle}
         />
       </NavbarContent>
     ),
-    [authProviders.length, session, isMenuOpen]
+    [isMenuOpen]
   );
 
   return (

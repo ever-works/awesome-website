@@ -40,6 +40,11 @@ const nextConfig: NextConfig = {
         hostname: "pbs.twimg.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
   async rewrites() {
