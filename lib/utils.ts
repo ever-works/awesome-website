@@ -203,3 +203,37 @@ export function isCategoryPagePath(pathname: string, href?: string): boolean {
   }
   return pathname.startsWith('/categories/category/');
 }
+
+// Returns the embeddable URL for YouTube or Vimeo, or the original if not recognized
+export function getVideoEmbedUrl(url: string): string {
+  if (!url) return "";
+  try {
+    const parsedUrl = new URL(url);
+    const host = parsedUrl.host.replace(/^www\./, "");
+
+    if (host === "youtube.com") {
+      // e.g. https://www.youtube.com/watch?v=VIDEO_ID
+      const videoId = parsedUrl.searchParams.get("v");
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+    }
+    if (host === "youtu.be") {
+      // e.g. https://youtu.be/VIDEO_ID
+      const videoId = parsedUrl.pathname.slice(1);
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+    }
+    if (host === "vimeo.com") {
+      // e.g. https://vimeo.com/VIDEO_ID
+      const videoId = parsedUrl.pathname.slice(1);
+      if (videoId) {
+        return `https://player.vimeo.com/video/${videoId}`;
+      }
+    }
+  } catch {
+    return url;
+  }
+  return url;
+}

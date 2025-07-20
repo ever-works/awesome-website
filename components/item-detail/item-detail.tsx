@@ -3,6 +3,7 @@ import { ItemIcon } from "./item-icon";
 import { ItemContent } from "./item-content";
 import { useTranslations } from "next-intl";
 import { slugify } from "@/lib/utils/slug";
+import { getVideoEmbedUrl } from "@/lib/utils";
 import { ShareButton } from "./share-button";
 import { CommentsSection } from "./comments-section";
 import { VoteButton } from "./vote-button";
@@ -17,6 +18,7 @@ export interface ItemDetailProps {
     updated_at?: string;
     source_url?: string;
     tags?: Array<string | { name: string; id: string }>;
+    video_url?: string;
   };
   content?: string;
   categoryName: string;
@@ -42,6 +44,7 @@ export function ItemDetail({
       <div className="relative z-10 container max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1">
+            {/* Video Showcase */}
             <div className="mb-8">
               <div className="mb-8 transform transition-all duration-500 hover:scale-[1.01]">
                 <ItemBreadcrumb
@@ -66,6 +69,22 @@ export function ItemDetail({
                   <div className="h-1 w-24 bg-gradient-to-r from-theme-primary-500 to-theme-purple-500 rounded-full transform transition-all duration-500 group-hover:w-32"></div>
                 </div>
               </div>
+
+              {/* Video Showcase - below title/meta, above description */}
+              {meta.video_url && (
+                <div className="mb-8">
+                  <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+                    <iframe
+                      src={getVideoEmbedUrl(meta.video_url)}
+                      title={`Video Demo for ${meta.name}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute top-0 left-0 w-full h-full"
+                    ></iframe>
+                  </div>
+                </div>
+              )}
 
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl font-medium">
                 {meta.description}
