@@ -23,6 +23,14 @@ const drizzle = isDatabaseAvailable ? DrizzleAdapter(db, {
 
 export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
   adapter: drizzle,
+  session: { 
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   callbacks: {
     authorized: ({ auth }) => auth?.user != null,
     signIn: async ({ user, account }) => {
@@ -66,26 +74,46 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
       }
     },
     jwt: async ({ token, user, account }) => {
-      if (user?.id) {
+      // Always fetch the user from the database to get isAdmin
+      let dbUser = null;
+      if (user?.email) {
+        dbUser = await getUserByEmail(user.email);
+      } else if (token?.email) {
+        dbUser = await getUserByEmail(token.email);
+      }
+      
+      if (user?.id && typeof user.id === "string") {
         token.userId = user.id;
       }
-      if (!token.userId && token.sub) {
+      if (!token.userId && typeof token.sub === "string") {
         token.userId = token.sub;
       }
       token.provider = account?.provider || "credentials";
+      
+      // Add isAdmin to token if available from dbUser
+      if (dbUser) {
+        const isAdmin = dbUser.isAdmin ?? dbUser.is_admin;
+        if (typeof isAdmin === "boolean") {
+          token.isAdmin = isAdmin;
+        }
+      }
+      
       return token;
     },
     session: async ({ session, token }) => {
       if (token && session.user) {
-        if (token.userId) {
+        if (typeof token.userId === "string") {
           session.user.id = token.userId;
         }
-        session.user.provider = token.provider || "credentials";
+        session.user.provider = typeof token.provider === "string" ? token.provider : "credentials";
+        if (typeof token.isAdmin === "boolean") {
+          session.user.isAdmin = token.isAdmin;
+        }
       }
+      
       return session;
     },
   },
-  session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",

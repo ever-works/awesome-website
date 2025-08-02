@@ -17,7 +17,10 @@ import { useAutoRecaptchaVerification } from '../hooks/useRecaptchaVerification'
 export function CredentialsForm({
   type,
   children,
-}: PropsWithChildren<{ type: "login" | "signup" }>) {
+  hideSwitchButton = false,
+  onSuccess,
+  clientMode = false,
+}: PropsWithChildren<{ type: "login" | "signup", hideSwitchButton?: boolean, onSuccess?: () => void, clientMode?: boolean }>) {
   const isLogin = type === "login";
   const t = useTranslations("auth");
   const searchParams = useSearchParams();
@@ -31,17 +34,26 @@ export function CredentialsForm({
   const [captchaError, setCaptchaError] = useState<string | null>(null);
   const { verifyToken, isLoading: isVerifying, error: verificationError } = useAutoRecaptchaVerification();
   const [isPending, startTransition] = useTransition();
-  
+
   const [state, formAction, pending] = useActionState<ActionState, FormData>(
     isLogin ? signInAction : signUp,
     {}
   );
+
+  // Local state used only in clientMode for login
+  const [clientPending, setClientPending] = useState(false);
+  const [clientError, setClientError] = useState<string | null>(null);
+  const [clientSuccess, setClientSuccess] = useState(false);
   useEffect(() => {
     if (state.success) {
-      router.push(redirect || "/dashboard");
-      router.refresh();
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        router.push(redirect || "/dashboard");
+        router.refresh();
+      }
     }
-  }, [state, redirect, router]);
+  }, [state, redirect, router, onSuccess]);
 
   useEffect(() => {
     if (RECAPTCHA_SITE_KEY.value || process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
@@ -54,6 +66,7 @@ export function CredentialsForm({
   }, []);
   const isRecaptchaRequired = !!(RECAPTCHA_SITE_KEY.value || process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
   const isRecaptchaBlocking = isRecaptchaRequired && !captchaToken;
+
   const handleFormAction = async (formData: FormData) => {
     if (isRecaptchaRequired) {
       if (!captchaToken) {
@@ -72,7 +85,7 @@ export function CredentialsForm({
 
         console.log('ReCAPTCHA verified successfully');
 
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('ReCAPTCHA verification error:', error);
         setCaptchaError('ReCAPTCHA verification failed. Please try again.');
         return;
@@ -83,22 +96,62 @@ export function CredentialsForm({
       formData.append('captchaToken', captchaToken);
     }
 
-    formData.append('provider', config.authConfig?.provider || 'next-auth');
+    formData.append('authProvider', config.authConfig?.provider || 'next-auth');
 
     startTransition(() => {
       formAction(formData);
     });
   };
-  
+
+  // Client-side submit when clientMode is true (admin login path)
+  const handleClientSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isLogin) return;
+
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+
+    setClientPending(true);
+    setClientError(null);
+
+    try {
+      const { signIn } = await import('next-auth/react');
+      const res = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (res && !res.error) {
+        setClientSuccess(true);
+        // Small delay to show success message before redirect
+        setTimeout(() => {
+          if (onSuccess) onSuccess();
+        }, 1000);
+      } else {
+        setClientError(res?.error || 'Authentication failed');
+      }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : typeof error === 'string' 
+          ? error 
+          : 'Authentication failed';
+      setClientError(errorMessage);
+    } finally {
+      setClientPending(false);
+    }
+  };
   return (
     <div className="max-w-md mx-auto">
       {/* Simple header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {isLogin ? t("SIGN_IN") : t("CREATE_ACCOUNT")}
-        </h1>
+            {isLogin ? t("SIGN_IN") : t("CREATE_ACCOUNT")}
+          </h1>
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          {isLogin
+            {isLogin
             ? "Welcome back! Please sign in to your account"
             : "Create your account to get started"}
         </p>
@@ -106,8 +159,10 @@ export function CredentialsForm({
 
       {auth.credentials && (
         <form
+          {...(clientMode
+            ? { onSubmit: handleClientSubmit }
+            : { action: handleFormAction as any })}
           className="space-y-5 animate-fade-in"
-          action={handleFormAction}
           aria-label={isLogin ? t("SIGN_IN") : t("CREATE_ACCOUNT")}
         >
           {/* Name field (signup only) */}
@@ -223,7 +278,7 @@ export function CredentialsForm({
       </div>
 
       {/* Modern error and success messages */}
-      {state?.error && (
+      {(state?.error || clientError) && (
         <div className="flex items-start space-x-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
           <div className="flex-shrink-0">
             <div className="w-6 h-6 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
@@ -237,13 +292,14 @@ export function CredentialsForm({
               Connection Error
             </h4>
             <p className="text-sm text-red-700 dark:text-red-300">
-              {state?.error}
+              {state?.error || clientError}
             </p>
           </div>
         </div>
       )}
 
-      {state?.success && (
+      {/* Server-side success message */}
+      {state?.success && !clientMode && (
         <div className="flex items-start space-x-3 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
           <div className="flex-shrink-0">
             <div className="w-6 h-6 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center">
@@ -258,6 +314,27 @@ export function CredentialsForm({
             </h4>
             <p className="text-sm text-green-700 dark:text-green-300">
               {isLogin ? "Redirecting..." : "You can now sign in."}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Client-side success message for admin login */}
+      {clientMode && clientSuccess && (
+        <div className="flex items-start space-x-3 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
+          <div className="flex-shrink-0">
+            <div className="w-6 h-6 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center">
+              <svg className="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h4 className="text-sm font-semibold text-green-800 dark:text-green-200 mb-1">
+              Admin Login Successful!
+            </h4>
+            <p className="text-sm text-green-700 dark:text-green-300">
+              Redirecting to admin dashboard...
             </p>
           </div>
         </div>
@@ -331,26 +408,36 @@ export function CredentialsForm({
         </div>
       )}
       <Button
-          type="submit"
-          className="w-full py-2.5 bg-theme-primary hover:bg-theme-primary/90 text-white font-medium rounded-md transition-colors disabled:opacity-50"
-        isLoading={pending || isPending || !!state.success || isVerifying}
-        isDisabled={pending || isPending || isVerifying || isRecaptchaBlocking}
-        aria-busy={pending || isPending || isVerifying}
-        aria-disabled={pending || isPending || isVerifying || isRecaptchaBlocking}
+        disabled={clientPending || clientSuccess || pending || isPending || isVerifying || isRecaptchaBlocking}
+        type="submit"
+        className={cn(
+          "w-full h-12 bg-gradient-to-r from-theme-primary to-theme-accent text-white font-semibold rounded-xl",
+          "hover:from-theme-primary/90 hover:to-theme-accent/90 focus:outline-none",
+          "focus:ring-4 focus:ring-theme-primary/20 transition-all duration-200",
+          "shadow-lg hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed",
+          "transform hover:scale-[1.02] active:scale-[0.98]"
+        )}
+        isLoading={(pending && !state.success) || clientPending || clientSuccess || isPending || isVerifying}
+        aria-busy={(pending && !state.success) || clientPending || clientSuccess || isPending || isVerifying}
+        aria-disabled={(pending && !state.success) || clientPending || clientSuccess || isPending || isVerifying || isRecaptchaBlocking}
       >
-        {pending ? (
-          <span className="flex items-center justify-center gap-3">
-            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            <span>{isLogin ? "Signing in..." : "Creating account..."}</span>
-          </span>
-        ) : state.success ? (
-          <span className="flex items-center justify-center gap-2">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            <span>{isLogin ? "Signed in!" : "Account created!"}</span>
-          </span>
-        ) : (
+        {(pending && !state.success) || clientPending ? (
+          <span>{isLogin ? "Signing in..." : "Creating account..."}</span>
+        ) : clientSuccess ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              <span>Redirecting...</span>
+            </span>
+          ) : state.success && !clientMode ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              <span>{isLogin ? "Signed in!" : "Account created!"}</span>
+            </span>
+          ) : (
           <span className="flex items-center justify-center gap-2">
             <span>{isLogin ? t("SIGN_IN") : t("CREATE_ACCOUNT")}</span>
             <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -364,7 +451,7 @@ export function CredentialsForm({
 
       {children}
 
-      {auth.credentials && (
+      {auth.credentials && !hideSwitchButton && (
         <div className="text-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
           <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
             {isLogin ? "New to our platform?" : "Already have an account?"}
