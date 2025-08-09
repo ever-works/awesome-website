@@ -40,8 +40,36 @@
     {
       "idx": 5,
       "version": "7",
-      "when": 1754518977141,
-      "tag": "0005_rare_captain_cross",
+      "when": 1754343250968,
+      "tag": "0005_freezing_mephisto",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1754351105196,
+      "tag": "0006_good_frank_castle",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1754373189533,
+      "tag": "0007_wealthy_rogue",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1754643888157,
+      "tag": "0008_past_quicksilver",
+            "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1754686947344,
+      "tag": "0009_add_pk_verificationTokens",
       "breakpoints": true
     }
   ]

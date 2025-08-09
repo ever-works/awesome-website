@@ -26,14 +26,13 @@ export function ProfileButton() {
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         z-index: 9999;
-        font-family: system-ui, -apple-system, sans-serif;
       ">
                   <div style="
             background: white;
@@ -65,29 +64,22 @@ export function ProfileButton() {
             ">Please wait while we log you out...</p>
           </div>
       </div>
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
     `;
-
-    // Add spinner animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    `;
-    document.head.appendChild(style);
     document.body.appendChild(overlay);
+
     try {
-
-      await signOut({ redirect: false });
-      overlay.remove();
-
-      const redirectUrl = isAdmin ? '/admin/auth/signin' : '/auth/signin';
-
-      window.location.replace(redirectUrl);
+      await signOut({ callbackUrl: '/' });
     } catch (error) {
-      overlay.remove();
-      console.error('Logout failed:', error);
+      console.error('Logout error:', error);
+      if (overlay && document.body.contains(overlay)) {
+        document.body.removeChild(overlay);
+      }
     }
   };
 
@@ -120,7 +112,6 @@ export function ProfileButton() {
             alt={user?.name || "User"}
             fallback={user?.name?.charAt(0) || "U"}
             size="sm"
-            className="ring-2 ring-white ring-offset-2 ring-offset-theme-primary transition-transform hover:scale-105"
           />
         </button>
       </div>
@@ -142,6 +133,15 @@ export function ProfileButton() {
               >
                 <Settings className="mr-3 h-4 w-4 text-gray-400" />
                 {t("common.ANALYTICS_DASHBOARD")}
+              </Link>
+              <Link
+                href="/admin/clients"
+                className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                role="menuitem"
+                onClick={() => setIsProfileMenuOpen(false)}
+              >
+                <Users className="mr-3 h-4 w-4 text-gray-400" />
+                Manage Clients
               </Link>
               <Link
                 href="/admin/categories"

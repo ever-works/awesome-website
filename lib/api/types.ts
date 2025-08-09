@@ -1,53 +1,62 @@
-import { AxiosError, AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 
+// API endpoint types
 export type ApiEndpoint = string;
 
-export type QueryParams = Readonly<Record<string, string | number | boolean | undefined>>;
+// Request/Response types
+export type QueryParams = Record<string, string | number | boolean | undefined>;
+export type RequestBody = Record<string, unknown>;
 
-export type RequestBody = Readonly<Record<string, unknown>>;
-
+// Pagination types
 export interface PaginationParams {
-  readonly page?: number;
-  readonly limit?: number;
-  readonly sort?: string;
-  readonly order?: 'asc' | 'desc';
+  page?: number;
+  limit?: number;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
 }
 
-export interface PaginatedMeta {
-  readonly total: number;
-  readonly page: number;
-  readonly limit: number;
-  readonly totalPages: number;
+// Response interceptor type
+export type ApiResponseInterceptor = (error: unknown) => Promise<never>;
+
+// Improved API response types using discriminated unions
+export type ApiResponse<T = unknown> = 
+  | { success: true; data: T; total?: number; page?: number; limit?: number; totalPages?: number }
+  | { success: false; error: string };
+
+export type PaginatedResponse<T> = 
+  | {
+      success: true;
+      data: T[];
+      meta: {
+        page: number;
+        totalPages: number;
+        total: number;
+        limit: number;
+      };
+    }
+  | { success: false; error: string };
+
+export interface ApiClientConfig extends Partial<AxiosRequestConfig> {
+  baseURL?: string;
+  timeout?: number;
+  headers?: Record<string, string>;
 }
 
-export interface PaginatedResponse<T> {
-  readonly data: ReadonlyArray<T>;
-  readonly meta: PaginatedMeta;
+export interface FetchOptions {
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  headers?: Record<string, string>;
+  body?: unknown;
+  params?: Record<string, string | number | boolean | undefined>;
 }
 
-export interface ApiResponse<T> {
-  readonly data: T;
-  readonly status: number;
-  readonly message: string;
+export interface ApiError {
+  message: string;
+  status?: number;
+  code?: string;
 }
 
 export interface ErrorResponse {
-  readonly message: string;
-  readonly code: string;
-  readonly details?: Readonly<Record<string, unknown>>;
-}
-
-export interface ApiClientConfig extends Partial<AxiosRequestConfig> {
-  readonly baseURL?: string;
-  readonly timeout?: number;
-  readonly headers?: Readonly<Record<string, string>>;
-}
-
-export interface ApiError extends Error {
-  readonly code?: string;
-  readonly details?: Readonly<Record<string, unknown>>;
-  readonly status?: number;
-}
-
-export type ApiErrorHandler = (error: AxiosError) => never;
-export type ApiResponseInterceptor = (error: AxiosError) => Promise<never>; 
+  success: false;
+  error: string;
+} 

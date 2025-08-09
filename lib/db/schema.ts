@@ -74,6 +74,54 @@ export const accounts = pgTable(
   ]
 );
 
+// ######################### Client Profiles Schema #########################
+export const clientProfiles = pgTable(
+  "client_profiles",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    displayName: text("display_name"),
+    username: text("username").unique(),
+    bio: text("bio"),
+    jobTitle: text("job_title"),
+    company: text("company"),
+    industry: text("industry"),
+    phone: text("phone"),
+    website: text("website"),
+    location: text("location"),
+    accountType: text("account_type", {
+      enum: ["individual", "business", "enterprise"],
+    }).default("individual"),
+    status: text("status", {
+      enum: ["active", "inactive", "suspended", "trial"],
+    }).default("active"),
+    plan: text("plan", {
+      enum: ["free", "standard", "premium"],
+    }).default("free"),
+    timezone: text("timezone").default("UTC"),
+    language: text("language").default("en"),
+    twoFactorEnabled: boolean("two_factor_enabled").default(false),
+    emailVerified: boolean("email_verified").default(false),
+    totalSubmissions: integer("total_submissions").default(0),
+    notes: text("notes"),
+    tags: text("tags"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (clientProfile) => [
+    index("client_profile_user_id_idx").on(clientProfile.userId),
+    index("client_profile_status_idx").on(clientProfile.status),
+    index("client_profile_plan_idx").on(clientProfile.plan),
+    index("client_profile_account_type_idx").on(clientProfile.accountType),
+    index("client_profile_username_idx").on(clientProfile.username),
+    index("client_profile_created_at_idx").on(clientProfile.createdAt),
+  ]
+);
+
 export const sessions = pgTable("sessions", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
@@ -82,12 +130,22 @@ export const sessions = pgTable("sessions", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
-export const verificationTokens = pgTable("verificationTokens", {
-  identifier: text("identifier").notNull(),
-  email: text("email").notNull(),
-  token: text("token").notNull(),
-  expires: timestamp("expires", { mode: "date" }).notNull(),
-});
+export const verificationTokens = pgTable(
+  "verificationTokens",
+  {
+    identifier: text("identifier").notNull(),
+    email: text("email").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (table) => [
+    {
+      compositePK: primaryKey({
+        columns: [table.identifier, table.token],
+      }),
+    },
+  ]
+);
 
 export const authenticators = pgTable(
   "authenticators",
@@ -338,3 +396,10 @@ export enum ActivityType {
   DELETE_ACCOUNT = "DELETE_ACCOUNT",
   UPDATE_ACCOUNT = "UPDATE_ACCOUNT",
 }
+
+// ######################### Client Profile Types #########################
+export type ClientProfile = typeof clientProfiles.$inferSelect;
+export type NewClientProfile = typeof clientProfiles.$inferInsert;
+export type ClientProfileWithUser = ClientProfile & {
+  user: typeof users.$inferSelect;
+};

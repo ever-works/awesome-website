@@ -40,9 +40,13 @@ export class ApiClient {
   }
 
   private handleResponseError: ApiResponseInterceptor = async (error) => {
-    if (error.response?.status === API_CONSTANTS.STATUS.UNAUTHORIZED) {
-      if (typeof window !== 'undefined' && env.AUTH_ENDPOINT_LOGIN) {
-        window.location.href = env.AUTH_ENDPOINT_LOGIN;
+    // Type guard to check if error has response property
+    if (error && typeof error === 'object' && 'response' in error) {
+      const responseError = error as { response?: { status?: number } };
+      if (responseError.response?.status === API_CONSTANTS.STATUS.UNAUTHORIZED) {
+        if (typeof window !== 'undefined' && env.AUTH_ENDPOINT_LOGIN) {
+          window.location.href = env.AUTH_ENDPOINT_LOGIN;
+        }
       }
     }
     throw this.formatError(error);
@@ -50,10 +54,10 @@ export class ApiClient {
 
   private formatError(error: unknown): ApiError {
     if (error instanceof AxiosError && error.response?.data) {
-      const errorData = error.response.data as any;
-      const message = errorData.message || errorData.error || 'An error occurred';
-      const code = errorData.code;
-      const details = errorData.details;
+      const errorData = error.response.data as Record<string, unknown>;
+      const message = (errorData.message as string) || (errorData.error as string) || 'An error occurred';
+      const code = errorData.code as string | undefined;
+      const details = errorData.details as unknown;
 
       const formattedError = new Error(message) as ApiError;
       Object.assign(formattedError, {
@@ -75,6 +79,11 @@ export class ApiClient {
       params,
       ...config
     });
+    
+    if (!response.data.success) {
+      throw new Error(response.data.error || 'Request failed');
+    }
+    
     return response.data.data;
   }
 
@@ -84,6 +93,11 @@ export class ApiClient {
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response = await this.client.post<ApiResponse<T>>(endpoint, data, config);
+    
+    if (!response.data.success) {
+      throw new Error(response.data.error || 'Request failed');
+    }
+    
     return response.data.data;
   }
 
@@ -93,6 +107,11 @@ export class ApiClient {
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response = await this.client.put<ApiResponse<T>>(endpoint, data, config);
+    
+    if (!response.data.success) {
+      throw new Error(response.data.error || 'Request failed');
+    }
+    
     return response.data.data;
   }
 
@@ -102,6 +121,11 @@ export class ApiClient {
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response = await this.client.patch<ApiResponse<T>>(endpoint, data, config);
+    
+    if (!response.data.success) {
+      throw new Error(response.data.error || 'Request failed');
+    }
+    
     return response.data.data;
   }
 
@@ -110,6 +134,11 @@ export class ApiClient {
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response = await this.client.delete<ApiResponse<T>>(endpoint, config);
+    
+    if (!response.data.success) {
+      throw new Error(response.data.error || 'Request failed');
+    }
+    
     return response.data.data;
   }
 
