@@ -792,7 +792,15 @@
     "STEP3_FEATURE_1": "Development server",
     "STEP3_FEATURE_2": "Production build",
     "STEP3_FEATURE_3": "Vercel deployment",
-    "STEP3_FEATURE_4": "Live directory platform"
+    "STEP3_FEATURE_4": "Live directory platform",
+    "PAGE_NOT_FOUND": "Page Not Found",
+    "PAGE_NOT_FOUND_DESCRIPTION": "Sorry, the page you're looking for doesn't exist or has been moved.",
+    "GO_BACK": "Go Back",
+    "BACK_TO_HOME": "Back to Home",
+    "TRY_SEARCHING": "Try searching instead",
+    "SEARCH_SUGGESTION": "Use the search bar above to find what you're looking for.",
+    "NEED_HELP": "Need help?",
+    "CONTACT_SUPPORT": "Contact Support"
   },
   "success": {
     "SUBSCRIPTION_ACTIVATED": "Subscription Activated!",
