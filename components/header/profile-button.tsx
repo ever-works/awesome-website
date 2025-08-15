@@ -1,6 +1,6 @@
 "use client";
 
-import { User, LogOut, Settings, FolderTree, Tag, Package, Shield, Users, Crown, Zap, Star, Activity } from "lucide-react";
+import { User, LogOut, Settings, FolderTree, Tag, Package, Shield, Users, Crown, Zap, Star, Activity, MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useRef, useEffect } from "react";
 import { signOut } from "next-auth/react";
@@ -15,7 +15,13 @@ export function ProfileButton() {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   
-  const profilePath = `/profile/${user?.id || user?.email?.split('@')[0] || 'profile'}`;
+  // Build stable, URL-safe profile path with proper encoding
+  const username =
+    (user as any)?.username ||
+    (user as any)?.clientProfile?.username ||
+    (user?.email ? user.email.split("@")[0] : undefined) ||
+    "profile";
+  const profilePath = `/client/profile/${encodeURIComponent(username)}`;
   const isAdmin = user?.isAdmin === true;
 
   // Close menu when clicking outside
@@ -423,6 +429,22 @@ export function ProfileButton() {
                 </Link>
 
                 <Link
+                  href="/admin/comments"
+                  className="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 transition-all duration-200"
+                  role="menuitem"
+                  onClick={() => setIsProfileMenuOpen(false)}
+                >
+                  <div className="flex items-center justify-center w-10 h-10 mr-3 rounded-xl bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 group-hover:from-blue-200 group-hover:to-cyan-200 dark:group-hover:from-blue-900/40 dark:group-hover:to-cyan-900/40 transition-all duration-200">
+                    <MessageSquare className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="font-semibold">{t("common.COMMENTS")}</span>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Manage comments</p>
+                  </div>
+                  <Zap className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </Link>
+
+                <Link
                   href="/admin/roles"
                   className="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 dark:hover:from-red-900/20 dark:hover:to-pink-900/20 transition-all duration-200"
                   role="menuitem"
@@ -473,7 +495,7 @@ export function ProfileButton() {
                 </Link>
                 
                 <Link
-                  href="/settings/profile"
+                  href="/client/settings"
                   className="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-slate-50 dark:hover:from-gray-700/50 dark:hover:to-slate-700/50 transition-all duration-200"
                   role="menuitem"
                   onClick={() => setIsProfileMenuOpen(false)}
