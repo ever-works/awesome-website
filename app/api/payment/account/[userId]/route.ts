@@ -38,8 +38,6 @@ export async function GET(
       userId: paymentAccount.userId,
       providerId: paymentAccount.providerId,
       customerId: paymentAccount.customerId,
-      accountId: paymentAccount.accountId,
-      lastUsed: paymentAccount.lastUsed,
       createdAt: paymentAccount.createdAt,
       updatedAt: paymentAccount.updatedAt
     });

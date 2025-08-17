@@ -34,6 +34,8 @@ export interface SubscriptionInfo {
     amount: number;
     currency: string;
     billingInterval: string;
+    currentPeriodEnd?: string;
+    currentPeriodStart?: string;
   };
   subscriptionHistory?: Array<{
     id: string;
@@ -47,6 +49,8 @@ export interface SubscriptionInfo {
     amount: number;
     currency: string;
     billingInterval: string;
+    currentPeriodEnd?: string;
+    currentPeriodStart?: string;
   }>;
 }
 

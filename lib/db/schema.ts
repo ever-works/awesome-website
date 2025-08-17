@@ -1,14 +1,14 @@
 import {
-	boolean,
-	timestamp,
-	pgTable,
-	text,
-	primaryKey,
-	integer,
-	serial,
-	varchar,
-	uniqueIndex,
-	index
+  boolean,
+  timestamp,
+  pgTable,
+  text,
+  primaryKey,
+  integer,
+  serial,
+  varchar,
+  uniqueIndex,
+  index
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from 'next-auth/adapters';
 import { PaymentPlan, PaymentProvider } from '../constants';
@@ -277,7 +277,7 @@ export const subscriptions = pgTable(
 		id: text('id')
 			.primaryKey()
 			.$defaultFn(() => crypto.randomUUID()),
-		userId: text('user_id')
+		userId: text('userId')
 			.notNull()
 			.references(() => users.id, { onDelete: 'cascade' }),
 		planId: text('plan_id').notNull().default(PaymentPlan.FREE),

@@ -36,8 +36,6 @@ export async function GET() {
         sub.status === 'active' || sub.status === 'trialing'
       );
 
-      console.log('activeSubscription', activeSubscription);
-
       // Transform Stripe data to our format
       const subscriptionData = {
         hasActiveSubscription: !!activeSubscription,
@@ -53,9 +51,13 @@ export async function GET() {
           subscriptionId: activeSubscription.id,
           amount: activeSubscription.items.data[0]?.price.unit_amount ? activeSubscription.items.data[0].price.unit_amount / 100 : 0,
           currency: activeSubscription.currency.toUpperCase(),
-          billingInterval: activeSubscription.items.data[0]?.price.recurring?.interval || 'monthly'
+          billingInterval: activeSubscription.items.data[0]?.price.recurring?.interval || 'monthly',
+          items: activeSubscription.items.data[0],
+          currentPeriodEnd: activeSubscription.items.data[0].current_period_end ? new Date(activeSubscription.items.data[0].current_period_end * 1000).toISOString() : '',
+          currentPeriodStart: activeSubscription.items.data[0].current_period_start ? new Date(activeSubscription.items.data[0].current_period_start * 1000).toISOString() : ''
         } : undefined,
         subscriptionHistory: subscriptions.data.map(sub => ({
+          
           id: sub.id,
           planId: sub.items.data[0]?.price.id || '',
           planName: sub.metadata.planName ||  'Premium Plan', 
