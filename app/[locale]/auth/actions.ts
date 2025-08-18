@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { ActivityType, NewUser } from "@/lib/db/schema";
+import { ActivityType } from "@/lib/db/schema";
 import { redirect } from "next/navigation";
 import {
   validatedAction,
@@ -18,12 +18,14 @@ import {
   getPasswordResetTokenByToken,
   getUserByEmail,
   getVerificationTokenByToken,
-  insertNewUser,
   logActivity,
   softDeleteUser,
   updateUser,
   updateUserPassword,
   updateUserVerification,
+  createClientProfile,
+  createClientAccount,
+  getClientAccountByEmail,
 } from "@/lib/db/queries";
 import { signIn } from "@/lib/auth";
 import {
@@ -53,7 +55,21 @@ export const signInAction = validatedAction(signInSchema, async (data) => {
     if (error) {
       throw error;
     }
-    return { success: true };
+    
+    // Check if user exists in users table (admin) or client_profiles table (client)
+    const foundUser = await getUserByEmail(data.email);
+    const clientAccount = await getClientAccountByEmail(data.email);
+    
+    if (foundUser) {
+      // User exists in users table = admin
+      return { success: true, redirect: "/admin", preserveLocale: true };
+    } else if (clientAccount) {
+      // User exists in client_profiles table = client
+      return { success: true, redirect: "/client/dashboard", preserveLocale: true };
+    }
+    
+    // Fallback to client dashboard for new users
+    return { success: true, redirect: "/client/dashboard", preserveLocale: true };
   } catch (error) {
     console.error(error);
     return {
@@ -130,46 +146,47 @@ export const signUp = validatedAction(signUpSchema, async (data) => {
       }
     }
 
-  const existingUser = await getUserByEmail(email).catch(() => null);
+    const passwordHash = await hashPassword(password);
 
-  if (existingUser) {
-    return {
-      error: "Failed to create user. Please try again.",
-      ...data,
-    };
-  }
+    // For client registrations, we only create records in client_profiles and accounts tables
+    // We don't create a user record in the users table for clients
+    
+    // 1) Create client profile record
+    const clientProfile = await createClientProfile({
+      email,
+      name,
+      displayName: name,
+      username: email.split('@')[0] || 'user',
+      bio: "Welcome! I'm a new user on this platform.",
+      jobTitle: "User",
+      company: "Unknown",
+      status: "active",
+      plan: "free",
+      accountType: "individual",
+    });
 
-  const passwordHash = await hashPassword(password);
+    // 2) Create credentials account record holding the password hash linked to client profile
+    const clientAccount = await createClientAccount(clientProfile.id, email, passwordHash);
+    if (!clientAccount) {
+      throw new Error("Failed to create client account");
+    }
 
-  const newUser: NewUser = {
-    name,
-    email,
-    passwordHash,
-  };
+    // Log activity using the client profile ID
+    		await logActivity(ActivityType.SIGN_UP, undefined, clientProfile.id);
 
-  const [createdUser] = await insertNewUser(newUser);
+    const verificationToken = await generateVerificationToken(email);
+    if (verificationToken) {
+      await sendVerificationEmail(email, verificationToken.token);
+    }
 
-  if (!createdUser) {
-    return {
-      error: "Failed to create user. Please try again.",
-      ...data,
-    };
-  }
+    await signIn(AuthProviders.CREDENTIALS, {
+      email,
+      password,
+      redirect: false,
+    });
 
-  logActivity(createdUser.id, ActivityType.SIGN_UP);
-
-  const verificationToken = await generateVerificationToken(email);
-  if (verificationToken) {
-    sendVerificationEmail(email, verificationToken.token);
-  }
-
-  await signIn(AuthProviders.CREDENTIALS, {
-    email,
-    password,
-    redirect: false,
-  });
-
-  return { success: true };
+    // Redirect clients to client dashboard
+    return { success: true, redirect: "/client/dashboard", preserveLocale: true };
   } catch (error) {
     console.error('SignUp error:', error);
     return {
@@ -219,7 +236,7 @@ export const updatePassword = validatedActionWithUser(
 
     await Promise.all([
       updateUserPassword(newPasswordHash, dbUser.id),
-      logActivity(dbUser.id, ActivityType.UPDATE_PASSWORD),
+      		logActivity(ActivityType.UPDATE_PASSWORD, dbUser.id),
     ]);
 
     return { success: "Password updated successfully." };
@@ -248,7 +265,7 @@ export const deleteAccount = validatedActionWithUser(
       return { error: "Incorrect password. Account deletion failed." };
     }
 
-    await logActivity(dbUser.id, ActivityType.DELETE_ACCOUNT);
+    		await logActivity(ActivityType.DELETE_ACCOUNT, dbUser.id);
 
     await softDeleteUser(dbUser.id);
     const authService = authServiceFactory(provider);
@@ -278,7 +295,7 @@ export const updateAccount = validatedActionWithUser(
     }
     await Promise.all([
       updateUser({ name, email }, dbUser.id),
-      logActivity(dbUser.id, ActivityType.UPDATE_ACCOUNT),
+      		logActivity(ActivityType.UPDATE_ACCOUNT, dbUser.id),
     ]);
 
     return { success: "Account updated successfully." };
@@ -338,7 +355,7 @@ export const verifyEmailAction = async (token: string) => {
     deleteVerificationToken(existingToken.token),
   ]);
 
-  logActivity(existingUser.id, ActivityType.VERIFY_EMAIL);
+  		logActivity(ActivityType.VERIFY_EMAIL, existingUser.id);
 
   return { success: true };
 };
@@ -388,7 +405,7 @@ export const newPasswordAction = validatedAction(
       deletePasswordResetToken(data.token),
     ]);
 
-    logActivity(result.userId, ActivityType.UPDATE_PASSWORD);
+    		logActivity(ActivityType.UPDATE_PASSWORD, result.userId);
 
     return { success: true };
   }

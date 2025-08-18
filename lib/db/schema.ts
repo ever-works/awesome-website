@@ -31,7 +31,6 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   deletedAt: timestamp("deleted_at"),
-  isAdmin: boolean("is_admin").notNull().default(false),
 });
 
 export const roles = pgTable("roles", {
@@ -49,29 +48,36 @@ export const roles = pgTable("roles", {
 }));
 
 export const accounts = pgTable(
-	'accounts',
-	{
-		userId: text('userId')
-			.notNull()
-			.references(() => users.id, { onDelete: 'cascade' }),
-		type: text('type').$type<AdapterAccountType>().notNull(),
-		provider: text('provider').notNull(),
-		providerAccountId: text('providerAccountId').notNull(),
-		refresh_token: text('refresh_token'),
-		access_token: text('access_token'),
-		expires_at: integer('expires_at'),
-		token_type: text('token_type'),
-		scope: text('scope'),
-		id_token: text('id_token'),
-		session_state: text('session_state')
-	},
-	(account) => [
-		{
-			compoundKey: primaryKey({
-				columns: [account.provider, account.providerAccountId]
-			})
-		}
-	]
+  "accounts",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => clientProfiles.id, { onDelete: "cascade" }), // References client_profiles.id
+    type: text("type").$type<AdapterAccountType>().notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("providerAccountId").notNull(),
+    // Client authentication fields
+    email: text("email"),
+    passwordHash: text("password_hash"),
+    // OAuth fields
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (account) => [
+    {
+      compoundKey: primaryKey({
+        columns: [account.provider, account.providerAccountId],
+      }),
+    },
+    // Index on email for client authentication lookups
+    index("accounts_email_idx").on(account.email),
+
+  ]
 );
 
 // ######################### Client Profiles Schema #########################
@@ -81,9 +87,8 @@ export const clientProfiles = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    userId: text("userId")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    email: text("email").notNull(),
+    name: text("name").notNull(),
     displayName: text("display_name"),
     username: text("username").unique(),
     bio: text("bio"),
@@ -113,7 +118,7 @@ export const clientProfiles = pgTable(
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (clientProfile) => [
-    index("client_profile_user_id_idx").on(clientProfile.userId),
+    index("client_profile_email_idx").on(clientProfile.email),
     index("client_profile_status_idx").on(clientProfile.status),
     index("client_profile_plan_idx").on(clientProfile.plan),
     index("client_profile_account_type_idx").on(clientProfile.accountType),
@@ -170,13 +175,17 @@ export const authenticators = pgTable(
 	]
 );
 
-export const activityLogs = pgTable('activityLogs', {
-	id: serial('id').primaryKey(),
-	userId: text('userId').references(() => users.id),
-	action: text('action').notNull(),
-	timestamp: timestamp('timestamp').notNull().defaultNow(),
-	ipAddress: varchar('ipAddress', { length: 45 })
-});
+export const activityLogs = pgTable("activityLogs", {
+  id: serial("id").primaryKey(),
+  userId: text("userId").references(() => users.id, { onDelete: "cascade" }), // For admin activities
+  clientId: text("clientId").references(() => clientProfiles.id, { onDelete: "cascade" }), // For client activities
+  action: text("action").notNull(),
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
+  ipAddress: varchar("ip_address", { length: 45 }),
+}, (table) => [
+  index("activity_logs_user_idx").on(table.userId),
+  index("activity_logs_client_idx").on(table.clientId),
+]);
 
 export const passwordResetTokens = pgTable('passwordResetTokens', {
 	id: text('id')

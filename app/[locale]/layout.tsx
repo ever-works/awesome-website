@@ -5,7 +5,7 @@ import "./globals.css";
 import { getCachedConfig } from "@/lib/content";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { getMessages } from "next-intl/server";
+import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "sonner";
 import { PHProvider } from "./integration/posthog/provider";
@@ -13,6 +13,7 @@ import PostHogPageView from "./integration/posthog/page-view";
 import { Locale } from "@/lib/constants";
 import { LoginModalProvider } from "@/components/auth/login-modal-provider";
 import { ConditionalLayout } from "@/components/layout/conditional-layout";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +53,9 @@ export default async function RootLayout({
     notFound();
   }
 
+  // Ensure server-side i18n helpers use the current route locale
+  unstable_setRequestLocale(locale);
+
   const config = await getCachedConfig();
   const messages = await getMessages();
 
@@ -62,7 +66,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-dark--theme-950`}
       >
         <PHProvider>
-          <PostHogPageView />
+                    <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
           <NextIntlClientProvider messages={messages}>
             <Toaster position="bottom-right" richColors />
             <Providers config={config}>

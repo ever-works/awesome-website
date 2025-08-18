@@ -7,7 +7,7 @@ import { PropsWithChildren, useActionState, useEffect, useState, useTransition }
 import { User, Lock, Mail, Eye, EyeOff } from "lucide-react";
 import { Button, cn } from "@heroui/react";
 import { useConfig } from "../../config";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import ReCAPTCHA from 'react-google-recaptcha';
 import { RECAPTCHA_SITE_KEY } from "@/lib/constants";
@@ -23,6 +23,7 @@ export function CredentialsForm({
 }: PropsWithChildren<{ type: "login" | "signup", hideSwitchButton?: boolean, onSuccess?: () => void, clientMode?: boolean }>) {
   const isLogin = type === "login";
   const t = useTranslations("auth");
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
   const router = useRouter();
@@ -49,11 +50,16 @@ export function CredentialsForm({
       if (onSuccess) {
         onSuccess();
       } else {
-        router.push(redirect || "/dashboard");
+        const redirectPath = state.redirect || redirect || "/client/dashboard";
+        // Handle locale preservation for redirects
+        const finalRedirectPath = state.preserveLocale && locale !== 'en' 
+          ? `/${locale}${redirectPath}` 
+          : redirectPath;
+        router.push(finalRedirectPath);
         router.refresh();
       }
     }
-  }, [state, redirect, router, onSuccess]);
+  }, [state, redirect, router, onSuccess, locale]);
 
   useEffect(() => {
     if (RECAPTCHA_SITE_KEY.value || process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
@@ -120,15 +126,22 @@ export function CredentialsForm({
       const res = await signIn('credentials', {
         email,
         password,
+        isAdmin: clientMode,
         redirect: false,
       });
 
       if (res && !res.error) {
         setClientSuccess(true);
-        // Small delay to show success message before redirect
         setTimeout(() => {
+          const redirectPath = clientMode ? "/admin" : "/client/dashboard";
+          // Handle locale preservation for client-side redirects
+          const finalRedirectPath = locale !== 'en' 
+            ? `/${locale}${redirectPath}` 
+            : redirectPath;
+          router.push(finalRedirectPath);
+          router.refresh();
           if (onSuccess) onSuccess();
-        }, 1000);
+        }, 400);
       } else {
         setClientError(res?.error || 'Authentication failed');
       }
@@ -165,6 +178,8 @@ export function CredentialsForm({
           className="space-y-5 animate-fade-in"
           aria-label={isLogin ? t("SIGN_IN") : t("CREATE_ACCOUNT")}
         >
+
+          
           {/* Name field (signup only) */}
       {!isLogin && (
         <div className="space-y-2">

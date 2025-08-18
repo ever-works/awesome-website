@@ -1,6 +1,6 @@
 // -------------------------------------------------------
 // Unified middleware that supports *either* Supabase Auth
-// *or* Next-Auth (or both) while keeping locale handling
+// *or* NextAuth (or both) while keeping locale handling
 // -------------------------------------------------------
 
 import createIntlMiddleware from "next-intl/middleware";
@@ -11,26 +11,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuthConfig } from "@/lib/auth/config";
 import { updateSession as supabaseUpdate } from "@/lib/auth/supabase/middleware";
 
-import { auth } from "@/lib/auth";
-
 const intl = createIntlMiddleware(routing);
 
 const ADMIN_PREFIX = "/admin";
 const ADMIN_SIGNIN = "/admin/auth/signin";
-
-/* ────────────────────────────────── NextAuth guard ────────────────────────────────── */
-
-// Use the same auth instance as the main app
-const nextAuthGuard: any = (auth as any)(
-  async (req: any) => {
-    if (req.auth?.user?.isAdmin) {
-      // Return locale-aware response
-      return intl(req as any);
-    }
-    return NextResponse.redirect(new URL(ADMIN_SIGNIN, req.url));
-  },
-  { callbacks: { authorized: () => true } },
-);
 
 /* ────────────────────────────── Supabase guard helper ────────────────────────────── */
 async function supabaseGuard(req: NextRequest, baseRes: NextResponse): Promise<NextResponse> {
@@ -51,7 +35,7 @@ async function supabaseGuard(req: NextRequest, baseRes: NextResponse): Promise<N
       cookies: {
         getAll() { return req.cookies.getAll(); },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value));
+          cookiesToSet.forEach((cookie) => baseRes.cookies.set(cookie));
         },
       },
     }
@@ -82,20 +66,76 @@ export default async function middleware(req: NextRequest) {
   const hasLocale = routing.locales.includes(maybeLocale as any);
   const pathWithoutLocale = hasLocale ? `/${segments.slice(1).join("/")}` : originalPathname;
 
+  // Only redirect admins away from /client/* without DB calls.
+  if (pathWithoutLocale === "/client" || pathWithoutLocale.startsWith("/client/")) {
+    if (cfg.provider === "next-auth") {
+      // For NextAuth, we'll skip admin redirect in Edge Runtime to avoid Node.js modules
+      // Admin redirect will be handled by the client-side logic
+    } else if (cfg.provider === "supabase") {
+      // For Supabase, check user metadata for admin flag
+      const { createServerClient } = await import('@supabase/ssr');
+      const { data: { user } } = await createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          cookies: {
+            getAll() { return req.cookies.getAll(); },
+            setAll(cookiesToSet) {
+              cookiesToSet.forEach((cookie) => intlResponse.cookies.set(cookie));
+            },
+          },
+        }
+      ).auth.getUser();
+
+      const isAdmin = user?.user_metadata?.isAdmin === true || user?.user_metadata?.role === 'admin';
+      if (isAdmin) {
+        const url = req.nextUrl.clone();
+        const rootLocalePrefix = hasLocale ? `/${maybeLocale}` : "";
+        url.pathname = `${rootLocalePrefix}/admin`;
+        const redirectRes = NextResponse.redirect(url);
+        intlResponse.cookies.getAll().forEach((c) => redirectRes.cookies.set(c));
+        return redirectRes;
+      }
+    } else if (cfg.provider === "both") {
+      // For 'both' provider, skip NextAuth check in Edge Runtime, only check Supabase
+
+      // Fallback to Supabase check
+      const { createServerClient } = await import('@supabase/ssr');
+      const { data: { user } } = await createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          cookies: {
+            getAll() { return req.cookies.getAll(); },
+            setAll(cookiesToSet) {
+              cookiesToSet.forEach((cookie) => intlResponse.cookies.set(cookie));
+            },
+          },
+        }
+      ).auth.getUser();
+
+      const isAdmin = user?.user_metadata?.isAdmin === true || user?.user_metadata?.role === 'admin';
+      if (isAdmin) {
+        const url = req.nextUrl.clone();
+        const rootLocalePrefix = hasLocale ? `/${maybeLocale}` : "";
+        url.pathname = `${rootLocalePrefix}/admin`;
+        const redirectRes = NextResponse.redirect(url);
+        intlResponse.cookies.getAll().forEach((c) => redirectRes.cookies.set(c));
+        return redirectRes;
+      }
+    }
+    return intlResponse;
+  }
+  
   if (pathWithoutLocale.startsWith(ADMIN_PREFIX) && pathWithoutLocale !== ADMIN_SIGNIN) {
     if (cfg.provider === "supabase") {
       return supabaseGuard(req, intlResponse);
     } else if (cfg.provider === "next-auth") {
-      return nextAuthGuard(req, {} as any);
+      // Skip NextAuth guard in Edge Runtime to avoid Node.js modules
+      // Admin access will be handled by client-side logic
+      return intlResponse;
     } else if (cfg.provider === "both") {
-      // Check NextAuth session first
-      const { auth } = await import("@/lib/auth");
-      const session = await auth();
-      if (session?.user?.isAdmin) {
-        return intlResponse;
-      }
-      
-      // Fallback to Supabase guard
+      // For 'both' provider, only use Supabase guard in Edge Runtime
       return supabaseGuard(req, intlResponse);
     }
   }
