@@ -25,11 +25,11 @@ export default async function SecuritySettingsPage() {
 
 					{/* Change Password Section */}
 					<div id="change-password" className="max-w-3xl mx-auto">
-						<div className="mb-6">
+						<div className="mb-6 flex flex-col items-center justify-center gap-2">
 							<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
 								{t('CHANGE_PASSWORD.TITLE')}
 							</h2>
-							<p className="text-gray-600 dark:text-gray-300">{t('CHANGE_PASSWORD.DESCRIPTION')}</p>
+							<p className="text-gray-600 dark:text-gray-300 text-center">{t('CHANGE_PASSWORD.DESCRIPTION')}</p>
 						</div>
 						<ChangePasswordForm />
 					</div>

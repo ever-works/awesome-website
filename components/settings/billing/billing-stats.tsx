@@ -13,6 +13,7 @@ interface BillingStatsProps {
   growthRate?: number;
   nextBillingDate?: string;
   daysUntilRenewal?: number;
+  currentPeriodEnd?: string;
 }
 
 export function BillingStats({
@@ -26,7 +27,7 @@ export function BillingStats({
   lastMonthSpent,
   growthRate,
   nextBillingDate,
-  daysUntilRenewal
+  daysUntilRenewal,
 }: BillingStatsProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -87,7 +88,7 @@ export function BillingStats({
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Spent */}
-        <div className="bg-gradient-to-br from-theme-primary-20 dark:from-theme-primary-20 to-theme-primary-100 dark:to-theme-primary-800/30 border border-theme-primary-200 dark:border-theme-primary-300 rounded-xl p-6 hover:shadow-lg transition-all duration-300 group">
+        <div className="bg-gradient-to-br from-theme-primary-20 dark:from-theme-primary-20 to-theme-primary-10 dark:to-theme-primary-20 border border-theme-primary-200 dark:border-theme-primary-300 rounded-xl p-6 hover:shadow-lg transition-all duration-300 group bg-theme-primary-10 dark:bg-theme-primary-10">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-theme-primary-20 dark:bg-theme-primary-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-theme-primary-200 dark:border-theme-primary-500">
               <DollarSign className="w-6 h-6 text-theme-primary-600 dark:text-theme-primary-700" />

@@ -84,7 +84,7 @@ export function SettingsContent() {
       title: "Billing",
       description: "Manage your billing information and subscription details",
       icon: <FiCreditCard className="w-5 h-5 text-theme-primary-600 dark:text-theme-primary-400" />,
-      href: `/${locale}/settings/billing`
+      href: `/${locale}/settings/profile/billing`
     }
   ];
 

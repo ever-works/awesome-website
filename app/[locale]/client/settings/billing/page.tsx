@@ -3,18 +3,21 @@ import { useState } from 'react';
 import { PaymentCard } from '@/components/settings/billing/payment-card';
 import { SubscriptionCard } from '@/components/settings/billing/subscription-card';
 import { SubscriptionHistoryCard } from '@/components/settings/billing/subscription-history-card';
+import { SubscriptionActions } from '@/components/settings/billing/subscription-actions';
 import { useBillingData } from '@/hooks/use-billing-data';
 import { Container } from '@/components/ui/container';
-import { CreditCard, Zap, ChevronRight, Plus, Download } from 'lucide-react';
+import { CreditCard, ChevronRight, Plus, Download, Zap } from 'lucide-react';
 import { BillingStats } from '@/components/settings/billing/billing-stats';
 import { TabNavigation } from '@/components/settings/billing/tab-navigation';
 import { SearchAndFilters } from '@/components/settings/billing/search-and-filters';
 import {
-  SubscriptionEmptyState,
-  PaymentsEmptyState,
-  SubscriptionsEmptyState,
-  OverviewEmptyState
+	SubscriptionEmptyState,
+	PaymentsEmptyState,
+	SubscriptionsEmptyState,
+	OverviewEmptyState
 } from '@/components/settings/billing/empty-state';
+import { FiArrowLeft } from 'react-icons/fi';
+import Link from 'next/link';
 
 export default function BillingPage() {
 	const {
@@ -32,7 +35,6 @@ export default function BillingPage() {
 	const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscriptions'>('overview');
 	const [searchTerm, setSearchTerm] = useState('');
 
-
 	if (!subscription && !loading) {
 		return (
 			<Container maxWidth="7xl" padding="default">
@@ -41,10 +43,12 @@ export default function BillingPage() {
 						<div className="w-24 h-24 bg-gradient-to-br from-theme-primary-100 to-theme-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
 							<CreditCard className="w-12 h-12 text-theme-primary-600" />
 						</div>
-						<h2 className="text-2xl font-bold text-gray-900 mb-3">Welcome to Ever Works!</h2>
-						<p className="text-gray-600 mb-8">
-							You&apos;re currently on the free plan. Upgrade to unlock premium features and start building
-							your success.
+						<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+							Welcome to Ever Works!
+						</h2>
+						<p className="text-gray-600 dark:text-gray-300 mb-8">
+							You&apos;re currently on the free plan. Upgrade to unlock premium features and start
+							building your success.
 						</p>
 						<div className="space-y-3">
 							<button className="w-full bg-gradient-to-r from-theme-primary-600 to-theme-primary-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-theme-primary-700 hover:to-theme-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
@@ -78,17 +82,16 @@ export default function BillingPage() {
 	return (
 		<Container maxWidth="7xl" padding="default">
 			{/* Header Section */}
-			<div className="mb-8 py-16">
-				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-					<div>
-						<h1 className="text-3xl font-bold text-gray-600 dark:text-gray-100 mb-2">
-							Billing & Subscription
-						</h1>
-						<p className="text-gray-600 dark:text-gray-400">
-							Manage your subscription, view payment history, and monitor your billing status
-						</p>
-					</div>
 
+			<div className="mb-8 pb-16">
+				<div className="space-y-8 flex justify-between">
+					<Link
+						href="/settings/profile"
+						className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+					>
+						<FiArrowLeft className="w-4 h-4" />
+						Back to Settings
+					</Link>
 					<div className="flex items-center gap-3">
 						<button
 							onClick={refresh}
@@ -105,6 +108,18 @@ export default function BillingPage() {
 						</button>
 					</div>
 				</div>
+				<div className="flex flex-col items-center justify-center">
+					<div className='space-y-4 text-center'>
+						<h1 className="text-3xl font-bold text-gray-600 dark:text-gray-100 mb-2">
+							Billing & Subscription
+						</h1>
+						<p className="text-gray-600 dark:text-gray-400 text-center">
+							Manage your subscription, view payment history, and monitor your billing status
+						</p>
+					</div>
+
+				
+				</div>
 			</div>
 
 			{/* Loading State */}
@@ -118,7 +133,7 @@ export default function BillingPage() {
 			)}
 
 			{!loading && (
-				<>
+				<div className="mt-10">
 					<BillingStats
 						totalSpent={totalSpent}
 						activePayments={activePayments}
@@ -127,6 +142,7 @@ export default function BillingPage() {
 						totalPayments={payments.length}
 						currency={subscription?.currentSubscription?.currency || 'USD'}
 						planName={subscription?.currentSubscription?.planName || 'Basic Plan'}
+						currentPeriodEnd={subscription?.currentSubscription?.currentPeriodEnd || ''}
 					/>
 
 					{/* Navigation Tabs */}
@@ -141,27 +157,38 @@ export default function BillingPage() {
 					{activeTab === 'overview' && (
 						<div className="space-y-8">
 							{/* Current Subscription Section */}
-							<div className="bg-white dark:bg-slate-800  border border-gray-200 dark:border-slate-700 rounded-xl p-6 shadow-sm">
-								<div className="flex items-center justify-between mb-6">
-									<h2 className="text-xl font-semibold text-gray-900 dark:text-slate-100">
+							<div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-3 shadow-sm">
+								<div className="flex items-center justify-between mb-3">
+									<h2 className="text-base font-semibold text-gray-900 dark:text-slate-100">
 										Current Subscription
 									</h2>
 									<button
 										onClick={refreshSubscription}
 										disabled={isRefreshingSubscription}
-										className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-theme-primary-600 hover:text-theme-primary-700 underline disabled:opacity-50"
+										className="inline-flex items-center gap-1 px-2 py-1 text-xs text-blue-600 hover:text-blue-700 underline disabled:opacity-50"
 									>
 										{isRefreshingSubscription ? 'Refreshing...' : 'Refresh'}
 									</button>
 								</div>
 
 								{subscription?.hasActiveSubscription && subscription.currentSubscription ? (
-									<SubscriptionCard subscription={subscription.currentSubscription} />
+									<>
+										<SubscriptionCard subscription={subscription.currentSubscription} />
+
+										{/* Subscription Actions */}
+										<div className="mt-3 pt-3 border-t border-gray-200 dark:border-slate-700">
+											<SubscriptionActions
+												subscriptionId={subscription.currentSubscription.subscriptionId}
+												status={subscription.currentSubscription.status}
+												planName={subscription.currentSubscription.planName}
+												onActionComplete={refreshSubscription}
+											/>
+										</div>
+									</>
 								) : (
 									<SubscriptionEmptyState />
 								)}
 							</div>
-
 							{/* Recent Activity */}
 							<div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-6 shadow-sm">
 								<h2 className="text-xl font-semibold text-gray-900 dark:text-slate-100 mb-6">
@@ -244,7 +271,9 @@ export default function BillingPage() {
 					{activeTab === 'subscriptions' && (
 						<div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-6 shadow-sm">
 							<div className="flex items-center justify-between mb-6">
-								<h2 className="text-xl font-semibold text-gray-900 dark:text-slate-100">Subscription History</h2>
+								<h2 className="text-xl font-semibold text-gray-900 dark:text-slate-100">
+									Subscription History
+								</h2>
 								<button
 									onClick={refreshSubscription}
 									disabled={isRefreshingSubscription}
@@ -265,7 +294,7 @@ export default function BillingPage() {
 							)}
 						</div>
 					)}
-				</>
+				</div>
 			)}
 		</Container>
 	);

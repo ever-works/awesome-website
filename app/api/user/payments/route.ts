@@ -38,7 +38,8 @@ export async function GET() {
         return subscriptionMap.set(sub.id, {
           planName: sub.metadata.planName || 'Premium Plan', // Default name since we can't expand product
           billingInterval: sub.items.data[0]?.price.recurring?.interval || 'monthly',
-          status: sub.status
+          status: sub.status,
+          items: sub.items.data[0]
         });
       });
 
@@ -46,17 +47,20 @@ export async function GET() {
       const paymentHistory = invoices.data
         .filter(invoice => invoice.status === 'paid' || invoice.status === 'open')
         .map(invoice => {
-          console.log('invoice', invoice);
           // Get subscription ID from invoice lines if available
-          const subscriptionId = invoice.lines?.data?.[0]?.subscription;
-          const subscriptionData = subscriptionId ? subscriptionMap.get(subscriptionId) : null;
-          
+          const subscriptionId = invoice.parent?.subscription_details?.subscription;
+          const subscriptionData = subscriptionId? subscriptionMap.get(subscriptionId) : null;
+          const planName = subscriptionData?.planName || 'Premium Plan';
+          const current_period_end = subscriptionData?.items?.current_period_end;
+          const current_period_start = subscriptionData?.items?.current_period_start;
+
+        
           return {
             id: invoice.id,
             date: new Date(invoice.created * 1000).toISOString(),
             amount: invoice.amount_paid / 100,
             currency: invoice.currency.toUpperCase(),
-            plan: subscriptionData?.planName,
+            plan: planName,
             planId: '',
             status: invoice.status === 'paid' ? 'Paid' : 
                     invoice.status === 'open' ? 'Pending' : 
@@ -64,13 +68,15 @@ export async function GET() {
             billingInterval: subscriptionData?.billingInterval || 'monthly',
             paymentProvider: 'stripe',
             subscriptionId: subscriptionId || '',
-            description: `${subscriptionData?.planName || 'Premium Plan'} - ${subscriptionData?.billingInterval || 'monthly'} billing`,
+            description: `${planName || 'Premium Plan'} - ${subscriptionData?.billingInterval || 'monthly'} billing`,
             invoiceUrl: invoice.hosted_invoice_url || null,
-            invoiceNumber: invoice.number || null
+            invoicePdf: invoice.invoice_pdf || null,
+            invoiceNumber: invoice.number || null,
+            period_end: current_period_end ? new Date(current_period_end * 1000).toISOString() : null,
+            period_start: current_period_start ? new Date(current_period_start * 1000).toISOString() : null,
           };
         })
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
       return NextResponse.json(paymentHistory);
     } catch (stripeError) {
       console.error('Stripe API error:', stripeError);
