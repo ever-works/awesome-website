@@ -1,5 +1,5 @@
 {
-  "id": "ff23f4f7-9528-417d-bbc2-5130d58fa547",
+  "id": "20000000-0000-0000-0000-000000000020",
   "prevId": "03764f05-9509-4dad-8cdf-5a0cc3c4c1be",
   "version": "7",
   "dialect": "postgresql",
@@ -105,10 +105,10 @@
         }
       },
       "foreignKeys": {
-        "accounts_userId_client_profiles_id_fk": {
-          "name": "accounts_userId_client_profiles_id_fk",
+        "accounts_userId_users_id_fk": {
+          "name": "accounts_userId_users_id_fk",
           "tableFrom": "accounts",
-          "tableTo": "client_profiles",
+          "tableTo": "users",
           "columnsFrom": [
             "userId"
           ],
@@ -326,6 +326,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "email": {
           "name": "email",
           "type": "text",
@@ -476,6 +482,21 @@
         }
       },
       "indexes": {
+        "client_profile_user_id_unique_idx": {
+          "name": "client_profile_user_id_unique_idx",
+          "columns": [
+            {
+              "expression": "userId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "client_profile_email_idx": {
           "name": "client_profile_email_idx",
           "columns": [
@@ -567,7 +588,21 @@
           "with": {}
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "client_profiles_userId_users_id_fk": {
+          "name": "client_profiles_userId_users_id_fk",
+          "tableFrom": "client_profiles",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "client_profiles_username_unique": {
@@ -1488,7 +1523,8 @@
           "name": "start_date",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "end_date": {
           "name": "end_date",

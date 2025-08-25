@@ -143,17 +143,31 @@
       "breakpoints": true
     },
     {
-      "idx": 1,
+      "idx": 20,
       "version": "7",
-      "when": 1755317817331,
-      "tag": "0001_dusty_demogoblin",
+      "when": 1756006339929,
+      "tag": "0020_funny_korath",
       "breakpoints": true
     },
     {
-      "idx": 2,
+      "idx": 21,
       "version": "7",
-      "when": 1755683550313,
-      "tag": "0002_giant_absorbing_man",
+      "when": 1756006400000,
+      "tag": "0021_reconcile_database_state",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1756006500000,
+      "tag": "0022_fix_schema_constraints",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1756006600000,
+      "tag": "0023_add_accounts_provider_unique_constraint",
       "breakpoints": true
     }
   ]
