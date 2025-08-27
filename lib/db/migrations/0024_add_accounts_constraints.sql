@@ -24,3 +24,4 @@ CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS "accounts_provider_providerAccoun
 -- Add performance index on provider column
 CREATE INDEX IF NOT EXISTS "accounts_provider_idx"
   ON "accounts" ("provider");
+

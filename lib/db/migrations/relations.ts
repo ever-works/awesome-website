@@ -11,6 +11,9 @@ export const authenticatorsRelations = relations(authenticators, ({one}) => ({
 export const usersRelations = relations(users, ({many}) => ({
 	authenticators: many(authenticators),
 	sessions: many(sessions),
+	comments: many(comments),
+	votes: many(votes),
+	activityLogs: many(activityLogs),
 	accounts: many(accounts),
 	subscriptions: many(subscriptions),
 	clientProfiles: many(clientProfiles),
