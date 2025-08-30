@@ -221,8 +221,7 @@ export const authenticators = pgTable(
 
 export const activityLogs = pgTable("activityLogs", {
   id: serial("id").primaryKey(),
-  userId: text("userId").references(() => users.id, { onDelete: "cascade" }), // For admin activities
-  clientId: text("clientId").references(() => clientProfiles.id, { onDelete: "cascade" }), // For client activities
+  userId: text("userId").references(() => clientProfiles.id, { onDelete: "cascade" }), // For client activities
   action: text("action").notNull(),
   timestamp: timestamp("timestamp").notNull().defaultNow(),
   ipAddress: varchar("ip_address", { length: 45 }),
@@ -230,7 +229,7 @@ export const activityLogs = pgTable("activityLogs", {
   index("activity_logs_user_idx").on(table.userId),
   index("activity_logs_client_idx").on(table.clientId),
   index("activity_logs_timestamp_idx").on(table.timestamp),
-  index("activity_logs_action_idx").on(table.action),
+  index("activity_logs_action_idx").on(table.action)
 ]);
 
 export const passwordResetTokens = pgTable('passwordResetTokens', {
