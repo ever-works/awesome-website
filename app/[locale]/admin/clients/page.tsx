@@ -2,22 +2,40 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Button, Card, CardBody, Chip, useDisclosure } from "@heroui/react";
-import { Plus, Edit, Trash2, Users, UserCheck, UserX, Search, ChevronDown, Building2, Eye } from "lucide-react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@/components/ui/modal";
+import { Select, SelectItem } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Plus, Edit, Trash2, Users, UserCheck, Search, Building2, Eye, Shield, TrendingUp, Filter } from "lucide-react";
 import { toast } from "sonner";
 import { ClientForm } from "@/components/admin/clients/client-form";
 import { UniversalPagination } from "@/components/universal-pagination";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import type { ClientListResponse, ClientResponse, CreateClientRequest, UpdateClientRequest } from "@/lib/types/client";
-import type { ClientProfileWithUser } from "@/lib/db/schema";
+import type { ClientResponse, CreateClientRequest, UpdateClientRequest } from "@/lib/types/client";
+import type { ClientProfileWithAuth } from "@/lib/db/queries";
+
+// Helper functions for provider stats
+function getTopProviderName(byProvider: Record<string, number>): string {
+  const providers = Object.entries(byProvider || {});
+  if (providers.length === 0 || providers.every(([, n]) => n === 0)) return '—';
+  const [key] = providers.reduce((a, b) => (a[1] > b[1] ? a : b));
+  return key === 'credentials' ? 'Email' : key.charAt(0).toUpperCase() + key.slice(1);
+}
+
+function getTopProviderCount(byProvider: Record<string, number>): number {
+  const providers = Object.entries(byProvider || {});
+  if (providers.length === 0 || providers.every(([, n]) => n === 0)) return 0;
+  const topProvider = providers.reduce((a, b) => (a[1] > b[1] ? a : b));
+  return topProvider[1];
+}
 
 export default function ClientsPage() {
   const router = useRouter();
   const params = useParams<{ locale: string }>();
   const searchParams = useSearchParams();
-  const [clients, setClients] = useState<ClientProfileWithUser[]>([]);
+  const [clients, setClients] = useState<ClientProfileWithAuth[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedClient, setSelectedClient] = useState<ClientProfileWithUser | null>(null);
+  const [selectedClient, setSelectedClient] = useState<ClientProfileWithAuth | null>(null);
   const [formMode, setFormMode] = useState<'create' | 'edit'>('create');
   const [navigatingClientId, setNavigatingClientId] = useState<string | null>(null);
 
@@ -27,27 +45,56 @@ export default function ClientsPage() {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [filteredTotal, setFilteredTotal] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [limit] = useState(10);
 
   // Filter state
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('active');
+  const [statusFilter, setStatusFilter] = useState<string>('');
   const [planFilter, setPlanFilter] = useState<string>('');
   const [accountTypeFilter, setAccountTypeFilter] = useState<string>('');
+  const [providerFilter, setProviderFilter] = useState<string>('');
   const [isFiltering, setIsFiltering] = useState(false);
 
+  // Date range filters
+  const [createdAfter, setCreatedAfter] = useState<string>('');
+  const [createdBefore, setCreatedBefore] = useState<string>('');
+  const [updatedAfter, setUpdatedAfter] = useState<string>('');
+  const [updatedBefore, setUpdatedBefore] = useState<string>('');
+
   // Stats state
-  const [stats, setStats] = useState({ total: 0, active: 0, inactive: 0, suspended: 0 });
+  const [stats, setStats] = useState({
+    overview: { total: 0, active: 0, inactive: 0, suspended: 0, trial: 0 },
+    byProvider: { credentials: 0, google: 0, github: 0, facebook: 0, twitter: 0, linkedin: 0, other: 0 },
+    byPlan: { free: 0, standard: 0, premium: 0 },
+    byAccountType: { individual: 0, business: 0, enterprise: 0 },
+    byStatus: { active: 0, inactive: 0, suspended: 0, trial: 0 },
+    activity: { newThisWeek: 0, newThisMonth: 0, activeThisWeek: 0, activeThisMonth: 0 },
+    growth: { weeklyGrowth: 0, monthlyGrowth: 0 }
+  });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+  const { isOpen: isFilterModalOpen, onOpen: onOpenFilterModal, onClose: onCloseFilterModal } = useDisclosure();
 
   // Debounced search term
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   // Track if this is the initial load
   const isInitialLoad = useRef(true);
+
+  // Calculate active filter count
+  const activeFilterCount = [
+    searchTerm,
+    statusFilter,
+    planFilter,
+    accountTypeFilter,
+    providerFilter,
+    createdAfter,
+    createdBefore,
+    updatedAfter,
+    updatedBefore,
+  ].filter(Boolean).length;
 
   const clearEditParam = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -72,23 +119,8 @@ export default function ClientsPage() {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Fetch stats
-  const fetchStats = useCallback(async () => {
-    try {
-      const response = await fetch('/api/admin/clients/stats');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          setStats(data.data);
-        }
-      }
-    } catch (error) {
-      console.error('Failed to fetch stats:', error);
-    }
-  }, []);
-
-  // Fetch clients
-  const fetchClients = useCallback(async (page: number = currentPage) => {
+  // Optimized function to fetch both clients and stats in a single request
+  const fetchDashboardData = useCallback(async (page: number = currentPage) => {
     try {
       setIsLoading(true);
       setIsFiltering(true);
@@ -100,32 +132,41 @@ export default function ClientsPage() {
       if (statusFilter) params.append('status', statusFilter);
       if (planFilter) params.append('plan', planFilter);
       if (accountTypeFilter) params.append('accountType', accountTypeFilter);
+      if (providerFilter) params.append('provider', providerFilter);
+      if (createdAfter) params.append('createdAfter', createdAfter);
+      if (createdBefore) params.append('createdBefore', createdBefore);
+      if (updatedAfter) params.append('updatedAfter', updatedAfter);
+      if (updatedBefore) params.append('updatedBefore', updatedBefore);
 
-      const response = await fetch(`/api/admin/clients?${params}`);
+      const response = await fetch(`/api/admin/clients/dashboard?${params}`);
 
       if (!response.ok) {
         const message = await response.text().catch(() => '');
         throw new Error(message || `Request failed (${response.status})`);
       }
 
-      const data: ClientListResponse = await response.json();
+      const data = await response.json();
 
       if (data.success) {
+        // Update clients
         setClients(data.data.clients);
-        setTotalPages(data.meta.totalPages);
-        setCurrentPage(data.meta.page);
-        setFilteredTotal(data.meta.total);
+        setTotalPages(data.data.pagination.totalPages);
+        setCurrentPage(data.data.pagination.page);
+        setTotalCount(data.data.pagination.total);
+        
+        // Update stats
+        setStats(data.data.stats);
       } else {
-        toast.error(data.error || 'Failed to fetch clients');
+        toast.error(data.error || 'Failed to fetch dashboard data');
       }
     } catch (error) {
-      console.error('Failed to fetch clients:', error);
-      toast.error('Failed to fetch clients');
+      console.error('Failed to fetch dashboard data:', error);
+      toast.error('Failed to fetch dashboard data');
     } finally {
       setIsLoading(false);
       setIsFiltering(false);
     }
-  }, [debouncedSearchTerm, statusFilter, planFilter, accountTypeFilter, currentPage, limit]);
+  }, [debouncedSearchTerm, statusFilter, planFilter, accountTypeFilter, providerFilter, currentPage, limit, createdAfter, createdBefore, updatedAfter, updatedBefore]);
 
   // Create client
   const handleCreate = async (data: CreateClientRequest) => {
@@ -147,7 +188,7 @@ export default function ClientsPage() {
       if (result.success) {
         toast.success('Client created successfully');
         closeForm();
-        fetchClients();
+        fetchDashboardData();
       } else {
         toast.error(result.error || 'Failed to create client');
       }
@@ -180,7 +221,7 @@ export default function ClientsPage() {
       if (result.success) {
         toast.success('Client updated successfully');
         closeForm();
-        fetchClients();
+        fetchDashboardData();
       } else {
         toast.error(result.error || 'Failed to update client');
       }
@@ -217,7 +258,7 @@ export default function ClientsPage() {
 
       if (result.success) {
         toast.success('Client deleted successfully');
-        fetchClients();
+        fetchDashboardData();
       } else {
         toast.error(result.error || 'Failed to delete client');
       }
@@ -243,7 +284,7 @@ export default function ClientsPage() {
     onOpen();
   };
 
-  const openEditForm = (client: ClientProfileWithUser) => {
+  const openEditForm = (client: ClientProfileWithAuth) => {
     setSelectedClient(client);
     setFormMode('edit');
     onOpen();
@@ -274,9 +315,14 @@ export default function ClientsPage() {
     setStatusFilter('');
     setPlanFilter('');
     setAccountTypeFilter('');
+    setProviderFilter('');
+    setCreatedAfter('');
+    setCreatedBefore('');
+    setUpdatedAfter('');
+    setUpdatedBefore('');
     setCurrentPage(1);
     // Optional: short-circuit debounce for immediate fetch
-    // setDebouncedSearchTerm('');
+    fetchDashboardData(1);
   };
 
   const handleSearch = (value: string) => {
@@ -284,29 +330,11 @@ export default function ClientsPage() {
     setCurrentPage(1);
   };
 
-  const handleStatusFilter = (value: string) => {
-    setStatusFilter(value);
-    setCurrentPage(1);
-    fetchClients(1);
-  };
-
-  const handlePlanFilter = (value: string) => {
-    setPlanFilter(value);
-    setCurrentPage(1);
-    fetchClients(1);
-  };
-
-  const handleAccountTypeFilter = (value: string) => {
-    setAccountTypeFilter(value);
-    setCurrentPage(1);
-    fetchClients(1);
-  };
-
   // Initial fetch on component mount
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        await Promise.all([fetchClients(), fetchStats()]);
+        await fetchDashboardData();
       } finally {
         isInitialLoad.current = false; // Mark initial load as complete
       }
@@ -336,7 +364,7 @@ export default function ClientsPage() {
             if (!resp.ok) throw new Error('Failed to load client');
             const data: ClientResponse = await resp.json();
             if (data.success && (data as any).data) {
-              setSelectedClient((data as any).data as ClientProfileWithUser);
+              setSelectedClient((data as any).data as ClientProfileWithAuth);
               setFormMode('edit');
               onOpen();
             } else {
@@ -359,15 +387,15 @@ export default function ClientsPage() {
   useEffect(() => {
     // Skip if this is the initial load
     if (!isInitialLoad.current) {
-      fetchClients(1);
+      fetchDashboardData(1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusFilter, planFilter, accountTypeFilter]);
+  }, [statusFilter, planFilter, accountTypeFilter, providerFilter, createdAfter, createdBefore, updatedAfter, updatedBefore]);
 
   // Fetch when debounced search term changes, including when cleared
   useEffect(() => {
     if (!isInitialLoad.current) {
-      fetchClients(1);
+      fetchDashboardData(1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm]);
@@ -470,13 +498,17 @@ export default function ClientsPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Total Clients */}
         <Card className="border-0 shadow-lg">
           <CardBody className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Clients</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.overview.total}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  +{stats.activity.newThisWeek} this week
+                </p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Users aria-hidden="true" className="w-6 h-6 text-white" />
@@ -485,12 +517,16 @@ export default function ClientsPage() {
           </CardBody>
         </Card>
 
+        {/* Active Clients */}
         <Card className="border-0 shadow-lg">
           <CardBody className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Clients</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.active}</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.overview.active}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {stats.overview.total > 0 ? Math.round((stats.overview.active / stats.overview.total) * 100) : 0}% of total
+                </p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
                 <UserCheck aria-hidden="true" className="w-6 h-6 text-white" />
@@ -499,29 +535,41 @@ export default function ClientsPage() {
           </CardBody>
         </Card>
 
+        {/* Top Provider */}
         <Card className="border-0 shadow-lg">
           <CardBody className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Inactive Clients</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.inactive}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Top Provider</p>
+                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                  {getTopProviderName(stats.byProvider)}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {getTopProviderCount(stats.byProvider)} users
+                </p>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center shadow-lg">
-                <UserX aria-hidden="true" className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Shield aria-hidden="true" className="w-6 h-6 text-white" />
               </div>
             </div>
           </CardBody>
         </Card>
 
+        {/* Growth Rate */}
         <Card className="border-0 shadow-lg">
           <CardBody className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Suspended</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.suspended}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Monthly Growth</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  +{stats.growth.monthlyGrowth}%
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {stats.activity.newThisMonth} new clients
+                </p>
               </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
-                <UserX aria-hidden="true" className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                <TrendingUp aria-hidden="true" className="w-6 h-6 text-white" />
               </div>
             </div>
           </CardBody>
@@ -548,93 +596,82 @@ export default function ClientsPage() {
           )}
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Status Filter */}
-          <div className="relative">
-            <select
-              aria-label="Filter by status"
-              value={statusFilter}
-              onChange={(e) => handleStatusFilter(e.target.value)}
-              className="appearance-none bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-2 pr-8 text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-theme-primary/20 focus:border-theme-primary transition-all duration-200 cursor-pointer"
-            >
-              <option value="active">Active</option>
-              <option value="">All Status</option>
-              <option value="inactive">Inactive</option>
-              <option value="suspended">Suspended</option>
-              <option value="trial">Trial</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" />
-          </div>
-
-          {/* Plan Filter */}
-          <div className="relative">
-            <select
-              aria-label="Filter by plan"
-              value={planFilter}
-              onChange={(e) => handlePlanFilter(e.target.value)}
-              className="appearance-none bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-2 pr-8 text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-theme-primary/20 focus:border-theme-primary transition-all duration-200 cursor-pointer"
-            >
-              <option value="">All Plans</option>
-              <option value="free">Free</option>
-              <option value="standard">Standard</option>
-              <option value="premium">Premium</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" />
-          </div>
-
-          {/* Account Type Filter */}
-          <div className="relative">
-            <select
-              value={accountTypeFilter}
-              onChange={(e) => handleAccountTypeFilter(e.target.value)}
-              className="appearance-none bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-2 pr-8 text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-theme-primary/20 focus:border-theme-primary transition-all duration-200 cursor-pointer"
-            >
-              <option value="">All Types</option>
-              <option value="individual">Individual</option>
-              <option value="business">Business</option>
-              <option value="enterprise">Enterprise</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" />
-          </div>
-        </div>
-
-        {/* Active Filters Indicator */}
-        {(searchTerm || statusFilter !== 'active' || planFilter || accountTypeFilter) && (
-          <div className="flex items-center justify-between mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-            <span className="text-sm text-blue-700 dark:text-blue-300">
-              {(() => {
-                const count = [
-                  searchTerm && 'search',
-                  statusFilter !== 'active' && 'status',
-                  planFilter && 'plan',
-                  accountTypeFilter && 'type',
-                ].filter(Boolean).length;
-                return `${count} filter${count !== 1 ? 's' : ''} applied`;
-              })()}
-            </span>
+        {/* Filter Button and Active Filters */}
+        <div className="flex items-center justify-between mb-4">
+          <Button
+            size="sm"
+            variant="flat"
+            color="secondary"
+            startContent={<Filter className="w-4 h-4" />}
+            onPress={onOpenFilterModal}
+          >
+            Filters
+            {activeFilterCount > 0 && (
+              <Chip size="sm" variant="flat" color="primary" className="ml-2">
+                {activeFilterCount}
+              </Chip>
+            )}
+          </Button>
+          
+          {activeFilterCount > 0 && (
             <Button
-              variant="light"
               size="sm"
+              variant="light"
               color="danger"
               onPress={clearFilters}
-              className="h-6 px-2 text-xs"
             >
               Clear all
             </Button>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Results Summary */}
-        {!isLoading && (
-          <div className="mt-4 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
-            <span>
-              Showing {clients.length} of {filteredTotal} {(searchTerm || statusFilter !== 'active' || planFilter || accountTypeFilter) ? 'filtered ' : ''}clients
-            </span>
-            {totalPages > 1 && (
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
+        {/* Active Filters Display */}
+        {activeFilterCount > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {searchTerm && (
+              <Chip variant="flat" color="primary" onClose={() => setSearchTerm('')}>
+                Search: &ldquo;{searchTerm}&rdquo;
+              </Chip>
+            )}
+            {statusFilter && (
+              <Chip variant="flat" color="secondary" onClose={() => setStatusFilter('')}>
+                Status: {statusFilter}
+              </Chip>
+            )}
+            {planFilter && (
+              <Chip variant="flat" color="success" onClose={() => setPlanFilter('')}>
+                Plan: {planFilter}
+              </Chip>
+            )}
+            {accountTypeFilter && (
+              <Chip variant="flat" color="warning" onClose={() => setAccountTypeFilter('')}>
+                Type: {accountTypeFilter}
+              </Chip>
+            )}
+            {providerFilter && (
+              <Chip variant="flat" color="default" onClose={() => setProviderFilter('')}>
+                Provider: {providerFilter}
+              </Chip>
+            )}
+            {createdAfter && (
+              <Chip variant="flat" color="secondary" onClose={() => setCreatedAfter('')}>
+                Created after: {createdAfter}
+              </Chip>
+            )}
+            {createdBefore && (
+              <Chip variant="flat" color="secondary" onClose={() => setCreatedBefore('')}>
+                Created before: {createdBefore}
+              </Chip>
+            )}
+            {updatedAfter && (
+              <Chip variant="flat" color="secondary" onClose={() => setUpdatedAfter('')}>
+                Updated after: {updatedAfter}
+              </Chip>
+            )}
+            {updatedBefore && (
+              <Chip variant="flat" color="secondary" onClose={() => setUpdatedBefore('')}>
+                Updated before: {updatedBefore}
+              </Chip>
             )}
           </div>
         )}
@@ -647,7 +684,7 @@ export default function ClientsPage() {
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Clients</h3>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                {stats.total} clients total
+                {totalCount} clients total
               </span>
             </div>
           </div>
@@ -657,12 +694,12 @@ export default function ClientsPage() {
               <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No clients found</h3>
               <p className="text-gray-500 dark:text-gray-400 mb-4">
-                {searchTerm || statusFilter !== 'active' || planFilter || accountTypeFilter
+                {searchTerm || statusFilter || planFilter || accountTypeFilter || providerFilter || createdAfter || createdBefore || updatedAfter || updatedBefore
                   ? 'Try adjusting your filters or search terms.'
                   : 'Get started by adding your first client.'
                 }
               </p>
-              {!searchTerm && statusFilter === 'active' && !planFilter && !accountTypeFilter && (
+              {!searchTerm && !statusFilter && !planFilter && !accountTypeFilter && !providerFilter && (
                 <Button color="primary" onPress={openCreateForm}>
                   Add First Client
                 </Button>
@@ -847,6 +884,113 @@ export default function ClientsPage() {
           </div>
         </div>
       )}
+
+      {/* Filter Modal */}
+      <Modal isOpen={isFilterModalOpen} onClose={onCloseFilterModal} size="2xl">
+        <ModalContent>
+          <ModalHeader>Filter Clients</ModalHeader>
+          <ModalBody>
+            <div className="space-y-6">
+              {/* Basic Filters */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Basic Filters</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Select
+                    label="Status"
+                    placeholder="All Statuses"
+                    selectedKeys={statusFilter ? [statusFilter] : []}
+                    onSelectionChange={(keys) => setStatusFilter(Array.from(keys)[0] as string || '')}
+                  >
+                    <SelectItem value="">All Statuses</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                    <SelectItem value="suspended">Suspended</SelectItem>
+                    <SelectItem value="trial">Trial</SelectItem>
+                  </Select>
+
+                  <Select
+                    label="Plan"
+                    placeholder="All Plans"
+                    selectedKeys={planFilter ? [planFilter] : []}
+                    onSelectionChange={(keys) => setPlanFilter(Array.from(keys)[0] as string || '')}
+                  >
+                    <SelectItem value="free">Free</SelectItem>
+                    <SelectItem value="standard">Standard</SelectItem>
+                    <SelectItem value="premium">Premium</SelectItem>
+                  </Select>
+
+                  <Select
+                    label="Account Type"
+                    placeholder="All Types"
+                    selectedKeys={accountTypeFilter ? [accountTypeFilter] : []}
+                    onSelectionChange={(keys) => setAccountTypeFilter(Array.from(keys)[0] as string || '')}
+                  >
+                    <SelectItem value="individual">Individual</SelectItem>
+                    <SelectItem value="business">Business</SelectItem>
+                    <SelectItem value="enterprise">Enterprise</SelectItem>
+                  </Select>
+
+                  <Select
+                    label="Provider"
+                    placeholder="All Providers"
+                    selectedKeys={providerFilter ? [providerFilter] : []}
+                    onSelectionChange={(keys) => setProviderFilter(Array.from(keys)[0] as string || '')}
+                  >
+                    <SelectItem value="credentials">Email/Password</SelectItem>
+                    <SelectItem value="google">Google</SelectItem>
+                    <SelectItem value="github">GitHub</SelectItem>
+                    <SelectItem value="facebook">Facebook</SelectItem>
+                    <SelectItem value="twitter">Twitter</SelectItem>
+                    <SelectItem value="linkedin">LinkedIn</SelectItem>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Date Filters */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Date Filters</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input
+                    label="Created After"
+                    type="date"
+                    value={createdAfter}
+                    onChange={(e) => setCreatedAfter(e.target.value)}
+                  />
+                  <Input
+                    label="Created Before"
+                    type="date"
+                    value={createdBefore}
+                    onChange={(e) => setCreatedBefore(e.target.value)}
+                  />
+                  <Input
+                    label="Updated After"
+                    type="date"
+                    value={updatedAfter}
+                    onChange={(e) => setUpdatedAfter(e.target.value)}
+                  />
+                  <Input
+                    label="Updated Before"
+                    type="date"
+                    value={updatedBefore}
+                    onChange={(e) => setUpdatedBefore(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="flat" onPress={clearFilters}>
+              Clear All
+            </Button>
+            <Button variant="flat" onPress={onCloseFilterModal}>
+              Cancel
+            </Button>
+            <Button color="primary" onPress={onCloseFilterModal}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 } 

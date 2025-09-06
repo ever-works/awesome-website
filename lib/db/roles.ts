@@ -1,6 +1,6 @@
 import { db } from './drizzle';
 import { roles, userRoles, permissions, rolePermissions } from './schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, sql } from 'drizzle-orm';
 
 /**
  * Get all roles assigned to a user
@@ -145,12 +145,36 @@ export async function getUserPermissions(userId: string) {
  * Check if a user is an admin (has admin role)
  */
 export async function isAdmin(userId: string): Promise<boolean> {
-  return hasRole(userId, 'admin');
+  const result = await db
+    .select({ roleId: roles.id })
+    .from(userRoles)
+    .innerJoin(roles, eq(userRoles.roleId, roles.id))
+    .where(
+      and(
+        eq(userRoles.userId, userId),
+        eq(roles.isAdmin, true),
+        eq(roles.status, 'active')
+      )
+    )
+    .limit(1);
+  return result.length > 0;
 }
 
 /**
  * Check if a user is a client (has client role)
  */
 export async function isClient(userId: string): Promise<boolean> {
-  return hasRole(userId, 'client');
+  const result = await db
+    .select({ roleId: roles.id })
+    .from(userRoles)
+    .innerJoin(roles, eq(userRoles.roleId, roles.id))
+    .where(
+      and(
+        eq(userRoles.userId, userId),
+        sql`(${roles.isAdmin} = false OR ${roles.isAdmin} IS NULL)`,
+        eq(roles.status, 'active')
+      )
+    )
+    .limit(1);
+  return result.length > 0;
 }

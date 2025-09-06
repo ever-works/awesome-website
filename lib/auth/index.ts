@@ -5,8 +5,8 @@
 
 import NextAuth from 'next-auth';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { accounts, sessions, users, verificationTokens } from '../db/schema';
 import { db } from '../db/drizzle';
+import { users, accounts, sessions, verificationTokens } from '../db/schema';
 import authConfig from '../../auth.config';
 export * from '../payment/config/payment-provider-manager';
 
