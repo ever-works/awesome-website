@@ -69,13 +69,13 @@ const ProfileAvatar = memo(({
     {/* Online status indicator */}
     <div
       className={cn(
-        MENU_STYLES.AVATAR.onlineIndicator,
-        onlineStatus === "online"   ? "bg-green-500"  :
-        onlineStatus === "away"     ? "bg-yellow-500" :
-        onlineStatus === "busy"     ? "bg-red-500"    :
-        onlineStatus === "offline"  ? "bg-gray-400"   : "bg-green-500"
+        "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white dark:border-gray-900",
+        onlineStatus === "online"   ? "bg-green-500 shadow-green-500/50 shadow-sm"  :
+        onlineStatus === "away"     ? "bg-yellow-500 shadow-yellow-500/50 shadow-sm" :
+        onlineStatus === "busy"     ? "bg-red-500 shadow-red-500/50 shadow-sm"    :
+        onlineStatus === "offline"  ? "bg-gray-400"   : "bg-green-500 shadow-green-500/50 shadow-sm"
       )}
-      title={onlineStatus}
+      title={`Status: ${onlineStatus}`}
     />
     {isAdmin && (
       <div
