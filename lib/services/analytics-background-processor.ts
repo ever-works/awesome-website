@@ -1,4 +1,6 @@
 import { AdminAnalyticsOptimizedRepository } from '@/lib/repositories/admin-analytics-optimized.repository';
+import { getJobManager } from '@/lib/background-jobs';
+import { AnalyticsTaskIds } from '@/lib/background-jobs/triggers/analytics';
 
 // Constants for job scheduling
 const JOB_INTERVALS = {
@@ -46,15 +48,15 @@ export class AnalyticsBackgroundProcessor {
   }
 
   private initializeJobs(): void {
-    // Schedule all background jobs
-    this.scheduleJob('user-growth', 'User Growth Aggregation', this.processUserGrowth.bind(this), JOB_INTERVALS.USER_GROWTH);
-    this.scheduleJob('activity-trends', 'Activity Trends Aggregation', this.processActivityTrends.bind(this), JOB_INTERVALS.ACTIVITY_TRENDS);
-    this.scheduleJob('top-items', 'Top Items Ranking', this.processTopItems.bind(this), JOB_INTERVALS.TOP_ITEMS);
-    this.scheduleJob('recent-activity', 'Recent Activity Update', this.processRecentActivity.bind(this), JOB_INTERVALS.RECENT_ACTIVITY);
-    this.scheduleJob('performance-metrics', 'Performance Metrics Update', this.processPerformanceMetrics.bind(this), JOB_INTERVALS.PERFORMANCE_METRICS);
-    this.scheduleJob('cache-cleanup', 'Cache Cleanup', this.processCacheCleanup.bind(this), JOB_INTERVALS.CACHE_CLEANUP);
+    // Schedule all background jobs via BackgroundJobManager
+    this.scheduleJob(AnalyticsTaskIds.userGrowth, 'User Growth Aggregation', this.processUserGrowth.bind(this), JOB_INTERVALS.USER_GROWTH);
+    this.scheduleJob(AnalyticsTaskIds.activityTrends, 'Activity Trends Aggregation', this.processActivityTrends.bind(this), JOB_INTERVALS.ACTIVITY_TRENDS);
+    this.scheduleJob(AnalyticsTaskIds.topItems, 'Top Items Ranking', this.processTopItems.bind(this), JOB_INTERVALS.TOP_ITEMS);
+    this.scheduleJob(AnalyticsTaskIds.recentActivity, 'Recent Activity Update', this.processRecentActivity.bind(this), JOB_INTERVALS.RECENT_ACTIVITY);
+    this.scheduleJob(AnalyticsTaskIds.performanceMetrics, 'Performance Metrics Update', this.processPerformanceMetrics.bind(this), JOB_INTERVALS.PERFORMANCE_METRICS);
+    this.scheduleJob(AnalyticsTaskIds.cacheCleanup, 'Cache Cleanup', this.processCacheCleanup.bind(this), JOB_INTERVALS.CACHE_CLEANUP);
 
-    console.log('Analytics background processor initialized with', this.jobs.size, 'jobs');
+    console.log('Analytics background processor initialized with 6 jobs');
   }
 
   private scheduleJob(id: string, name: string, job: () => Promise<void>, interval: number): void {
@@ -69,18 +71,9 @@ export class AnalyticsBackgroundProcessor {
 
     this.jobStatuses.set(id, jobStatus);
 
-    const timeout = setInterval(async () => {
-      // Check if job is already running to prevent overlapping executions
-      const currentStatus = this.jobStatuses.get(id);
-      if (currentStatus && currentStatus.status === 'running') {
-        console.log(`Job ${id} is already running, skipping execution`);
-        return;
-      }
-      
-      await this.executeJob(id, job);
-    }, interval);
-
-    this.jobs.set(id, timeout);
+    // Delegate scheduling to the BackgroundJobManager
+    const manager = getJobManager();
+    manager.scheduleJob(id, name, () => this.executeJob(id, job), interval);
   }
 
   private async executeJob(id: string, job: () => Promise<void>): Promise<void> {
@@ -245,13 +238,16 @@ export class AnalyticsBackgroundProcessor {
   }
 
   public stop(): void {
-    // Clear all scheduled jobs
-    for (const [id, timeout] of this.jobs) {
-      clearInterval(timeout);
-      console.log(`Stopped job: ${id}`);
-    }
-    
-    this.jobs.clear();
+    // Stop only analytics jobs via BackgroundJobManager
+    const manager = getJobManager();
+    [
+      AnalyticsTaskIds.userGrowth,
+      AnalyticsTaskIds.activityTrends,
+      AnalyticsTaskIds.topItems,
+      AnalyticsTaskIds.recentActivity,
+      AnalyticsTaskIds.performanceMetrics,
+      AnalyticsTaskIds.cacheCleanup
+    ].forEach((id) => manager.stopJob(id));
     console.log('Analytics background processor stopped');
   }
 

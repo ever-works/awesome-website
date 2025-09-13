@@ -6,7 +6,6 @@ export type SyncResult = { success: boolean; message: string; details?: string }
 // Background sync status tracking
 let lastSyncTime: Date | null = null;
 let syncInProgress = false;
-let syncPromise: Promise<SyncResult> | null = null;
 
 // Background sync function
 async function performBackgroundSync(): Promise<SyncResult> {
@@ -53,12 +52,12 @@ export async function startBackgroundSync(): Promise<SyncResult | null> {
   console.log("[SYNC_SERVICE] Starting automatic background sync");
   
   syncInProgress = true;
-  syncPromise = performBackgroundSync().finally(() => {
+  try {
+    await performBackgroundSync();
+  } finally {
     syncInProgress = false;
-    syncPromise = null;
-  });
-
-  return await syncPromise;
+  }
+  return null;
 }
 
 // Export sync status for other modules
