@@ -7,10 +7,13 @@ import { Tag, Category, ItemData } from "@/lib/content";
 import { sortByNumericProperty, filterItems } from "@/lib/utils";
 import { HomeTwoLayout } from "@/components/home-two";
 import { ListingClient } from "@/components/shared-card/listing-client";
+import { FeaturedItemsSection } from "@/components/featured-items";
 import { useFilters } from "@/hooks/use-filters";
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { PER_PAGE, totalPages } from "@/lib/paginate";
+import { sortItemsWithFeatured } from "@/lib/utils/featured-items";
+import { useFeaturedItemsSection } from "@/hooks/use-feature-items-section";
 
 type ListingProps = {
   total: number;
@@ -29,6 +32,14 @@ export default function GlobalsClient(props: ListingProps) {
   const sortedCategories = sortByNumericProperty(props.categories);
   const searchParams = useSearchParams();
   const [initialized, setInitialized] = useState(false);
+  
+  // Use the new hook for featured items
+  const { featuredItems } = useFeaturedItemsSection({
+    limit: 6,
+    enabled: true,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchInterval: 10 * 60 * 1000, // 10 minutes
+  });
 
   // Get page from query param, default to 1
   const pageParam = searchParams.get("page");
@@ -36,14 +47,18 @@ export default function GlobalsClient(props: ListingProps) {
   const perPage = useLayoutTheme().itemsPerPage ?? 12;
   const start = (page - 1) * perPage;
 
+
   // Filtering logic using shared utility
   const filteredItems = useMemo(() => {
-    return filterItems(props.items, {
+    const filtered = filterItems(props.items, {
       searchTerm,
       selectedTags,
       selectedCategories,
     });
-  }, [props.items, searchTerm, selectedTags, selectedCategories]);
+    
+    // Sort items with featured items first
+    return sortItemsWithFeatured(filtered, featuredItems);
+  }, [props.items, searchTerm, selectedTags, selectedCategories, featuredItems]);
 
   // Paginate filtered items
   const paginatedItems = useMemo(() => {
@@ -83,8 +98,9 @@ export default function GlobalsClient(props: ListingProps) {
     }
     // Default is popularity (no sorting needed)
 
-    return filtered;
-  }, [props.items, selectedCategories, searchTerm, selectedTags, sortBy]);
+    // Sort items with featured items first
+    return sortItemsWithFeatured(filtered, featuredItems);
+  }, [props.items, selectedCategories, searchTerm, selectedTags, sortBy, featuredItems]);
 
   // Calculate paginated items for Home 1
   const homeOnePaginatedItems = useMemo(() => {
@@ -123,6 +139,17 @@ export default function GlobalsClient(props: ListingProps) {
   if (layoutHome === LayoutHome.HOME_ONE) {
     return (
       <div className="pb-12">
+        {/* Featured Items Section - Only show on first page */}
+        {page === 1 && featuredItems.length > 0 && (
+          <FeaturedItemsSection 
+            className="mb-12"
+            title="Featured Items"
+            description="Discover our handpicked selection of top-rated tools and resources"
+            limit={6}
+            variant="hero"
+          />
+        )}
+        
         <div className="flex flex-col md:flex-row w-full gap-5">
           <div className="lg:sticky lg:top-4 lg:self-start">
             <Categories total={props.total} categories={sortedCategories} tags={sortedTags} />
