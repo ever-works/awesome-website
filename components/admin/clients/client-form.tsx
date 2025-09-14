@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Save, X } from "lucide-react";
-import type { 
-  CreateClientRequest, 
+import type {
+  CreateClientRequest,
   UpdateClientRequest
 } from "@/lib/types/client";
 import type { ClientProfileWithAuth } from "@/lib/db/queries";
@@ -19,29 +19,39 @@ interface ClientFormProps {
 }
 
 export function ClientForm({ client, onSubmit, onCancel, isLoading = false, mode }: ClientFormProps) {
+  
   // Extract long className strings into constants for better maintainability
   const containerClasses = "w-full";
   const headerClasses = "px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900";
   const formClasses = "p-6 space-y-6";
   const actionsClasses = "flex justify-end space-x-3 pt-6 border-t border-gray-200 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 -mx-6 -mb-6 px-6 pb-6";
 
-  const [formData, setFormData] = useState({
-    email: '',
-    displayName: client?.displayName || '',
-    username: client?.username || '',
-    bio: client?.bio || '',
-    jobTitle: client?.jobTitle || '',
-    company: client?.company || '',
-    industry: client?.industry || '',
-    phone: client?.phone || '',
-    website: client?.website || '',
-    location: client?.location || '',
-    accountType: client?.accountType || 'individual',
-    timezone: client?.timezone || 'UTC',
-    language: client?.language || 'en',
+  // Helper function to construct form defaults based on client data and mode
+  const defaultsFor = (m: 'create' | 'edit', c?: ClientProfileWithAuth) => ({
+    email: m === 'edit' ? (c?.email ?? '') : '',
+    displayName: c?.displayName ?? '',
+    username: c?.username ?? '',
+    bio: c?.bio ?? '',
+    jobTitle: c?.jobTitle ?? '',
+    company: c?.company ?? '',
+    industry: c?.industry ?? '',
+    phone: c?.phone ?? '',
+    website: c?.website ?? '',
+    location: c?.location ?? '',
+    accountType: (c?.accountType ?? 'individual') as 'individual' | 'business' | 'enterprise',
+    timezone: c?.timezone ?? 'UTC',
+    language: c?.language ?? 'en',
   });
 
+  const [formData, setFormData] = useState(() => defaultsFor(mode, client));
+
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Update form data when client prop changes
+  useEffect(() => {
+    setFormData(defaultsFor(mode, client));
+    setErrors({});
+  }, [client, mode]);
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -158,9 +168,9 @@ export function ClientForm({ client, onSubmit, onCancel, isLoading = false, mode
     }
   };
 
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
+  const handleInputChange = (field: keyof typeof formData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value as any }));
+
     // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
