@@ -103,14 +103,14 @@ export class RoleDbService {
   }> {
     try {
       const { page = 1, limit = 10, status, sortBy = 'name', sortOrder = 'asc' } = options;
-      
+
       let query = db.select().from(roles);
-      
+
       // Apply filters
       if (status) {
         query = query.where(eq(roles.status, status));
       }
-      
+
       // Get total count with same filters
       let countQuery = db.select({ count: sql`count(*)` }).from(roles);
       if (status) {
@@ -118,7 +118,7 @@ export class RoleDbService {
       }
       const countResult = await countQuery;
       const total = Number(countResult[0].count);
-      
+
       // Apply sorting and pagination
       const sortFieldMap = {
         name: roles.name,
@@ -131,7 +131,7 @@ export class RoleDbService {
         .orderBy(orderFn(sortField))
         .limit(limit)
         .offset((page - 1) * limit);
-      
+
       return {
         roles: result.map(this.mapDbToRoleData),
         total,
