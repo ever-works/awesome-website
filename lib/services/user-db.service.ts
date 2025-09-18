@@ -1,8 +1,24 @@
 import { db } from '@/lib/db/drizzle';
-import { users, clientProfiles } from '@/lib/db/schema';
+import { users, clientProfiles, userRoles, roles } from '@/lib/db/schema';
 import { eq, desc, asc, and, sql, isNull, type SQL } from 'drizzle-orm';
-import { AuthUserData, CreateUserRequest, UpdateUserRequest, UserListOptions } from '@/lib/types/user';
+import type { PgTransaction } from 'drizzle-orm/pg-core';
+import { AuthUserData, CreateUserRequest, UpdateUserRequest, UserListOptions, UserStatus } from '@/lib/types/user';
 import { hash } from 'bcryptjs';
+
+// Interface for joined query result structure
+interface JoinedUserData {
+  id: string;
+  email: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  username: string | null;
+  name: string | null;
+  title: string | null;
+  avatar: string | null;
+  status: UserStatus | null;
+  roleId: string | null;
+  roleName: string | null;
+}
 
 export class UserDbService {
   async readUsers(): Promise<AuthUserData[]> {
@@ -72,17 +88,58 @@ export class UserDbService {
 
   async updateUser(id: string, data: UpdateUserRequest): Promise<AuthUserData> {
     try {
-      const updateData: Record<string, unknown> = {};
-      if (data.email !== undefined) updateData.email = data.email;
+      const now = new Date();
 
-      const result = await db.update(users)
-        .set(updateData)
-        .where(eq(users.id, id))
-        .returning();
+      // Prepare data for users table update
+      const userUpdateData: Record<string, unknown> = {
+        updatedAt: now,
+      };
+      if (data.email !== undefined) userUpdateData.email = data.email;
 
-      if (result.length === 0) {
-        throw new Error(`User with ID '${id}' not found`);
-      }
+      // Prepare data for client_profiles table update
+      const profileUpdateData: Record<string, unknown> = {
+        updatedAt: now,
+      };
+      if (data.username !== undefined) profileUpdateData.username = data.username;
+      if (data.name !== undefined) profileUpdateData.name = data.name;
+      if (data.title !== undefined) profileUpdateData.jobTitle = data.title;
+      if (data.avatar !== undefined) profileUpdateData.avatar = data.avatar;
+      if (data.status !== undefined) profileUpdateData.status = data.status;
+      if (data.email !== undefined) profileUpdateData.email = data.email; // Keep email in sync
+
+      const result = await db.transaction(async (tx: PgTransaction<any, any, any>) => {
+        // Update users table
+        const updated = await tx.update(users)
+          .set(userUpdateData)
+          .where(eq(users.id, id))
+          .returning();
+
+        if (updated.length === 0) {
+          throw new Error(`User with ID '${id}' not found`);
+        }
+
+        // Update client_profiles table if we have profile data to update
+        if (Object.keys(profileUpdateData).length > 1) { // More than just updatedAt
+          await tx.update(clientProfiles)
+            .set(profileUpdateData)
+            .where(eq(clientProfiles.userId, id));
+        }
+
+        // Update role if provided
+        if (data.role !== undefined) {
+          // Delete existing role assignments
+          await tx.delete(userRoles).where(eq(userRoles.userId, id));
+          // Insert new role assignment
+          if (data.role) {
+            await tx.insert(userRoles).values({
+              userId: id,
+              roleId: data.role,
+            });
+          }
+        }
+
+        return updated;
+      });
 
       return this.mapDbToAuthUserData(result[0]);
     } catch (error) {
@@ -110,29 +167,65 @@ export class UserDbService {
     totalPages: number;
   }> {
     try {
-      const { page = 1, limit = 10, search, sortBy = 'email', sortOrder = 'asc' } = options as any;
-      
-      let query = db.select().from(users);
+      const { page = 1, limit = 10, search, sortBy = 'email', sortOrder = 'asc', role, status } = options as any;
+
+      // Join users with client_profiles and roles to get complete user data
+      let query = db.select({
+        id: users.id,
+        email: users.email,
+        createdAt: users.createdAt,
+        updatedAt: users.updatedAt,
+        // Profile data
+        username: clientProfiles.username,
+        name: clientProfiles.name,
+        title: clientProfiles.jobTitle,
+        avatar: clientProfiles.avatar,
+        status: clientProfiles.status,
+        // Role data
+        roleId: userRoles.roleId,
+        roleName: roles.name,
+      })
+      .from(users)
+      .leftJoin(clientProfiles, eq(users.id, clientProfiles.userId))
+      .leftJoin(userRoles, eq(users.id, userRoles.userId))
+      .leftJoin(roles, eq(userRoles.roleId, roles.id));
+
       const conditions: SQL[] = [];
       conditions.push(isNull(users.deletedAt));
 
       if (search) {
-        // Filter by email only in minimized schema
-        conditions.push(sql`${users.email} ILIKE ${`%${search.replace(/\\/g, "\\\\").replace(/[%_]/g, "\\$&")}%`}`);
+        // Search in email, name, or username
+        conditions.push(sql`(
+          ${users.email} ILIKE ${`%${search.replace(/\\/g, "\\\\").replace(/[%_]/g, "\\$&")}%`} OR
+          ${clientProfiles.name} ILIKE ${`%${search.replace(/\\/g, "\\\\").replace(/[%_]/g, "\\$&")}%`} OR
+          ${clientProfiles.username} ILIKE ${`%${search.replace(/\\/g, "\\\\").replace(/[%_]/g, "\\$&")}%`}
+        )`);
+      }
+
+      if (role) {
+        conditions.push(eq(userRoles.roleId, role));
+      }
+
+      if (status) {
+        conditions.push(eq(clientProfiles.status, status));
       }
 
       if (conditions.length > 0) {
         query = query.where(and(...conditions));
       }
       
-      // Get total count with same filters
-      let countQuery = db.select({ count: sql`count(*)` }).from(users);
+      // Get total count with same filters (need to join for search to work)
+      let countQuery = db.select({ count: sql`count(*)` })
+        .from(users)
+        .leftJoin(clientProfiles, eq(users.id, clientProfiles.userId))
+        .leftJoin(userRoles, eq(users.id, userRoles.userId))
+        .leftJoin(roles, eq(userRoles.roleId, roles.id));
       if (conditions.length > 0) {
         countQuery = countQuery.where(and(...conditions));
       }
       const countResult = await countQuery;
       const total = Number(countResult[0].count);
-      
+
       // Apply sorting and pagination
       const sortFieldMap: Record<string, any> = {
         email: users.email,
@@ -146,7 +239,7 @@ export class UserDbService {
         .offset((page - 1) * limit);
       
       return {
-        users: result.map(this.mapDbToAuthUserData),
+        users: result.map(this.mapJoinedDataToAuthUserData),
         total,
         page,
         limit,
@@ -217,6 +310,23 @@ export class UserDbService {
       email: dbUser.email || '',
       created_at: dbUser.createdAt.toISOString(),
       updated_at: dbUser.updatedAt.toISOString(),
+    };
+  }
+
+  private mapJoinedDataToAuthUserData(joinedData: JoinedUserData): AuthUserData {
+    return {
+      id: joinedData.id,
+      email: joinedData.email ?? '',
+      username: joinedData.username ?? '',
+      name: joinedData.name ?? '',
+      title: joinedData.title ?? '',
+      avatar: joinedData.avatar ?? '',
+      status: joinedData.status ?? 'active',
+      role: joinedData.roleId ?? '',
+      roleName: joinedData.roleName ?? 'No role',
+      created_at: joinedData.createdAt.toISOString(),
+      updated_at: joinedData.updatedAt.toISOString(),
+      created_by: 'system', // TODO: Add proper created_by field
     };
   }
 } 

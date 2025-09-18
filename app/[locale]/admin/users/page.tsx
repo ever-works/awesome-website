@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Card, CardBody, Chip, useDisclosure } from "@heroui/react";
 import { Plus, Edit, Trash2, Users, UserCheck, UserX, Search, ChevronDown } from "lucide-react";
 import UserForm from "@/components/admin/users/user-form";
-import { UserData, CreateUserRequest, UpdateUserRequest } from "@/lib/types/user";
+import { UserData } from "@/lib/types/user";
 import { useAdminUsers } from "@/hooks/use-admin-users";
 
 // Helper function to generate consistent avatar colors based on user identifier
@@ -49,8 +49,6 @@ export default function AdminUsersPage() {
     searchTerm,
     roleFilter,
     statusFilter,
-    createUser,
-    updateUser,
     deleteUser,
     handlePageChange,
     handleSearch,
@@ -61,7 +59,7 @@ export default function AdminUsersPage() {
     limit: 10,
     search: '',
     role: '',
-    status: 'active',
+    status: '',
   });
 
   // Local state for form
@@ -70,16 +68,6 @@ export default function AdminUsersPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Handler functions
-  const handleCreate = async (data: CreateUserRequest) => {
-   const ok= await createUser(data);
-   if (ok)onClose();
-
-  };
-
-  const handleUpdate = async (data: UpdateUserRequest & { id: string }) => {
-    const ok= await updateUser(data.id, data);
-    if (ok) onClose();
-  };
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
@@ -101,15 +89,6 @@ export default function AdminUsersPage() {
     onOpen();
   };
 
-  const handleFormSubmit = async (data: CreateUserRequest | UpdateUserRequest) => {
-    if (formMode === 'create') {
-      await handleCreate(data as CreateUserRequest);
-    } else {
-      if (selectedUser) {
-        await handleUpdate({ ...data, id: selectedUser.id } as UpdateUserRequest & { id: string });
-      }
-    }
-  };
 
   if (isLoading) {
     return (
@@ -319,11 +298,12 @@ export default function AdminUsersPage() {
 
           {/* Status Filter */}
           <div className="relative">
-            <select 
-              value={statusFilter} 
+            <select
+              value={statusFilter}
               onChange={(e) => handleStatusFilter(e.target.value)}
               className="appearance-none bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-2 pr-8 text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-theme-primary/20 focus:border-theme-primary transition-all duration-200 cursor-pointer"
             >
+              <option value="">All statuses</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
@@ -331,17 +311,17 @@ export default function AdminUsersPage() {
           </div>
 
           {/* Active Filters Count */}
-          {(searchTerm || roleFilter || statusFilter !== 'active') && (
+          {(searchTerm || roleFilter || statusFilter) && (
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {[
                   searchTerm && 'search',
                   roleFilter && 'role',
-                  statusFilter !== 'active' && 'status'
+                  statusFilter && 'status'
                 ].filter(Boolean).length} filter{[
                   searchTerm && 'search',
                   roleFilter && 'role',
-                  statusFilter !== 'active' && 'status'
+                  statusFilter && 'status'
                 ].filter(Boolean).length !== 1 ? 's' : ''} applied
               </span>
               <Button
@@ -351,7 +331,7 @@ export default function AdminUsersPage() {
                 onPress={() => {
                   handleSearch('');
                   handleRoleFilter('');
-                  handleStatusFilter('active');
+                  handleStatusFilter('');
                 }}
                 className="h-6 px-2 text-xs"
               >
@@ -366,7 +346,7 @@ export default function AdminUsersPage() {
           <div className="mt-4 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
             <span>
               Showing {users.length} of {totalUsers} users
-              {(searchTerm || roleFilter || statusFilter !== 'active') && (
+              {(searchTerm || roleFilter || statusFilter) && (
                 <span className="ml-1">
                   • filtered
                 </span>
@@ -419,20 +399,18 @@ export default function AdminUsersPage() {
                     </div>
                     <div className="flex items-center space-x-4">
                       <Chip
-                        color={user.isActive ? 'success' : 'default'}
+                        color={user.status === 'active' ? 'success' : 'default'}
                         variant="flat"
                         size="sm"
                       >
-                        {user.isActive ? 'Active' : 'Inactive'}
+                        {user.status === 'active' ? 'Active' : 'Inactive'}
                       </Chip>
                       <Chip
                         color="primary"
                         variant="flat"
                         size="sm"
                       >
-                        {typeof user.role === 'string'
-                          ? user.role.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
-                          : 'No Role'}
+                        {user.roleName || 'No role'}
                       </Chip>
                       <div className="flex space-x-1">
                         <Button
@@ -519,7 +497,7 @@ export default function AdminUsersPage() {
             <div className="overflow-y-auto max-h-[calc(90vh-4rem)]">
               <UserForm
                 user={selectedUser || undefined}
-                onSuccess={handleFormSubmit}
+                onSuccess={() => onClose()}
                 isSubmitting={isSubmitting}
                 onCancel={onClose}
               />

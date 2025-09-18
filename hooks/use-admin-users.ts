@@ -8,12 +8,15 @@ export interface UserData {
   id: string;
   name: string | null;
   email: string | null;
-  image: string | null;
-  emailVerified: Date | null;
-  isActive: boolean;
+  username?: string;
+  title?: string;
+  avatar?: string;
+  status: 'active' | 'inactive';
   role: string;
-  createdAt: Date;
-  updatedAt: Date;
+  roleName?: string;
+  created_at: string;
+  updated_at: string;
+  created_by?: string;
 }
 
 export interface UserWithCount extends UserData {
@@ -22,18 +25,23 @@ export interface UserWithCount extends UserData {
 }
 
 export interface CreateUserRequest {
+  username: string;
   name: string;
   email: string;
   password: string;
   role: string;
-  isActive?: boolean;
+  title?: string;
+  avatar?: string;
 }
 
 export interface UpdateUserRequest {
+  username?: string;
   name?: string;
   email?: string;
   role?: string;
-  isActive?: boolean;
+  status?: 'active' | 'inactive';
+  title?: string;
+  avatar?: string;
 }
 
 export interface UsersListResponse {
@@ -189,7 +197,7 @@ export function useAdminUsers(options: UseAdminUsersOptions = {}): UseAdminUsers
     limit = 10,
     search: initialSearch = '',
     role: initialRole = '',
-    status: initialStatus = 'active',
+    status: initialStatus = '',
   } = options;
 
   // State for pagination and filters
@@ -276,6 +284,7 @@ export function useAdminUsers(options: UseAdminUsersOptions = {}): UseAdminUsers
 
   // Derived data
   const users = usersData?.data || [];
+
   const isFiltering = isLoading && currentPage === 1;
   const isSubmitting = createMutation.isPending || updateMutation.isPending || deleteMutation.isPending;
   const totalPages = usersData?.totalPages || 1;

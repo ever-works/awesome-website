@@ -7,6 +7,14 @@ export type UserStatus = 'active' | 'inactive';
 export interface AuthUserData {
   id: string;
   email: string;
+  username?: string;
+  name?: string;
+  title?: string;
+  avatar?: string;
+  role?: string;
+  roleName?: string;
+  status?: UserStatus;
+  created_by?: string;
   created_at: string;
   updated_at: string;
 }
@@ -20,6 +28,7 @@ export interface UserData {
   title?: string;
   avatar?: string;
   role: string;
+  roleName?: string;
   status: UserStatus;
   created_at: string;
   updated_at: string;
@@ -105,6 +114,7 @@ export const userValidationSchema = z.object({
     .optional(),
   role: z.string()
     .min(1, 'Role is required'),
+  status: z.enum(['active', 'inactive']).optional(),
   password: z.string()
     .min(8, 'Password must be at least 8 characters')
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain at least one lowercase letter, one uppercase letter, and one number'),
