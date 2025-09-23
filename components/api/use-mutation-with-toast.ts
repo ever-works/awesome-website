@@ -3,7 +3,7 @@ import { apiClient, ApiError, RequestBody } from '@/lib/api/api-client';
 import { toast } from 'sonner';
 
 interface MutationConfig<TData, TVariables extends RequestBody> extends Omit<
-  UseMutationOptions<TData, ApiError, TVariables>,
+  UseMutationOptions<TData, ApiError, TVariables, unknown>,
   'mutationFn'
 > {
   endpoint: string;
@@ -23,7 +23,7 @@ export function useMutationWithToast<TData, TVariables extends RequestBody = Req
 }: MutationConfig<TData, TVariables>) {
   const queryClient = useQueryClient();
 
-  return useMutation<TData, ApiError, TVariables>({
+  return useMutation<TData, ApiError, TVariables, unknown>({
     mutationFn: async (variables) => {
       switch (method) {
         case 'post':
@@ -38,7 +38,7 @@ export function useMutationWithToast<TData, TVariables extends RequestBody = Req
           throw new Error(`Unsupported method: ${method}`);
       }
     },
-    onSuccess: async (data, variables, context, meta) => {
+    onSuccess: async (data, variables, context, mutation) => {
       await Promise.all(
         invalidateQueries.map((queryKey) =>
           queryClient.invalidateQueries({ queryKey: [queryKey] })
@@ -48,11 +48,12 @@ export function useMutationWithToast<TData, TVariables extends RequestBody = Req
       if (successMessage) {
         toast.success(successMessage);
       }
-      await onSuccess?.(data, variables, context, meta);
+
+      await onSuccess?.(data, variables, context, mutation);
     },
-    onError: (error, variables, context, meta) => {
+    onError: (error, variables, context, mutation) => {
       toast.error(error.message || 'An error occurred');
-      onError?.(error, variables, context, meta);
+      onError?.(error, variables, context, mutation);
     },
     ...options,
   });

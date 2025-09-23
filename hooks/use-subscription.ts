@@ -341,7 +341,7 @@ export function useSubscriptionById(subscriptionId: string) {
 export function useSubscriptionManager() {
   const queryClient = useQueryClient();
   
-  const { createSubscription, updateSubscription, cancelSubscription } = useSubscription();
+  const { updateSubscription, cancelSubscription } = useSubscription();
 
   // Optimistic update for subscription creation
   const createSubscriptionOptimistic = useMutation<
@@ -359,7 +359,7 @@ export function useSubscriptionManager() {
 
       return response.data;
     },
-    onMutate: async (newSubscription) => {
+    onMutate: async () => {
       // Cancel any outgoing refetches
       await queryClient.cancelQueries({ queryKey: ['user-subscription'] });
 
@@ -378,7 +378,7 @@ export function useSubscriptionManager() {
 
       return { previousSubscription };
     },
-    onError: (err, newSubscription, context) => {
+    onError: (_, __, context) => {
       // If the mutation fails, use the context returned from onMutate to roll back
       if (context?.previousSubscription) {
         queryClient.setQueryData(['user-subscription'], context.previousSubscription);
