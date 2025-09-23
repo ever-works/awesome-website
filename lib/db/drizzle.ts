@@ -2,6 +2,11 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
+function getPoolSize(): number {
+  const poolSize = parseInt(process.env.DB_POOL_SIZE || '10', 10);
+  return Math.max(1, Math.min(poolSize, 50)); // Clamp between 1-50
+}
+
 // Create a dummy DB client for when DATABASE_URL is not available
 class DummyDb {
   async query() {
@@ -21,16 +26,25 @@ let isRealConnection = false;
 // Only initialize the database if DATABASE_URL is available
 if (process.env.DATABASE_URL) {
   try {
-    const conn = globalForDb.conn ?? postgres(process.env.DATABASE_URL, {
-      max: 1,
-      idle_timeout: 20,
-      connect_timeout: 10,
-    });
+    const poolSize = getPoolSize();
+    const reusing = Boolean(globalForDb.conn);
+    const conn = reusing
+      ? globalForDb.conn!
+      : postgres(process.env.DATABASE_URL, {
+          max: poolSize,
+          idle_timeout: 20,
+          connect_timeout: 10,
+          prepare: false,
+        });
     globalForDb.conn = conn;
     db = drizzle(conn, { schema });
     globalForDb.db = db;
     isRealConnection = true;
-    console.log("Database connection established successfully");
+    console.log(
+      reusing
+        ? 'Reusing existing database connection; pool size is unchanged from the initial value (restart to apply DB_POOL_SIZE changes).'
+        : `Database connection established successfully with pool size: ${poolSize}`
+    );
   } catch (error) {
     console.error("Failed to initialize database connection:", error);
     db = new DummyDb();
