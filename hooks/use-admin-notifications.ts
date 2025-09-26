@@ -102,6 +102,7 @@ export function useAdminNotifications() {
   const {
     data: notificationData,
     isLoading,
+    isFetching,
     error,
     refetch: fetchNotifications,
   } = useQuery({
@@ -180,9 +181,9 @@ export function useAdminNotifications() {
     },
   });
 
-  // Computed values
-  const notifications = notificationData?.notifications || [];
-  const unreadCount = notificationData?.unreadCount || 0;
+  // Computed values with fallbacks
+  const notifications = notificationData?.notifications ?? [];
+  const unreadCount = notificationData?.unreadCount ?? 0;
   
   // Calculate stats from notifications
   const stats: NotificationStats = {
@@ -281,6 +282,7 @@ export function useAdminNotifications() {
     
     // Loading states
     isLoading,
+    isFetching,
     isMarkingAsRead,
     isMarkingAllAsRead,
     isCreating,
