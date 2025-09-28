@@ -6,12 +6,20 @@ export function createQueryClientInstance(): QueryClient {
 	return new QueryClient({
 		defaultOptions: {
 			queries: {
-				staleTime: 1000 * 60 * 5, 
-				gcTime: 1000 * 60 * 60 * 24, 
-				refetchOnWindowFocus: false,
-				retry: 1 
+				staleTime: 5 * 60 * 1000, // 5 minutes - data considered fresh
+				gcTime: 10 * 60 * 1000, // 10 minutes - cache retention
+				refetchOnWindowFocus: false, // Prevent excessive refetching
+				refetchOnMount: false, // Don't refetch if data is fresh
+				refetchOnReconnect: true, // Refetch on network reconnect
+				retry: (failureCount) => {
+					// Simple retry logic - retry network/server errors up to 2 times
+					// Removed flawed string matching logic that caused false positives
+					return failureCount < 2;
+				},
+				retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 			},
 			mutations: {
+				retry: 1, // Retry mutations once on failure
 				onError: (error) => {
 					const message = error.message;
 					toast.error(`Mutation Error: ${message}`);
