@@ -1409,7 +1409,101 @@
         "DESCRIPTION_LENGTH": "La description de l'élément doit contenir entre {min} et {max} caractères",
         "SOURCE_URL_REQUIRED": "L'URL source est requise",
         "SOURCE_URL_INVALID": "Veuillez entrer une URL valide",
-        "CATEGORY_REQUIRED": "Au moins une catégorie est requise"
+        "CATEGORY_REQUIRED": "Au moins une catégorie est requise",
+        "ICON_URL_INVALID": "Veuillez entrer une URL d'icône valide",
+        "ICON_URL_LOAD_FAILED": "Échec du chargement de l'icône depuis l'URL",
+        "TAGS_REQUIRED": "Au moins une étiquette est requise",
+        "STATUS_REQUIRED": "Le statut est requis"
+      },
+      "STEPS": {
+        "BASIC_INFO": {
+          "TITLE": "Informations de Base",
+          "DESCRIPTION": "Entrez les détails essentiels de l'élément"
+        },
+        "CLASSIFICATION": {
+          "TITLE": "Classification",
+          "DESCRIPTION": "Organisez l'élément avec des catégories et des étiquettes",
+          "TIPS_TITLE": "Conseils pour la Classification",
+          "TIP_1": "Utilisez des catégories descriptives qui correspondent à votre structure de répertoire",
+          "TIP_2": "Ajoutez des étiquettes pertinentes pour améliorer la recherche",
+          "TIP_3": "Gardez les catégories larges et les étiquettes spécifiques"
+        },
+        "MEDIA_LINKS": {
+          "TITLE": "Médias et Liens",
+          "DESCRIPTION": "Ajoutez l'URL source et les éléments visuels",
+          "TIPS_TITLE": "Directives Médias",
+          "TIP_1": "Assurez-vous que les URL sont valides et accessibles",
+          "TIP_2": "Utilisez des icônes de haute qualité (minimum 256x256px recommandé)",
+          "TIP_3": "Les icônes doivent être au format PNG ou SVG pour une meilleure qualité"
+        },
+        "REVIEW": {
+          "TITLE": "Révision et Soumission",
+          "DESCRIPTION": "Vérifiez tous les détails avant la soumission",
+          "SUMMARY_TITLE": "Résumé",
+          "SETTINGS_TITLE": "Paramètres",
+          "NOT_SET": "Non défini"
+        }
+      },
+      "FIELDS": {
+        "ID": {
+          "LABEL": "ID de l'Élément",
+          "PLACEHOLDER": "Entrez un ID unique (ex: awesome-time-tracking-tool)",
+          "HELP": "Identifiant unique pour l'élément (ne peut pas être modifié après création)"
+        },
+        "NAME": {
+          "LABEL": "Nom de l'Élément",
+          "PLACEHOLDER": "Entrez le nom de l'élément (ex: Awesome Time Tracking Tool)"
+        },
+        "SLUG": {
+          "LABEL": "Slug de l'Élément",
+          "PLACEHOLDER": "Entrez le slug URL (ex: awesome-time-tracking-tool)",
+          "HELP": "Identifiant convivial pour l'URL de l'élément"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Entrez une description détaillée de l'élément...",
+          "HELP": "Description détaillée de l'élément ({current}/{max})"
+        },
+        "CATEGORY": {
+          "LABEL": "Catégories",
+          "PLACEHOLDER": "Entrez les catégories séparées par des virgules",
+          "HELP": "Catégories pour organiser l'élément",
+          "SUGGESTED": "Catégories suggérées"
+        },
+        "TAGS": {
+          "LABEL": "Étiquettes",
+          "PLACEHOLDER": "Entrez les étiquettes séparées par des virgules",
+          "HELP": "Étiquettes pour une meilleure recherche et organisation",
+          "SUGGESTED": "Étiquettes suggérées"
+        },
+        "ICON_URL": {
+          "LABEL": "URL de l'Icône",
+          "PLACEHOLDER": "https://exemple.com/icone.png",
+          "HELP": "URL d'icône optionnelle pour l'élément",
+          "UPLOAD_BUTTON": "Télécharger l'Icône"
+        },
+        "SOURCE_URL": {
+          "LABEL": "URL Source",
+          "PLACEHOLDER": "https://github.com/exemple/awesome-tool",
+          "HELP": "Lien vers la source ou la page d'accueil de l'élément",
+          "PREVIEW_BUTTON": "Aperçu de l'URL"
+        },
+        "FEATURED": {
+          "LABEL": "Élément en Vedette",
+          "HELP": "Les éléments en vedette apparaissent de manière proéminente sur le site"
+        },
+        "STATUS": {
+          "LABEL": "Statut",
+          "PLACEHOLDER": "Sélectionner le statut"
+        }
+      },
+      "NAVIGATION": {
+        "NEXT": "Suivant",
+        "PREVIOUS": "Précédent",
+        "CREATE": "Créer l'Élément",
+        "UPDATE": "Mettre à Jour l'Élément",
+        "CANCEL": "Annuler",
+        "STEP_COUNTER": "Étape {current} sur {total}"
       }
     },
     "DELETE_COMMENT_DIALOG": {

@@ -1096,7 +1096,101 @@
         "DESCRIPTION_LENGTH": "يجب أن يكون وصف العنصر بين {min} و {max} حرف",
         "SOURCE_URL_REQUIRED": "رابط المصدر مطلوب",
         "SOURCE_URL_INVALID": "يرجى إدخال رابط صحيح",
-        "CATEGORY_REQUIRED": "فئة واحدة على الأقل مطلوبة"
+        "CATEGORY_REQUIRED": "فئة واحدة على الأقل مطلوبة",
+        "ICON_URL_INVALID": "يرجى إدخال رابط أيقونة صحيح",
+        "ICON_URL_LOAD_FAILED": "فشل تحميل الأيقونة من الرابط",
+        "TAGS_REQUIRED": "وسم واحد على الأقل مطلوب",
+        "STATUS_REQUIRED": "الحالة مطلوبة"
+      },
+      "STEPS": {
+        "BASIC_INFO": {
+          "TITLE": "المعلومات الأساسية",
+          "DESCRIPTION": "أدخل التفاصيل الأساسية حول العنصر"
+        },
+        "CLASSIFICATION": {
+          "TITLE": "التصنيف",
+          "DESCRIPTION": "قم بتنظيم العنصر مع الفئات والوسوم",
+          "TIPS_TITLE": "نصائح للتصنيف",
+          "TIP_1": "استخدم فئات وصفية تتطابق مع بنية الدليل الخاص بك",
+          "TIP_2": "أضف وسوم ذات صلة لتحسين قابلية البحث",
+          "TIP_3": "اجعل الفئات عامة والوسوم محددة"
+        },
+        "MEDIA_LINKS": {
+          "TITLE": "الوسائط والروابط",
+          "DESCRIPTION": "أضف رابط المصدر والعناصر المرئية",
+          "TIPS_TITLE": "إرشادات الوسائط",
+          "TIP_1": "تأكد من أن الروابط صالحة ويمكن الوصول إليها",
+          "TIP_2": "استخدم أيقونات عالية الجودة (يُنصح بحد أدنى 256×256 بكسل)",
+          "TIP_3": "يجب أن تكون الأيقونات بتنسيق PNG أو SVG للحصول على أفضل جودة"
+        },
+        "REVIEW": {
+          "TITLE": "المراجعة والإرسال",
+          "DESCRIPTION": "راجع جميع التفاصيل قبل الإرسال",
+          "SUMMARY_TITLE": "الملخص",
+          "SETTINGS_TITLE": "الإعدادات",
+          "NOT_SET": "غير محدد"
+        }
+      },
+      "FIELDS": {
+        "ID": {
+          "LABEL": "معرّف العنصر",
+          "PLACEHOLDER": "أدخل معرّف فريد للعنصر (مثال: awesome-time-tracking-tool)",
+          "HELP": "معرّف فريد للعنصر (لا يمكن تغييره بعد الإنشاء)"
+        },
+        "NAME": {
+          "LABEL": "اسم العنصر",
+          "PLACEHOLDER": "أدخل اسم العنصر (مثال: Awesome Time Tracking Tool)"
+        },
+        "SLUG": {
+          "LABEL": "اسم العنصر المختصر",
+          "PLACEHOLDER": "أدخل الاسم المختصر للرابط (مثال: awesome-time-tracking-tool)",
+          "HELP": "معرّف صديق للرابط للعنصر"
+        },
+        "DESCRIPTION": {
+          "LABEL": "الوصف",
+          "PLACEHOLDER": "أدخل وصفًا تفصيليًا للعنصر...",
+          "HELP": "وصف تفصيلي للعنصر ({current}/{max})"
+        },
+        "CATEGORY": {
+          "LABEL": "الفئات",
+          "PLACEHOLDER": "أدخل الفئات مفصولة بفواصل",
+          "HELP": "فئات لتنظيم العنصر",
+          "SUGGESTED": "الفئات المقترحة"
+        },
+        "TAGS": {
+          "LABEL": "الوسوم",
+          "PLACEHOLDER": "أدخل الوسوم مفصولة بفواصل",
+          "HELP": "وسوم لتحسين قابلية البحث والتنظيم",
+          "SUGGESTED": "الوسوم المقترحة"
+        },
+        "ICON_URL": {
+          "LABEL": "رابط الأيقونة",
+          "PLACEHOLDER": "https://example.com/icon.png",
+          "HELP": "رابط اختياري للأيقونة الخاصة بالعنصر",
+          "UPLOAD_BUTTON": "رفع أيقونة"
+        },
+        "SOURCE_URL": {
+          "LABEL": "رابط المصدر",
+          "PLACEHOLDER": "https://github.com/example/awesome-tool",
+          "HELP": "رابط إلى مصدر العنصر أو صفحته الرئيسية",
+          "PREVIEW_BUTTON": "معاينة الرابط"
+        },
+        "FEATURED": {
+          "LABEL": "عنصر مميز",
+          "HELP": "العناصر المميزة تظهر بشكل بارز على الموقع"
+        },
+        "STATUS": {
+          "LABEL": "الحالة",
+          "PLACEHOLDER": "اختر الحالة"
+        }
+      },
+      "NAVIGATION": {
+        "NEXT": "التالي",
+        "PREVIOUS": "السابق",
+        "CREATE": "إنشاء عنصر",
+        "UPDATE": "تحديث عنصر",
+        "CANCEL": "إلغاء",
+        "STEP_COUNTER": "الخطوة {current} من {total}"
       }
     },
     "DELETE_COMMENT_DIALOG": {
