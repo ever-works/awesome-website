@@ -6,14 +6,23 @@ on:
         description: "Vercel Environment to deploy to (e.g., production, staging, preview)"
         required: true
         type: string
+
   workflow_call:
     inputs:
       environment:
         required: true
         type: string
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: vercel-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   DATA_REPOSITORY: "https://github.com/${{ github.repository_owner }}/${{ secrets.DATA_REPOSITORY }}"
-  NODE_OPTIONS: "--max-old-space-size=4096"
 
 jobs:
   Deploy-Vercel:
@@ -21,7 +30,8 @@ jobs:
     steps:
       - name: Target environment
         run: echo "Target ${{ inputs.environment }}"
-      - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v4
 
       - name: Detect package manager
         id: detect-pm
@@ -45,17 +55,70 @@ jobs:
 
       - name: Install Vercel CLI
         run: ${{ steps.detect-pm.outputs.global-cmd }} vercel@latest
+
       - name: Link Vercel project
         run: vercel link --yes --project ${{ github.event.repository.name }} --token=${{ secrets.VERCEL_TOKEN }}
+
       - name: Set data repository env variable
         run: echo -n "$DATA_REPOSITORY" | vercel env add DATA_REPOSITORY ${{ inputs.environment }} --token ${{ secrets.VERCEL_TOKEN }}
         continue-on-error: true
+
       - name: Set GitHub API KEY env variable
         run: echo -n "${{ secrets.GH_TOKEN }}" | vercel env add GH_TOKEN ${{ inputs.environment }} --token ${{ secrets.VERCEL_TOKEN }}
         continue-on-error: true
+
       - name: Pull settings
         run: vercel pull --yes  --environment=${{ inputs.environment }} --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --target=${{ inputs.environment }} --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --target=${{ inputs.environment }} --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Trigger Vercel Deployment via API
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.vercel.com/v13/deployments" \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "${{ github.event.repository.name }}",
+              "gitSource": {
+                "type": "github",
+                "ref": "${{ github.ref_name }}",
+                "repoId": "${{ github.repository_id }}",
+                "sha": "${{ github.sha }}"
+              },
+              "target": "${{ inputs.environment }}"
+            }')
+
+          # Extract HTTP status code and response body
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "HTTP Status Code: $HTTP_CODE"
+          echo "Response Body: $BODY"
+
+          # Check if the request was successful
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+            echo "✅ Deployment triggered successfully"
+            
+            # Extract and display deployment URL
+            DEPLOYMENT_URL=$(echo "$BODY" | jq -r '.url // empty')
+            if [ -n "$DEPLOYMENT_URL" ]; then
+              echo "🚀 Deployment URL: https://$DEPLOYMENT_URL"
+            fi
+            
+            # Extract deployment ID
+            DEPLOYMENT_ID=$(echo "$BODY" | jq -r '.id // empty')
+            if [ -n "$DEPLOYMENT_ID" ]; then
+              echo "📋 Deployment ID: $DEPLOYMENT_ID"
+            fi
+          else
+            echo "❌ Deployment failed with HTTP $HTTP_CODE"
+            echo "Error details: $BODY"
+            
+            # Extract error message if available
+            ERROR_MSG=$(echo "$BODY" | jq -r '.error.message // "Unknown error"')
+            echo "Error message: $ERROR_MSG"
+            
+            exit 1
+          fi
+
+      - name: Deployment Summary
+        if: success()
+        run: echo "✅ Vercel deployment triggered successfully for ${{ inputs.environment }} environment"
