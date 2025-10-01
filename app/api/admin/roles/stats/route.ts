@@ -4,17 +4,104 @@ import { RoleRepository } from '@/lib/repositories/role.repository';
 
 const roleRepository = new RoleRepository();
 
+/**
+ * @swagger
+ * /api/admin/roles/stats:
+ *   get:
+ *     tags: ["Admin - Roles"]
+ *     summary: "Get role statistics"
+ *     description: "Returns comprehensive statistics about roles including total count, active/inactive breakdown, and average permissions per role. Provides insights for admin dashboard and role management analytics. Requires admin privileges."
+ *     security:
+ *       - sessionAuth: []
+ *     responses:
+ *       200:
+ *         description: "Role statistics retrieved successfully"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     total:
+ *                       type: integer
+ *                       description: "Total number of roles"
+ *                       example: 25
+ *                     active:
+ *                       type: integer
+ *                       description: "Number of active roles"
+ *                       example: 20
+ *                     inactive:
+ *                       type: integer
+ *                       description: "Number of inactive roles"
+ *                       example: 5
+ *                     averagePermissions:
+ *                       type: number
+ *                       description: "Average number of permissions per role (rounded to 1 decimal)"
+ *                       example: 4.2
+ *               required: ["success", "data"]
+ *             example:
+ *               success: true
+ *               data:
+ *                 total: 25
+ *                 active: 20
+ *                 inactive: 5
+ *                 averagePermissions: 4.2
+ *       401:
+ *         description: "Unauthorized - Authentication required"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *       403:
+ *         description: "Forbidden - Admin access required"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: "Forbidden"
+ *       500:
+ *         description: "Internal server error"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to fetch role statistics"
+ */
 export async function GET() {
   try {
     // Check authentication
     const session = await auth();
     if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     // Check admin permissions
     if (!session.user.isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 });
     }
 
     const roles = await roleRepository.findAll();
@@ -34,11 +121,11 @@ export async function GET() {
       averagePermissions: Math.round(averagePermissions * 10) / 10, // Round to 1 decimal place
     };
     
-    return NextResponse.json(stats);
+    return NextResponse.json({ success: true, data: stats });
   } catch (error) {
     console.error('Error fetching role stats:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch role statistics' },
+      { success: false, error: 'Failed to fetch role statistics' },
       { status: 500 }
     );
   }
