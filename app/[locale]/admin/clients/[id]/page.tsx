@@ -21,6 +21,7 @@ import {
   ExternalLink,
   Edit
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 type Params = { id: string; locale?: string };
 
@@ -29,6 +30,8 @@ export default async function ClientDetailPage({
 }: {
   params: Promise<Params>;
 }) {
+  const t = await getTranslations('admin.ADMIN_CLIENT_DETAIL_PAGE');
+
   const { id, locale: paramLocale } = await params;
 
   const session = await auth();
@@ -57,7 +60,7 @@ export default async function ClientDetailPage({
               className="inline-flex items-center px-2 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white bg-white dark:bg-gray-800 rounded transition-colors"
             >
               <ArrowLeft aria-hidden="true" className="w-4 h-4 mr-1" />
-              Back to Clients
+              {t('BACK_TO_CLIENTS')}
             </Link>
             <div className="flex items-center space-x-3">
               <Link
@@ -65,7 +68,7 @@ export default async function ClientDetailPage({
                 className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-theme-primary to-theme-accent text-white shadow-lg hover:shadow-xl rounded transition-all duration-300"
               >
                 <Edit aria-hidden="true" className="w-4 h-4 mr-1" />
-                Edit Client
+                {t('EDIT_CLIENT')}
               </Link>
             </div>
           </div>
@@ -114,15 +117,15 @@ export default async function ClientDetailPage({
                   <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center space-x-2">
                       <Calendar aria-hidden="true" className="w-4 h-4" />
-                      <span>Joined {toDateTime(profile.createdAt, locale)}</span>
+                      <span>{t('JOINED')} {toDateTime(profile.createdAt, locale)}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Star aria-hidden="true" className="w-4 h-4" />
-                      <span>{profile.totalSubmissions || 0} submissions</span>
+                      <span>{profile.totalSubmissions || 0} {t('SUBMISSIONS')}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Clock aria-hidden="true" className="w-4 h-4" />
-                      <span>Last login {lastLogin ? toDateTime(lastLogin.timestamp, locale) : 'Never'}</span>
+                      <span>{t('LAST_LOGIN')} {lastLogin ? toDateTime(lastLogin.timestamp, locale) : 'Never'}</span>
                     </div>
                   </div>
                 </div>
@@ -143,39 +146,39 @@ export default async function ClientDetailPage({
                 <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-700">
                   <div className="flex items-center space-x-3">
                     <User aria-hidden="true" className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Profile Information</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('PROFILE_INFORMATION')}</h2>
                   </div>
                 </div>
                 <div className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <ModernField
                       icon={<User aria-hidden="true" className="w-4 h-4 text-blue-500" />}
-                      label="Display Name"
+                      label={t('DISPLAY_NAME')}
                       value={profile.displayName || "Not provided"}
                     />
                     <ModernField
                       icon={<User aria-hidden="true" className="w-4 h-4 text-green-500" />}
-                      label="Username"
+                      label={t('USERNAME')}
                       value={profile.username ? `@${profile.username}` : "Not set"}
                     />
                     <ModernField
                       icon={<Building2 aria-hidden="true" className="w-4 h-4 text-purple-500" />}
-                      label="Company"
+                      label={t('COMPANY')}
                       value={profile.company || "Not provided"}
                     />
                     <ModernField
                       icon={<Building2 aria-hidden="true" className="w-4 h-4 text-orange-500" />}
-                      label="Job Title"
+                      label={t('JOB_TITLE')}
                       value={profile.jobTitle || "Not provided"}
                     />
                     <ModernField
                       icon={<Shield aria-hidden="true" className="w-4 h-4 text-indigo-500" />}
-                      label="Account Type"
+                      label={t('ACCOUNT_TYPE')}
                       value={(profile.accountType || 'individual').charAt(0).toUpperCase() + (profile.accountType || 'individual').slice(1)}
                     />
                     <ModernField
                       icon={<CreditCard aria-hidden="true" className="w-4 h-4 text-pink-500" />}
-                      label="Subscription Plan"
+                      label={t('SUBSCRIPTION_PLAN')}
                       value={(profile.plan || 'free').charAt(0).toUpperCase() + (profile.plan || 'free').slice(1)}
                     />
                   </div>
@@ -183,7 +186,7 @@ export default async function ClientDetailPage({
                     <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
                       <div className="flex items-center space-x-2 mb-3">
                         <User aria-hidden="true" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">Bio</span>
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">{t('BIO')}</span>
                       </div>
                       <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800">
                         <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -202,40 +205,40 @@ export default async function ClientDetailPage({
                 <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-700">
                   <div className="flex items-center space-x-3">
                     <Mail aria-hidden="true" className="w-5 h-5 text-green-600 dark:text-green-400" />
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Contact & Details</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('CONTACT_DETAILS')}</h2>
                   </div>
                 </div>
                 <div className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <ModernField
                       icon={<Phone aria-hidden="true" className="w-4 h-4 text-green-500" />}
-                      label="Phone"
+                      label={t('PHONE')}
                       value={profile.phone || "Not provided"}
                     />
                     <ModernField
                       icon={<Globe aria-hidden="true" className="w-4 h-4 text-blue-500" />}
-                      label="Website"
+                      label={t('WEBSITE')}
                       value={profile.website || "Not provided"}
                       isLink={!!profile.website}
                     />
                     <ModernField
                       icon={<MapPin aria-hidden="true" className="w-4 h-4 text-red-500" />}
-                      label="Location"
+                        label={t('LOCATION')}
                       value={profile.location || "Not provided"}
                     />
                     <ModernField
                       icon={<Building2 aria-hidden="true" className="w-4 h-4 text-purple-500" />}
-                      label="Industry"
+                      label={t('INDUSTRY')}
                       value={profile.industry || "Not specified"}
                     />
                     <ModernField
                       icon={<Languages aria-hidden="true" className="w-4 h-4 text-orange-500" />}
-                      label="Language"
+                      label={t('LANGUAGE')}
                       value={profile.language?.toUpperCase() || "EN"}
                     />
                     <ModernField
                       icon={<Clock aria-hidden="true" className="w-4 h-4 text-indigo-500" />}
-                      label="Timezone"
+                      label={t('TIMEZONE')}
                       value={profile.timezone || "UTC"}
                     />
                   </div>
@@ -252,14 +255,14 @@ export default async function ClientDetailPage({
                 <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-700">
                   <div className="flex items-center space-x-3">
                     <Shield aria-hidden="true" className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Security & Status</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('SECURITY_STATUS')}</h2>
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
                   <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-100 dark:border-green-800">
                     <div className="flex items-center space-x-3">
                       <Mail aria-hidden="true" className="w-5 h-5 text-green-600 dark:text-green-400" />
-                      <span className="font-medium text-gray-900 dark:text-white">Email Verified</span>
+                      <span className="font-medium text-gray-900 dark:text-white">{t('EMAIL_VERIFIED')}</span>
                     </div>
                     <Chip
                       size="sm"
@@ -273,7 +276,7 @@ export default async function ClientDetailPage({
                   <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-100 dark:border-blue-800">
                     <div className="flex items-center space-x-3">
                       <Shield aria-hidden="true" className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                      <span className="font-medium text-gray-900 dark:text-white">Two-Factor Auth</span>
+                      <span className="font-medium text-gray-900 dark:text-white">{t('TWO_FACTOR_AUTH')}</span>
                     </div>
                     <Chip
                       size="sm"
@@ -281,7 +284,7 @@ export default async function ClientDetailPage({
                       variant="flat"
                       className="shadow-sm"
                     >
-                      {profile.twoFactorEnabled ? 'Enabled' : 'Disabled'}
+                      {profile.twoFactorEnabled ? t('ENABLED') : t('DISABLED')}
                     </Chip>
                   </div>
                   <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
@@ -290,7 +293,7 @@ export default async function ClientDetailPage({
                         <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                           {profile.totalSubmissions || 0}
                         </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">Submissions</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{t('SUBMISSIONS')}</div>
                       </div>
                     </div>
                   </div>
@@ -304,7 +307,7 @@ export default async function ClientDetailPage({
                 <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-700">
                   <div className="flex items-center space-x-3">
                     <CreditCard aria-hidden="true" className="w-5 h-5 text-green-600 dark:text-green-400" />
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Billing & Plans</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('BILLING_PLANS')}</h2>
                   </div>
                 </div>
                 <div className="p-6">
@@ -312,7 +315,7 @@ export default async function ClientDetailPage({
                     <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <CreditCard aria-hidden="true" className="w-8 h-8 text-green-600 dark:text-green-400" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No billing setup</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('NO_BILLING_SETUP')}</h3>
                     <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm">
                       Payment and subscription details will appear here once configured.
                     </p>
@@ -322,7 +325,7 @@ export default async function ClientDetailPage({
                       size="sm"
                       className="bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      Set up billing
+                      {t('SET_UP_BILLING')}
                     </Button>
                   </div>
                 </div>
