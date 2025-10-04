@@ -16,6 +16,11 @@ export interface TagsResponse {
   error?: string;
 }
 
+export interface SingleTagResponse {
+  tag: TagData;
+  success: boolean;
+  message?: string;
+}
 
 export interface UpdateTagData extends TagData {}
 
@@ -32,35 +37,42 @@ export const tagsKeys = {
 const tagsApi = {
   // Get tags with pagination
   getTags: async (page: number = 1, limit: number = 10): Promise<TagsResponse> => {
-    const response = await serverClient.get<TagsResponse>(`/api/admin/tags?page=${page}&limit=${limit}`);
+    const response = await serverClient.get<{ success: boolean; data: TagsResponse }>(`/api/admin/tags?page=${page}&limit=${limit}`);
     
     if (!apiUtils.isSuccess(response)) {
       throw new Error(response.error || 'Failed to fetch tags');
     }
     
-    return response.data;
+    return response.data.data;
   },
 
   // Create tag
-  createTag: async (data: TagData): Promise<TagsResponse> => {
-    const response = await serverClient.post<TagsResponse>('/api/admin/tags', data);
-    
+  createTag: async (data: TagData): Promise<SingleTagResponse> => {
+    const response = await serverClient.post<{ success: boolean; tag: TagData }>('/api/admin/tags', data);
+
     if (!apiUtils.isSuccess(response)) {
       throw new Error(response.error || 'Failed to create tag');
     }
-    
-    return response.data;
+
+    return {
+      tag: response.data.tag,
+      success: true
+    };
   },
 
   // Update tag
-  updateTag: async (id: string, data: UpdateTagData): Promise<TagsResponse> => {
-    const response = await serverClient.put<TagsResponse>(`/api/admin/tags/${id}`, data);
+  updateTag: async (id: string, data: UpdateTagData): Promise<SingleTagResponse> => {
+    const response = await serverClient.put<{ success: boolean; data: TagData; message: string }>(`/api/admin/tags/${id}`, data);
     
     if (!apiUtils.isSuccess(response)) {
       throw new Error(response.error || 'Failed to update tag');
     }
     
-    return response.data;
+    return {
+      tag: response.data.data,
+      success: true,
+      message: response.data.message
+    };
   },
 
   // Delete tag
@@ -94,10 +106,8 @@ export function useCreateTag() {
       // Invalidate and refetch tags lists
       queryClient.invalidateQueries({ queryKey: tagsKeys.lists() });
       
-      // Optionally add the new tag to the cache
-      if (data.tags && data.tags.length > 0) {
-        queryClient.setQueryData(tagsKeys.detail(data.tags[0].id), data.tags[0]);
-      }
+      // Add the new tag to the cache
+      queryClient.setQueryData(tagsKeys.detail(data.tag.id), data.tag);
     },
     onError: (error) => {
       console.error('Error creating tag:', error);
@@ -116,9 +126,7 @@ export function useUpdateTag() {
       queryClient.invalidateQueries({ queryKey: tagsKeys.lists() });
       
       // Update the specific tag in cache
-      if (data.tags && data.tags.length > 0) {
-        queryClient.setQueryData(tagsKeys.detail(variables.id), data.tags[0]);
-      }
+      queryClient.setQueryData(tagsKeys.detail(variables.id), data.tag);
     },
     onError: (error) => {
       console.error('Error updating tag:', error);
