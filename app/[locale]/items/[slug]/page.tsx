@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCategoriesName } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { ItemDetail } from "@/components/item-detail";
+import { ServerItemContent } from "@/components/item-detail/server-item-content";
 import { Container } from "@/components/ui/container";
 import { Suspense } from "react";
 
@@ -51,14 +52,21 @@ export default async function ItemDetails({
       allItems: similarItems,
     };
 
+    // Render the MDX content on the server
+    const renderedContent = (
+      <ServerItemContent 
+        content={content} 
+        noContentMessage={t("NO_CONTENT_PROVIDED")} 
+      />
+    );
+
     return (
       <Container maxWidth="7xl" padding="default">
         <Suspense fallback={<div>Loading...</div>}>
           <ItemDetail
             meta={metaWithVideo}
-            content={content}
+            renderedContent={renderedContent}
             categoryName={categoryName}
-            noContentMessage={t("NO_CONTENT_PROVIDED")}
           />
         </Suspense>
       </Container>

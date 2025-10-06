@@ -1,7 +1,6 @@
 'use client';
 import { ItemBreadcrumb } from './breadcrumb';
 import { ItemIcon } from './item-icon';
-import { ItemContent } from './item-content';
 import { slugify } from '@/lib/utils/slug';
 import { getVideoEmbedUrl } from '@/lib/utils';
 import { ShareButton } from './share-button';
@@ -30,12 +29,11 @@ export interface ItemDetailProps {
 		promo_code?: PromoCode;
 		allItems?: ItemData[];
 	};
-	content?: string | null;
+	renderedContent: React.ReactNode;
 	categoryName: string;
-	noContentMessage: string;
 }
 
-export function ItemDetail({ meta, content, categoryName, noContentMessage }: ItemDetailProps) {
+export function ItemDetail({ meta, renderedContent, categoryName }: ItemDetailProps) {
 	const t = useTranslations();
 	const tagNames = Array.isArray(meta.tags) ? meta.tags.map((tag) => (typeof tag === 'string' ? tag : tag.name)) : [];
 
@@ -153,7 +151,7 @@ export function ItemDetail({ meta, content, categoryName, noContentMessage }: It
 								</h2>
 							</div>
 							<div className="prose prose-gray dark:prose-invert prose-lg max-w-none">
-								<ItemContent content={content} noContentMessage={noContentMessage} />
+								{renderedContent}
 								<div className="flex justify-end mt-6">
 									<ReportButton contentType="item" contentId={meta.slug || meta.name} />
 								</div>
