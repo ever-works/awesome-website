@@ -176,7 +176,6 @@ interface CommentsSectionProps {
 export function CommentsSection({ itemId }: CommentsSectionProps) {
 	const { comments, isLoading, createComment, isCreating, deleteComment, isDeleting } = useComments(itemId);
 	const { user } = useCurrentUser();
-
 	const handleSubmit = useCallback(
 		async (content: string, rating: number) => {
 			try {
