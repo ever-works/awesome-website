@@ -6,9 +6,101 @@ import { ItemDetail } from "@/components/item-detail";
 import { ServerItemContent } from "@/components/item-detail/server-item-content";
 import { Container } from "@/components/ui/container";
 import { Suspense } from "react";
+import { Metadata } from "next";
+import { siteConfig } from "@/lib/config";
 
 // Disable static generation to prevent MDX compilation errors during build
 export const dynamic = 'force-dynamic';
+
+/**
+ * Generate metadata for item detail pages
+ * Includes: title, description, Open Graph, Twitter Cards, canonical URL
+ */
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ slug: string; locale: string }>;
+}): Promise<Metadata> {
+	const { slug, locale } = await params;
+
+	try {
+		const item = await fetchItem(slug, { lang: locale });
+
+		if (!item) {
+			return {
+				title: `Item Not Found | ${siteConfig.name}`,
+				description: "The item you're looking for doesn't exist.",
+				robots: {
+					index: false,
+					follow: false
+				}
+			};
+		}
+
+		const { meta } = item;
+
+		// Extract keywords from tags
+		const keywords = Array.isArray(meta.tags)
+			? meta.tags.map((tag) => (typeof tag === 'string' ? tag : tag.name))
+			: [];
+
+		// Truncate description to 160 characters for meta description
+		const MAX_DESCRIPTION_LENGTH = 160;
+		const metaDescription = meta.description
+			? meta.description.length > MAX_DESCRIPTION_LENGTH
+				? `${meta.description.slice(0, MAX_DESCRIPTION_LENGTH - 3)}...`
+				: meta.description
+			: `Discover ${meta.name} on ${siteConfig.name}`;
+
+		// Use dynamic OG image endpoint, with fallback to icon or logo
+		const ogImageUrl = new URL(`/${locale}/items/${slug}/opengraph-image`, siteConfig.url).toString();
+		const fallbackImageUrl = new URL(meta.icon_url ?? siteConfig.logo, siteConfig.url).toString();
+
+		return {
+			title: `${meta.name} | ${siteConfig.name}`,
+			description: metaDescription,
+			keywords,
+			openGraph: {
+				title: meta.name,
+				description: meta.description || metaDescription,
+				images: [
+					{
+						url: ogImageUrl,
+						width: 1200,
+						height: 630,
+						alt: meta.name
+					},
+					{
+						url: fallbackImageUrl,
+						alt: `${meta.name} icon`
+					}
+				],
+				type: 'website',
+				siteName: siteConfig.name,
+				url: `${siteConfig.url}/${locale}/items/${slug}`
+			},
+			twitter: {
+				card: 'summary_large_image',
+				title: meta.name,
+				description: metaDescription,
+				images: [ogImageUrl, fallbackImageUrl]
+			},
+			alternates: {
+				canonical: `${siteConfig.url}/${locale}/items/${slug}`
+			}
+		};
+	} catch (error) {
+		console.error(`Failed to generate metadata for item ${slug}:`, error);
+		return {
+			title: `Error | ${siteConfig.name}`,
+			description: 'An error occurred while loading this page.',
+			robots: {
+				index: false,
+				follow: false
+			}
+		};
+	}
+}
 
 // Remove generateStaticParams to prevent build-time MDX compilation
 // export async function generateStaticParams() {
