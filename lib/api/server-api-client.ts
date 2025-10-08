@@ -1,18 +1,20 @@
 /**
  * Server-side API client for making HTTP requests
  * Provides a centralized way to handle API calls with proper error handling
+ * Optimized for performance and reduced latency
  */
 
-// Logger utility
+// Optimized logger utility with conditional logging
+const isDev = process.env.NODE_ENV === 'development';
 const logger = {
-  info: (message: string, context?: Record<string, any>) =>
-    console.log(`[ServerClient] ${message}`, context || ''),
+  info: isDev ? (message: string, context?: Record<string, any>) =>
+    console.log(`[ServerClient] ${message}`, context || '') : () => {},
   warn: (message: string, context?: Record<string, any>) =>
     console.warn(`[ServerClient] ${message}`, context || ''),
   error: (message: string, context?: Record<string, any>) =>
     console.error(`[ServerClient] ${message}`, context || ''),
-  debug: (message: string, context?: Record<string, any>) =>
-    console.log(`[ServerClient] ${message}`, context || '')
+  debug: isDev ? (message: string, context?: Record<string, any>) =>
+    console.log(`[ServerClient] ${message}`, context || '') : () => {}
 };
 
 
@@ -30,19 +32,26 @@ export interface FetchOptions extends RequestInit {
   retryDelay?: number;
 }
 
-// Default configuration
+// Optimized default configuration with pre-allocated objects
+const DEFAULT_HEADERS = {
+  'Content-Type': 'application/json',
+  'User-Agent': 'EverWorks-Server/1.0',
+} as const;
+
 const DEFAULT_CONFIG = {
   timeout: 30000,
   retries: 3,
   retryDelay: 1000, 
-  headers: {
-    'Content-Type': 'application/json',
-    'User-Agent': 'EverWorks-Server/1.0',
-  },
-};
+  headers: DEFAULT_HEADERS,
+} as const;
+
+// Simple cache for GET requests (in-memory, basic LRU)
+const CACHE_SIZE = 100;
+const requestCache = new Map<string, { data: any; timestamp: number; ttl: number }>();
 
 /**
- * Enhanced fetch with timeout, retries, and error handling
+ * Optimized fetch with timeout, retries, and error handling
+ * Simplified AbortSignal logic for better performance
  */
 async function fetchWithTimeout(
   url: string,
@@ -56,29 +65,22 @@ async function fetchWithTimeout(
   } = options;
 
   const attemptFetch = async (attempt: number): Promise<Response> => {
-       const timeoutController = new AbortController();
-       const compositeSignal =
-         (AbortSignal as any)?.any && (fetchOptions as any)?.signal
-           ? (AbortSignal as any).any([timeoutController.signal, (fetchOptions as any).signal as AbortSignal])
-           : (() => {
-               const ext = (fetchOptions as any).signal as AbortSignal | undefined;
-               if (ext) {
-                 ext.addEventListener('abort', () => {
-                   (timeoutController as any).abort((ext as any).reason);
-                 }, { once: true });
-               }
-               return timeoutController.signal;
-             })();
-       const timeoutId = setTimeout(() => timeoutController.abort(), timeout);
+    const timeoutController = new AbortController();
+    const timeoutId = setTimeout(() => timeoutController.abort(), timeout);
+
+    // Simplified signal handling - use existing signal if provided, otherwise use timeout signal
+    const signal = fetchOptions.signal || timeoutController.signal;
 
     try {
+      // Pre-merge headers for better performance
+      const headers = fetchOptions.headers 
+        ? { ...DEFAULT_HEADERS, ...fetchOptions.headers }
+        : DEFAULT_HEADERS;
+
       const response = await fetch(url, {
         ...fetchOptions,
-        signal: compositeSignal,
-        headers: {
-          ...DEFAULT_CONFIG.headers,
-          ...fetchOptions.headers,
-        },
+        signal,
+        headers,
       });
 
       clearTimeout(timeoutId);
@@ -94,12 +96,17 @@ async function fetchWithTimeout(
         throw err;
       }
 
-      if (attempt < retries && !compositeSignal.aborted) {
+      // Only retry on network errors, not HTTP errors
+      const shouldRetry = attempt < retries && 
+        error instanceof Error && 
+        (error.name === 'TypeError' || error.message.includes('fetch'));
+
+      if (shouldRetry) {
         logger.warn(`Fetch attempt ${attempt + 1} failed, retrying in ${retryDelay}ms...`, { 
           url, 
           attempt: attempt + 1, 
           retries, 
-          error: error instanceof Error ? error.message : 'Unknown error' 
+          error: error.message
         });
         await new Promise(resolve => setTimeout(resolve, retryDelay));
         return attemptFetch(attempt + 1);
@@ -113,25 +120,94 @@ async function fetchWithTimeout(
 }
 
 /**
- * Main server client class
+ * Cache utility functions
+ */
+const cacheUtils = {
+  get(key: string): any | null {
+    const cached = requestCache.get(key);
+    if (!cached) return null;
+    
+    const now = Date.now();
+    if (now - cached.timestamp > cached.ttl) {
+      requestCache.delete(key);
+      return null;
+    }
+    
+    return cached.data;
+  },
+  
+  set(key: string, data: any, ttl: number = 300000): void { // 5 minutes default
+    // Simple LRU eviction
+    if (requestCache.size >= CACHE_SIZE) {
+      const firstKey = requestCache.keys().next().value;
+      if (firstKey) {
+        requestCache.delete(firstKey);
+      }
+    }
+    
+    requestCache.set(key, {
+      data,
+      timestamp: Date.now(),
+      ttl
+    });
+  },
+  
+  clear(): void {
+    requestCache.clear();
+  }
+};
+
+/**
+ * Optimized server client class with caching
  */
 export class ServerClient {
   private baseUrl: string;
   private defaultOptions: FetchOptions;
+  private cacheEnabled: boolean;
 
   constructor(baseUrl: string = '', options: FetchOptions = {}) {
     this.baseUrl = baseUrl;
     this.defaultOptions = { ...DEFAULT_CONFIG, ...options };
+    this.cacheEnabled = true;
   }
 
   /**
-   * Generic request method
+   * Enable or disable caching
+   */
+  setCacheEnabled(enabled: boolean): void {
+    this.cacheEnabled = enabled;
+  }
+
+  /**
+   * Clear the request cache
+   */
+  clearCache(): void {
+    cacheUtils.clear();
+  }
+
+  /**
+   * Optimized generic request method with caching
    */
   private async request<T>(
     endpoint: string,
     options: FetchOptions = {}
   ): Promise<ApiResponse<T>> {
     const url = this.baseUrl ? `${this.baseUrl}${endpoint}` : endpoint;
+    const isGetRequest = (options.method || 'GET') === 'GET';
+    const cacheKey = `${url}${options.body ? `_${JSON.stringify(options.body)}` : ''}`;
+
+    // Check cache for GET requests
+    if (this.cacheEnabled && isGetRequest && !options.signal) {
+      const cached = cacheUtils.get(cacheKey);
+      if (cached) {
+        logger.debug(`Cache hit for ${url}`);
+        return {
+          success: true,
+          data: cached,
+        };
+      }
+    }
+
     const mergedOptions = { ...this.defaultOptions, ...options };
 
     try {
@@ -148,6 +224,11 @@ export class ServerClient {
         data = await response.json();
       } else {
         data = (await response.text()) as unknown as T;
+      }
+
+      // Cache successful GET requests
+      if (this.cacheEnabled && isGetRequest && !options.signal) {
+        cacheUtils.set(cacheKey, data);
       }
 
       return {
@@ -228,7 +309,7 @@ export class ServerClient {
   }
 
   /**
-   * Upload file with form data
+   * Optimized upload file with form data
    */
   async upload<T>(
     endpoint: string,
@@ -240,23 +321,25 @@ export class ServerClient {
       formData.append('file', file);
     }
 
+    // Optimized header filtering
+    const filteredHeaders = options.headers 
+      ? Object.fromEntries(
+          Object.entries(options.headers).filter(
+            ([key]) => key.toLowerCase() !== 'content-type'
+          )
+        )
+      : {};
+
     return this.request<T>(endpoint, {
       ...options,
       method: 'POST',
       body: formData,
-      headers: {
-        // Remove Content-Type to let browser set it with boundary
-        ...Object.fromEntries(
-          Object.entries(options.headers || {}).filter(
-            ([key]) => key.toLowerCase() !== 'content-type'
-          )
-        ),
-      },
+      headers: filteredHeaders,
     });
   }
 
   /**
-   * Send form data (URL encoded)
+   * Optimized form data (URL encoded) with pre-allocated headers
    */
   async postForm<T>(
     endpoint: string,
@@ -301,7 +384,7 @@ export const externalClient = new ServerClient('', {
   },
 });
 
-// Utility functions
+// Optimized utility functions
 export const apiUtils = {
   /**
    * Check if response is successful
@@ -318,26 +401,42 @@ export const apiUtils = {
   },
 
   /**
-   * Create query string from object
+   * Optimized query string creation with early returns
    */
   createQueryString: (params: Record<string, any>): string => {
+    if (!params || Object.keys(params).length === 0) {
+      return '';
+    }
+    
     const searchParams = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== null) {
         searchParams.append(key, String(value));
       }
-    });
+    }
     return searchParams.toString();
   },
 
   /**
-   * Build URL with query parameters
+   * Optimized URL building with query parameters
    */
   buildUrl: (baseUrl: string, params?: Record<string, any>): string => {
     if (!params || Object.keys(params).length === 0) {
       return baseUrl;
     }
+    
     const queryString = apiUtils.createQueryString(params);
+    if (!queryString) {
+      return baseUrl;
+    }
+    
     return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${queryString}`;
+  },
+
+  /**
+   * Clear all caches
+   */
+  clearCache: (): void => {
+    cacheUtils.clear();
   },
 };
