@@ -4,6 +4,7 @@
  */
 
 import { serverClient } from '@/lib/api/server-api-client';
+import { buildUrl } from '@/lib/utils/url-cleaner';
 
 export interface PaymentAccount {
   id: string;
@@ -34,13 +35,12 @@ export class PaymentAccountClient {
   private getApiUrl(path: string): string {
     // If baseUrl is provided, use it
     if (this.baseUrl) {
-      return `${this.baseUrl}${path}`;
+      return buildUrl(path, this.baseUrl);
     }
     
     // For server-side calls, construct absolute URL
     if (typeof window === 'undefined') {
-      const host = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-      return `${host}${path}`;
+      return buildUrl(path);
     }
     
     // For client-side calls, use relative URL
