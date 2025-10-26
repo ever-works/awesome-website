@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { surveyApiClient } from '@/lib/api/survey-api.client';
 import type { Survey } from '@/lib/db/schema';
 import { toast } from 'sonner';
 import { ArrowLeft } from 'lucide-react';
 import { SurveysListClient } from './surveys-list-client';
-import { SurveyTypeEnum } from '@/lib/constants';
+import { SurveyTypeEnum } from '@/lib/types/survey';
 import { Logger } from '@/lib/logger';
 import { useTranslations } from 'next-intl';
 

@@ -5,6 +5,7 @@ import { getStatusColor, getTypeColor } from '@/components/surveys/utils/survey-
 import { Container } from '@/components/ui/container';
 import { Survey } from '@/lib/db/schema';
 import { Logger } from '@/lib/logger';
+import { SurveyTypeEnum, SurveyStatusEnum } from '@/lib/types/survey';
 
 const logger = Logger.create('SurveysPage');
 
@@ -19,8 +20,8 @@ export default async function SurveysPage() {
 
     try {
         const result = await surveyService.getMany({
-            type: 'global',
-            status: 'published'
+            type: SurveyTypeEnum.GLOBAL,
+            status: SurveyStatusEnum.PUBLISHED
         });
         publishedSurveys = result.surveys || [];
     } catch (error) {
@@ -38,7 +39,7 @@ export default async function SurveysPage() {
 
                 {publishedSurveys.length === 0 ? (
                     <div className="text-center py-16">
-                        <p className="text-gray-500 dark:text-gray-400">No surveys available at this time.</p>
+                    <p className="text-gray-500 dark:text-gray-400">No surveys available at this time.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
