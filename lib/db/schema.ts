@@ -515,7 +515,8 @@ export enum ActivityType {
 	VERIFY_EMAIL = 'VERIFY_EMAIL',
 	UPDATE_PASSWORD = 'UPDATE_PASSWORD',
 	DELETE_ACCOUNT = 'DELETE_ACCOUNT',
-	UPDATE_ACCOUNT = 'UPDATE_ACCOUNT'
+	UPDATE_ACCOUNT = 'UPDATE_ACCOUNT',
+	UPDATE_TWENTY_CRM_CONFIG = 'UPDATE_TWENTY_CRM_CONFIG'
 }
 
 // ######################### Client Profile Types #########################
@@ -583,6 +584,42 @@ export type NewFavorite = typeof favorites.$inferInsert;
 export type FavoriteWithUser = Favorite & {
   user: typeof users.$inferSelect;
 };
+
+// ######################### Twenty CRM Config Schema #########################
+/**
+ * Twenty CRM Configuration Table
+ *
+ * This table stores the Twenty CRM integration configuration.
+ *
+ * IMPORTANT: This table enforces a singleton pattern via a unique index on ((true)),
+ * which ensures only ONE configuration row can exist. This is enforced by migration
+ * 0006_add_twenty_crm_singleton_constraint.sql and prevents data inconsistencies.
+ *
+ * The singleton constraint is not visible in Drizzle schema definition as it uses
+ * an expression-based index, but it is enforced at the database level.
+ */
+export const twentyCrmConfig = pgTable("twenty_crm_config", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  baseUrl: text("base_url").notNull(),
+  apiKey: text("api_key").notNull(),
+  enabled: boolean("enabled").notNull().default(false),
+  syncMode: text("sync_mode", { enum: ["disabled", "platform", "direct_crm"] })
+    .notNull()
+    .default("disabled"),
+  createdBy: text("created_by"),
+  updatedBy: text("updated_by"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => ({
+  enabledIndex: index("twenty_crm_config_enabled_idx").on(table.enabled),
+  syncModeIndex: index("twenty_crm_config_sync_mode_idx").on(table.syncMode),
+  updatedAtIndex: index("twenty_crm_config_updated_at_idx").on(table.updatedAt),
+}));
+
+export type TwentyCrmConfigRow = typeof twentyCrmConfig.$inferSelect;
+export type NewTwentyCrmConfigRow = typeof twentyCrmConfig.$inferInsert;
 
 // ######################### Companies Schema #########################
 export const companies = pgTable("companies", {
