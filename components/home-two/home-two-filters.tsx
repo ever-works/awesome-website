@@ -30,14 +30,16 @@ export function HomeTwoFilters({
   tags,
   onFilterChange,
 }: Home2FiltersProps) {
-  const { 
-    searchTerm, 
-    setSearchTerm, 
-    setSortBy, 
+  const {
+    searchTerm,
+    setSearchTerm,
+    setSortBy,
     sortBy,
     selectedCategories,
     toggleSelectedCategory,
-    clearSelectedCategories
+    clearSelectedCategories,
+    selectedTags,
+    toggleSelectedTag
   } = useFilters();
 
   const handleCategoryToggle = (categoryId: string) => {
@@ -46,6 +48,11 @@ export function HomeTwoFilters({
     } else {
       toggleSelectedCategory(categoryId);
     }
+    onFilterChange?.();
+  };
+
+  const handleTagToggle = (tagId: string) => {
+    toggleSelectedTag(tagId);
     onFilterChange?.();
   };
 
@@ -75,7 +82,11 @@ export function HomeTwoFilters({
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1">
             <HomeTwoSortSelector setSortBy={handleSortChange} sortBy={sortBy} />
-            <HomeTwoTagsSelector tags={tags} />
+            <HomeTwoTagsSelector
+              tags={tags}
+              selectedTags={selectedTags}
+              onTagToggle={handleTagToggle}
+            />
           </div>
           <LayoutSettings />
         </div>
@@ -86,7 +97,11 @@ export function HomeTwoFilters({
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <HomeTwoSortSelector setSortBy={handleSortChange} sortBy={sortBy} />
-              <HomeTwoTagsSelector tags={tags} />
+              <HomeTwoTagsSelector
+                tags={tags}
+                selectedTags={selectedTags}
+                onTagToggle={handleTagToggle}
+              />
             </div>
             <LayoutSettings />
           </div>
@@ -105,7 +120,11 @@ export function HomeTwoFilters({
         {/* Left Side: Sort and Tags */}
         <div className="flex items-center gap-3">
           <HomeTwoSortSelector setSortBy={handleSortChange} sortBy={sortBy} />
-          <HomeTwoTagsSelector tags={tags} />
+          <HomeTwoTagsSelector
+            tags={tags}
+            selectedTags={selectedTags}
+            onTagToggle={handleTagToggle}
+          />
         </div>
         
         <div className="flex items-center gap-3">
