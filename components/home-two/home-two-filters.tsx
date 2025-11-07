@@ -7,6 +7,10 @@ import { SearchInput } from "../ui/search-input";
 import { HomeTwoCategories } from "./home-two-categories";
 import { LayoutKey } from "../layouts";
 import { SortOption } from "../filters/types";
+import { LayoutSettings } from "../layout-settings";
+import { Button } from "@heroui/react";
+import { useState } from "react";
+import clsx from "clsx";
 
 const SORT_OPTIONS: SortOption[] = [
   'popularity',
@@ -15,7 +19,13 @@ const SORT_OPTIONS: SortOption[] = [
   'date-desc',
   'date-asc',
 ];
-import { LayoutSettings } from "../layout-settings";
+
+// Style constants
+const FILTERS_CONTAINER = "space-y-3 sm:space-y-4";
+const MOBILE_FILTERS = "block sm:hidden space-y-3";
+const TABLET_FILTERS = "hidden sm:block md:hidden";
+const DESKTOP_FILTERS = "hidden md:flex justify-between items-center gap-4";
+const FILTERS_GROUP = "flex items-center gap-3";
 
 type Home2FiltersProps = {
   categories: Category[];
@@ -23,12 +33,16 @@ type Home2FiltersProps = {
   layoutKey: LayoutKey;
   setLayoutKey: (layoutKey: LayoutKey) => void;
   onFilterChange?: () => void;
+  totalCount?: number;
+  filteredCount?: number;
 };
 
 export function HomeTwoFilters({
   categories,
   tags,
   onFilterChange,
+  totalCount,
+  filteredCount,
 }: Home2FiltersProps) {
   const {
     searchTerm,
@@ -41,6 +55,8 @@ export function HomeTwoFilters({
     selectedTags,
     toggleSelectedTag
   } = useFilters();
+
+  const [showAllCategories, setShowAllCategories] = useState(false);
 
   const handleCategoryToggle = (categoryId: string) => {
     if (categoryId === "clear-all") {
@@ -69,8 +85,9 @@ export function HomeTwoFilters({
   };
 
   return (
-    <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
-      <div className="block sm:hidden space-y-3">
+    <div className={FILTERS_CONTAINER}>
+      {/* Mobile Layout */}
+      <div className={MOBILE_FILTERS}>
         <div className="w-full">
           <SearchInput
             searchTerm={searchTerm}
@@ -78,7 +95,7 @@ export function HomeTwoFilters({
             className="w-full"
           />
         </div>
-        
+
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1">
             <HomeTwoSortSelector setSortBy={handleSortChange} sortBy={sortBy} />
@@ -92,10 +109,11 @@ export function HomeTwoFilters({
         </div>
       </div>
 
-      <div className="hidden sm:block md:hidden">
+      {/* Tablet Layout */}
+      <div className={TABLET_FILTERS}>
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+            <div className={FILTERS_GROUP}>
               <HomeTwoSortSelector setSortBy={handleSortChange} sortBy={sortBy} />
               <HomeTwoTagsSelector
                 tags={tags}
@@ -105,7 +123,7 @@ export function HomeTwoFilters({
             </div>
             <LayoutSettings />
           </div>
-          
+
           <div className="w-full">
             <SearchInput
               searchTerm={searchTerm}
@@ -116,9 +134,10 @@ export function HomeTwoFilters({
         </div>
       </div>
 
-      <div className="hidden md:flex justify-between items-center gap-4">
+      {/* Desktop Layout */}
+      <div className={DESKTOP_FILTERS}>
         {/* Left Side: Sort and Tags */}
-        <div className="flex items-center gap-3">
+        <div className={FILTERS_GROUP}>
           <HomeTwoSortSelector setSortBy={handleSortChange} sortBy={sortBy} />
           <HomeTwoTagsSelector
             tags={tags}
@@ -126,26 +145,108 @@ export function HomeTwoFilters({
             onTagToggle={handleTagToggle}
           />
         </div>
-        
-        <div className="flex items-center gap-3">
+
+        {/* Right Side: Search and Layout */}
+        <div className={FILTERS_GROUP}>
           <div className="w-64 lg:w-80 xl:w-96">
             <SearchInput
               searchTerm={searchTerm}
               setSearchTerm={handleSearchChange}
             />
           </div>
-
           <LayoutSettings />
         </div>
       </div>
 
-      <HomeTwoCategories 
+      <HomeTwoCategories
         categories={categories}
         mode="filter"
         selectedCategories={selectedCategories}
         onCategoryToggle={handleCategoryToggle}
         totalItems={categories.reduce((sum, cat) => sum + (cat.count || 0), 0)}
+        showAllCategories={showAllCategories}
       />
+
+      {/* New Row: Items count and Toggle button */}
+      <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800">
+        {/* Left: Showing X of Y items */}
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          {filteredCount !== undefined && totalCount !== undefined ? (
+            filteredCount === totalCount ? (
+              <span>Showing {totalCount} items</span>
+            ) : (
+              <span>Showing {filteredCount} of {totalCount} items</span>
+            )
+          ) : null}
+        </div>
+
+        {/* Right: Show all categories toggle button */}
+        {categories.length > 5 && (
+          <Button
+            className={clsx(
+              "px-4 py-1.5 font-medium transition-all duration-300 rounded-full",
+              "text-theme-primary bg-theme-primary-10",
+              "hover:bg-theme-primary-20 hover:shadow-sm hover:scale-105",
+              "active:scale-95",
+              "text-xs sm:text-sm h-8",
+              "focus:outline-none focus:ring-2 focus:ring-theme-primary-300 focus:ring-offset-2"
+            )}
+            onPress={() => setShowAllCategories(!showAllCategories)}
+            aria-expanded={showAllCategories}
+            aria-label={
+              showAllCategories
+                ? "Collapse categories to single row"
+                : `Expand to show all ${categories.length} categories`
+            }
+          >
+            {showAllCategories ? (
+              <>
+                <span className="hidden sm:inline">Show as single row</span>
+                <span className="sm:hidden">Single row</span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="ml-1.5 transition-transform"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 10h18M3 14h18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </>
+            ) : (
+              <>
+                <span className="hidden sm:inline">
+                  Show all {categories.length} categories
+                </span>
+                <span className="sm:hidden">All categories</span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="ml-1.5 transition-transform"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M4 4h16v7H4V4zm0 9h16v7H4v-7z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </>
+            )}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

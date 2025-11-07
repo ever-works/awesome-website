@@ -16,7 +16,41 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import Image from "next/image";
+import clsx from "clsx";
 import { usePortal } from "@/hooks/use-portal";
+
+// Style constants
+const SCROLL_CONTAINER_STYLES = clsx(
+  "relative flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 pr-8 scroll-smooth",
+  "[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
+  "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1",
+  "after:bg-gradient-to-r after:from-transparent after:via-blue-100/20 after:to-transparent",
+  "dark:after:via-blue-900/10"
+);
+
+const SCROLL_FADE_LEFT = clsx(
+  "absolute left-0 top-0 bottom-4 w-16 pointer-events-none z-[5]",
+  "bg-gradient-to-r from-white via-white/80 to-transparent",
+  "dark:from-gray-900 dark:via-gray-900/80",
+  "opacity-0 transition-opacity duration-300"
+);
+
+const SCROLL_FADE_RIGHT = clsx(
+  "absolute right-0 top-0 bottom-4 w-16 pointer-events-none z-[5]",
+  "bg-gradient-to-l from-white via-white/80 to-transparent",
+  "dark:from-gray-900 dark:via-gray-900/80",
+  "opacity-0 transition-opacity duration-300"
+);
+
+const STICKY_LEFT_STYLES = clsx(
+  "sticky left-0 flex-shrink-0 z-10 pr-7",
+  "bg-gradient-to-r from-white via-white to-transparent",
+  "dark:from-gray-900 dark:via-gray-900"
+);
+
+const CATEGORIES_WRAPPER_BASE = "flex items-center gap-2 sm:gap-3 transition-all duration-500";
+const CATEGORIES_WRAPPER_COLLAPSED = clsx(CATEGORIES_WRAPPER_BASE, "flex-nowrap");
+const CATEGORIES_WRAPPER_EXPANDED = clsx(CATEGORIES_WRAPPER_BASE, "flex-wrap");
 
 type Home2CategoriesProps = {
   categories: Category[];
@@ -26,6 +60,7 @@ type Home2CategoriesProps = {
   selectedCategories?: string[];
   onCategoryToggle?: (categoryId: string | "clear-all") => void;
   totalItems?: number;
+  showAllCategories?: boolean;
 };
 
 type CategoryButtonProps = {
@@ -168,6 +203,7 @@ export function HomeTwoCategories({
   selectedCategories = [],
   onCategoryToggle,
   totalItems,
+  showAllCategories = false,
 }: Home2CategoriesProps) {
   const t = useTranslations("listing");
   const tCommon = useTranslations("common");
@@ -177,6 +213,8 @@ export function HomeTwoCategories({
   const allCategoriesCount = totalItems ?? calculatedTotalItems;
   const [selectedCategory, setSelectedCategory] = useState("");
   const [hiddenCategories, setHiddenCategories] = useState<Category[]>([]);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const [isMorePopoverOpen, setIsMorePopoverOpen] = useState(false);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -204,7 +242,7 @@ export function HomeTwoCategories({
             onClick={() => onCategoryToggle?.(category.id)}
             ref={
               index !== undefined
-                ? (el) => (categoriesRef.current[index] = el as any)
+                ? (el) => { categoriesRef.current[index] = el; }
                 : undefined
             }
           />
@@ -227,7 +265,7 @@ export function HomeTwoCategories({
             fullName={category.name}
             ref={
               index !== undefined
-                ? (el) => (categoriesRef.current[index] = el as any)
+                ? (el) => { categoriesRef.current[index] = el; }
                 : undefined
             }
           />
@@ -241,6 +279,36 @@ export function HomeTwoCategories({
     () => categories.map((category, index) => renderCategory(category, index)),
     [categories, renderCategory]
   );
+
+  // Update scroll indicators
+  const updateScrollIndicators = useCallback(() => {
+    if (scrollContainerRef.current && !showAllCategories) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    } else {
+      setCanScrollLeft(false);
+      setCanScrollRight(false);
+    }
+  }, [showAllCategories]);
+
+  // Initialize and update scroll indicators
+  useEffect(() => {
+    updateScrollIndicators();
+    const container = scrollContainerRef.current;
+    if (container) {
+      const resizeObserver = new ResizeObserver(updateScrollIndicators);
+      resizeObserver.observe(container);
+      return () => resizeObserver.disconnect();
+    }
+  }, [updateScrollIndicators, categories]);
+
+  // Fix flickering: Reset hiddenCategories when toggling between collapsed/expanded views
+  useEffect(() => {
+    setHiddenCategories([]);
+    setCanScrollLeft(false);
+    setCanScrollRight(false);
+  }, [showAllCategories]);
 
   useEffect(() => {
     if (isHomeActive) {
@@ -377,13 +445,15 @@ export function HomeTwoCategories({
 
       {/* Desktop Categories - Enhanced */}
       <div className="hidden md:block">
-        <div className="flex flex-col gap-4">
-          <div
+        <div
             ref={scrollContainerRef}
             onScroll={(e) => {
-              if (scrollContainerRef.current) {
+              // Only track scroll when in collapsed mode
+              if (scrollContainerRef.current && !showAllCategories) {
                 const container = e.currentTarget;
-         
+                const containerRect = container.getBoundingClientRect();
+                // Add threshold to detect categories earlier (50px before they're fully hidden)
+                const visibilityThreshold = 50;
 
                 const visible: string[] = [];
                 const hidden: Category[] = [];
@@ -392,12 +462,13 @@ export function HomeTwoCategories({
                   const el = categoriesRef.current[index];
                   if (el) {
                     const rect = el.getBoundingClientRect();
-                    const containerRect = container.getBoundingClientRect();
 
-                    if (
-                      rect.left >= containerRect.left &&
-                      rect.right <= containerRect.right
-                    ) {
+                    // Check if element is visible within container bounds with threshold
+                    const isVisible =
+                      rect.left >= containerRect.left - visibilityThreshold &&
+                      rect.right <= containerRect.right + visibilityThreshold;
+
+                    if (isVisible) {
                       visible.push(category.id);
                     } else {
                       hidden.push(category);
@@ -406,12 +477,31 @@ export function HomeTwoCategories({
                 });
 
                 setHiddenCategories(hidden);
+                updateScrollIndicators();
               }
             }}
-            className="relative flex items-center gap-3 overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-gradient-to-r after:from-transparent after:via-blue-100/20 after:to-transparent dark:after:via-blue-900/10"
+            className={showAllCategories ? "relative pb-4 pr-8 transition-all duration-500" : SCROLL_CONTAINER_STYLES}
+            role="region"
+            aria-label="Categories filter"
           >
-            <div className="flex items-center gap-2 sm:gap-3 flex-nowrap">
-              <div className="sticky left-0 flex-shrink-0 bg-gradient-to-r from-white dark:from-gray-900 via-white dark:via-gray-900 to-transparent pr-7 z-10 pl-1 py-1">
+            {/* Scroll fade indicators */}
+            {!showAllCategories && canScrollLeft && (
+              <div
+                className={SCROLL_FADE_LEFT}
+                style={{ opacity: canScrollLeft ? 1 : 0 }}
+                aria-hidden="true"
+              />
+            )}
+            {!showAllCategories && canScrollRight && (
+              <div
+                className={SCROLL_FADE_RIGHT}
+                style={{ opacity: canScrollRight ? 1 : 0 }}
+                aria-hidden="true"
+              />
+            )}
+
+            <div className={showAllCategories ? CATEGORIES_WRAPPER_EXPANDED : CATEGORIES_WRAPPER_COLLAPSED}>
+              <div className={showAllCategories ? "" : STICKY_LEFT_STYLES}>
                 <style jsx global>{`
                   .hover-lift {
                     transition: transform 0.2s ease;
@@ -487,7 +577,6 @@ export function HomeTwoCategories({
               )}
             </div>
           </div>
-        </div>
       </div>
     </div>
   );
