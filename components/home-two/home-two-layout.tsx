@@ -98,7 +98,7 @@ export function HomeTwoLayout(props: Home2LayoutProps) {
           categories={props.categories}
           tags={props.tags}
           items={paginatedItems}
-          config={CardPresets.showViewToggle}
+          config={CardPresets.homeTwoListing}
         />
         {totalPagesCount > 1 && (
           <div className="mt-8 flex items-center justify-center">
