@@ -1,6 +1,7 @@
 import { fetchItems } from "@/lib/content";
 import Listing from "../../(listing)/listing";
 import { Suspense } from "react";
+import { ListingSkeleton } from "@/components/ui/skeleton";
 
 export const revalidate = 10;
 
@@ -29,7 +30,7 @@ export default async function CategoryListing({
   const decodedCategory = decodeURIComponent(category);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<ListingSkeleton />}>
       <Listing
         categories={categories}
         tags={tags}
