@@ -18,7 +18,7 @@ type ItemProps = ItemData & {
 	onNavigate?: () => void;
 };
 
-const TAG_BUTTON_BASE_CLASS = 'text-xs transition-all duration-300 cursor-pointer text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:scale-105 font-medium px-2 py-1 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20';
+const TAG_BUTTON_BASE_CLASS = 'text-xs transition-all duration-300 cursor-pointer text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:scale-105 font-medium px-1 py-0.5 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20';
 
 export default function Item(props: ItemProps) {
 	const pathname = usePathname();
@@ -165,7 +165,7 @@ export default function Item(props: ItemProps) {
 						</p>
 
 						{/* Enhanced Hashtags */}
-						<div className="flex flex-wrap gap-2">
+						<div className="flex flex-wrap gap-0.5">
 							{props.tags &&
 								Array.isArray(props.tags) &&
 								props.tags.slice(0, 4).map((tag, index) => {
