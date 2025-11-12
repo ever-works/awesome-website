@@ -120,7 +120,7 @@ export default function GlobalsClient(props: ListingProps) {
 						<div className="mb-6 sm:mb-8 md:mb-10">
 							<ListingClient
 								{...props}
-								items={props.items}
+								items={filteredItems}
 							/>
 						</div>
 					</div>
