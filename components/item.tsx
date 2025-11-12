@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Card, CardHeader, CardBody, cn, Spinner } from '@heroui/react';
 import { FiArrowUpRight, FiFolder } from 'react-icons/fi';
 import { useFilters } from '@/components/filters/context/filter-context';
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { PromoCodeComponent } from './promo-code';
 import { FavoriteButton } from './favorite-button';
 import { useSession } from 'next-auth/react';
@@ -21,8 +21,8 @@ type ItemProps = ItemData & {
 const TAG_BUTTON_BASE_CLASS = 'text-xs transition-all duration-300 cursor-pointer text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:scale-105 font-medium px-2 py-1 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20';
 
 export default function Item(props: ItemProps) {
-	const pathname = usePathname();
-	const locale = pathname.split('/')[1] || '';
+	const params = useParams();
+	const locale = params?.locale as string | undefined;
 	const { data: session } = useSession();
 	const [isNavigating, setIsNavigating] = useState(false);
 
@@ -33,8 +33,8 @@ export default function Item(props: ItemProps) {
 		if (tag && typeof tag === 'object' && 'name' in tag) return tag.name;
 		return '';
 	};
-	const isSourceUrl = props.is_source_url_active === true ? '': `/${locale}`;
-	const getDetailPath = () => (locale ? `${isSourceUrl}/items/${props.slug}` : `/items/${props.slug}`);
+	const isSourceUrl = props.is_source_url_active === true ? '' : (locale ? `/${locale}` : '');
+	const getDetailPath = () => `${isSourceUrl}/items/${props.slug}`;
 
 	const cardClassName = cn(
 		'group relative border-0 rounded-2xl transition-all duration-700 transform hover:-translate-y-3 backdrop-blur-xl overflow-hidden h-full',
