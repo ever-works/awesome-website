@@ -34,9 +34,21 @@ class SyncManager {
    * Perform a single sync operation with mutex lock and timeout
    */
   async performSync(): Promise<SyncResult> {
+    // DEV-MODE FEATURE: Allow disabling auto-sync in development via environment variable
+    if (process.env.NODE_ENV === 'development' && process.env.DISABLE_AUTO_SYNC === 'true') {      
+      console.log('[SYNC_MANAGER] Sync disabled in development mode (DISABLE_AUTO_SYNC=true)');      
+      return {
+        success: true,
+        message: 'Sync disabled in development mode',
+        details: 'Background sync is skipped (DISABLE_AUTO_SYNC=true)'
+      };
+    }
+
     // Prevent concurrent syncs
     if (this.syncInProgress) {
-      console.log('[SYNC_MANAGER] Sync already in progress, skipping');
+      if (process.env.NODE_ENV !== 'development') {
+        console.log('[SYNC_MANAGER] Sync already in progress, skipping');
+      }
       return {
         success: false,
         message: 'Sync already in progress',
@@ -48,7 +60,10 @@ class SyncManager {
     const startTime = Date.now();
 
     try {
-      console.log('[SYNC_MANAGER] Starting background repository sync');
+      // DEV-MODE FEATURE: Reduce logging in development mode
+      if (process.env.NODE_ENV !== 'development') {
+        console.log('[SYNC_MANAGER] Starting background repository sync');
+      }
 
       // Dynamic import to prevent webpack from bundling Node.js modules
       const { trySyncRepository } = await import('@/lib/repository');
@@ -77,11 +92,15 @@ class SyncManager {
 
       this.lastSyncResult = result;
 
-      console.log(`[SYNC_MANAGER] Sync completed successfully in ${duration}ms`);
+      // DEV-MODE FEATURE: Reduce logging in development mode
+      if (process.env.NODE_ENV !== 'development') {
+        console.log(`[SYNC_MANAGER] Sync completed successfully in ${duration}ms`);
+      }
 
-      // TODO: Cache invalidation will be added in PR #2 (caching implementation)
-      // revalidateTag() requires request context, which doesn't exist in background sync
-      // For now, content is read fresh from disk on each request, so no stale cache to invalidate
+      // Invalidate content caches after successful sync
+      const { invalidateContentCaches } = await import('@/lib/cache-invalidation');
+      await invalidateContentCaches();
+      console.log('[SYNC_MANAGER] Content caches invalidated');
 
       return result;
 
@@ -89,6 +108,7 @@ class SyncManager {
       const duration = Date.now() - startTime;
       const errorMessage = error instanceof Error ? error.message : 'Unknown sync error';
 
+      // DEV-MODE FEATURE: Always log errors regardless of environment
       console.error(`[SYNC_MANAGER] Sync failed after ${duration}ms:`, error);
 
       const result: SyncResult = {
@@ -103,7 +123,9 @@ class SyncManager {
       // Retry logic
       if (this.retryCount < MAX_RETRIES) {
         this.retryCount++;
-        console.log(`[SYNC_MANAGER] Scheduling retry ${this.retryCount}/${MAX_RETRIES} in 10 seconds`);
+        if (process.env.NODE_ENV !== 'development') {
+          console.log(`[SYNC_MANAGER] Scheduling retry ${this.retryCount}/${MAX_RETRIES} in 10 seconds`);
+        }
         setTimeout(() => this.performSync(), 10000);
       } else {
         console.error(`[SYNC_MANAGER] Max retries (${MAX_RETRIES}) reached, giving up`);
@@ -135,7 +157,9 @@ class SyncManager {
    * Manually trigger a sync (for admin API)
    */
   async triggerManualSync(): Promise<SyncResult> {
-    console.log('[SYNC_MANAGER] Manual sync triggered');
+    if (process.env.NODE_ENV !== 'development') {
+      console.log('[SYNC_MANAGER] Manual sync triggered');
+    }
     return await this.performSync();
   }
 }
