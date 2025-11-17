@@ -49,3 +49,6 @@ next-env.d.ts
 analyze/
 #Ignore vscode AI rules
 .github/instructions/codacy.instructions.md
+
+.cache
+.pnpm-debug.log
