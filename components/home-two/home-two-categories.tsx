@@ -18,6 +18,7 @@ import ReactDOM from "react-dom";
 import Image from "next/image";
 import clsx from "clsx";
 import { usePortal } from "@/hooks/use-portal";
+import { useCategoriesEnabled } from "@/hooks/use-categories-enabled";
 
 // Style constants
 const SCROLL_CONTAINER_STYLES = clsx(
@@ -205,9 +206,11 @@ export function HomeTwoCategories({
   totalItems,
   showAllCategories = false,
 }: Home2CategoriesProps) {
+  const { categoriesEnabled } = useCategoriesEnabled();
   const t = useTranslations("listing");
   const tCommon = useTranslations("common");
   const router = useRouter();
+
   // Use totalItems prop for All Categories button, fallback to calculated value
   const { totalItems: calculatedTotalItems, isHomeActive, pathname } = useCategoryState(categories);
   const allCategoriesCount = totalItems ?? calculatedTotalItems;
@@ -386,6 +389,11 @@ export function HomeTwoCategories({
       }
     };
   }, [isMorePopoverOpen]);
+
+  // Don't render if categories are disabled
+  if (!categoriesEnabled) {
+    return null;
+  }
 
   // Handle category change from select
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

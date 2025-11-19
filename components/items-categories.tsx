@@ -5,6 +5,7 @@ import { Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useCategoriesEnabled } from "@/hooks/use-categories-enabled";
 
 export function ItemsCategories(props: {
     categories: Category[];
@@ -13,10 +14,11 @@ export function ItemsCategories(props: {
     enableSticky?: boolean;
     maxVisibleTags?: number;
   }) {
+    const { categoriesEnabled } = useCategoriesEnabled();
     const [showAllCategories, setShowAllCategories] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
     const pathname = usePathname();
-  
+
     useEffect(() => {
       if (props.enableSticky) {
         const handleScroll = () => {
@@ -36,7 +38,12 @@ export function ItemsCategories(props: {
       }
       return undefined;
     }, [isSticky, props.enableSticky]);
-  
+
+    // Don't render if categories are disabled
+    if (!categoriesEnabled) {
+      return null;
+    }
+
     const MAX_VISIBLE_CATEGORIES = props.maxVisibleTags || 8;
     const hasMoreTags = props.categories.length > MAX_VISIBLE_CATEGORIES;
   
