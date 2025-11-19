@@ -63,7 +63,6 @@ export default function GlobalsClient(props: ListingProps) {
 		return sortItemsWithFeatured(filtered, featuredItems);
 	}, [props.items, searchTerm, selectedTags, selectedCategories, featuredItems]);
 
-
 	// Note: URL parsing is handled by FilterURLParser in the Listing component
 	// No need to duplicate that logic here
 	// IMPORTANT: This file should NOT parse URL params - FilterURLParser handles that
