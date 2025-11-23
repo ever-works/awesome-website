@@ -15,13 +15,20 @@ import Script from 'next/script';
 import { ConditionalLayout } from '@/components/layout/conditional-layout';
 import { siteConfig } from '@/lib/config';
 import { SpeedInsights } from './integration/speed-insights';
+import { SettingsProvider } from '@/components/providers/settings-provider';
 import {
 	getCategoriesEnabled,
+	getTagsEnabled,
+	getCompaniesEnabled,
+	getSurveysEnabled,
 	getHeaderSubmitEnabled,
 	getHeaderPricingEnabled,
 	getHeaderLayoutEnabled,
 	getHeaderLanguageEnabled,
 	getHeaderThemeEnabled,
+	getHeaderLayoutDefault,
+	getHeaderPaginationDefault,
+	getHeaderThemeDefault,
 } from '@/lib/utils/settings';
 
 /**
@@ -68,21 +75,20 @@ export default async function RootLayout({
 	const config = await getCachedConfig();
 	const messages = await getMessages();
 
-	// Fetch settings server-side
+	// Read settings server-side for instant availability
+	const categoriesEnabled = getCategoriesEnabled();
+	const tagsEnabled = getTagsEnabled();
+	const companiesEnabled = getCompaniesEnabled();
+	const surveysEnabled = getSurveysEnabled();
 	const headerSettings = {
 		submitEnabled: getHeaderSubmitEnabled(),
 		pricingEnabled: getHeaderPricingEnabled(),
 		layoutEnabled: getHeaderLayoutEnabled(),
 		languageEnabled: getHeaderLanguageEnabled(),
 		themeEnabled: getHeaderThemeEnabled(),
-	};
-	const categoriesEnabled = getCategoriesEnabled();
-
-	// Merge settings into config
-	const enhancedConfig = {
-		...config,
-		headerSettings,
-		categoriesEnabled,
+		layoutDefault: getHeaderLayoutDefault(),
+		paginationDefault: getHeaderPaginationDefault(),
+		themeDefault: getHeaderThemeDefault(),
 	};
 
 	// Determine if the current locale is RTL
@@ -95,12 +101,20 @@ export default async function RootLayout({
 				</Suspense>
 				<NextIntlClientProvider messages={messages}>
 					<Toaster position="bottom-right" richColors />
-					<Providers config={enhancedConfig}>
-						<ConditionalLayout>{children}</ConditionalLayout>
-					</Providers>
+					<SettingsProvider
+						categoriesEnabled={categoriesEnabled}
+						tagsEnabled={tagsEnabled}
+						companiesEnabled={companiesEnabled}
+						surveysEnabled={surveysEnabled}
+						headerSettings={headerSettings}
+					>
+						<Providers config={config}>
+							<ConditionalLayout>{children}</ConditionalLayout>
+						</Providers>
+					</SettingsProvider>
 				</NextIntlClientProvider>
 			</PHProvider>
-			{/* 
+			{/*
 				Vercel Speed Insights Integration
 				- Automatically detects Vercel environment and Speed Insights availability
 				- Gracefully degrades when not enabled or not on a paid plan

@@ -1,8 +1,8 @@
-import { useConfig } from '@/app/[locale]/config';
+import { useSettings } from '@/components/providers/settings-provider';
 
 /**
  * Client-side hook to check if categories are enabled
- * Reads setting from ConfigContext (server-side fetched)
+ * Reads from SettingsProvider context for instant access (no loading delay)
  * @returns boolean - true if categories are enabled, false otherwise
  */
 export function useCategoriesEnabled(): {
@@ -10,14 +10,8 @@ export function useCategoriesEnabled(): {
 	loading: boolean;
 	error: Error | null;
 } {
-	const config = useConfig();
+	const { categoriesEnabled } = useSettings();
 
-	// Use server-provided setting or default to true
-	const categoriesEnabled = config.categoriesEnabled ?? true;
-
-	return {
-		categoriesEnabled,
-		loading: false,
-		error: null,
-	};
+	// No loading state since value comes from server-rendered context
+	return { categoriesEnabled, loading: false, error: null };
 }
