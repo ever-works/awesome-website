@@ -18,6 +18,7 @@ import { useSession } from "next-auth/react";
 import { LayoutSwitcher } from "../layout-switcher";
 import { NavigationControls } from "../navigation-controls";
 import { ProfileButton } from "./profile-button";
+import { MoreMenu } from "./more-menu";
 import { IconEverworksSimple } from "../icons/Icons";
 import { Container } from "../ui/container";
 import { useFeatureFlags } from "@/hooks/use-feature-flags";
@@ -254,8 +255,17 @@ export default function Header() {
   );
 
   const renderNavigationItems = useCallback(
-    () => navigationItems.map(renderNavigationItem),
-    [navigationItems, renderNavigationItem]
+    () => (
+      <>
+        {navigationItems.map(renderNavigationItem)}
+        {headerSettings.moreEnabled && (
+          <NavbarItem key="more">
+            <MoreMenu />
+          </NavbarItem>
+        )}
+      </>
+    ),
+    [navigationItems, renderNavigationItem, headerSettings.moreEnabled]
   );
 
   const renderRightSection = useCallback(
@@ -264,13 +274,13 @@ export default function Header() {
         <NavbarItem className={STYLES.largeUp}>
           <NavigationControls />
         </NavbarItem>
-        
+
         <NavbarItem>
           <div className="scale-90 sm:scale-95 md:scale-100 lg:scale-105 xl:scale-110 transition-transform duration-200">
             <ProfileButton/>
           </div>
         </NavbarItem>
-        
+
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className={STYLES.navbarMenuToggle}
@@ -311,7 +321,13 @@ export default function Header() {
               </Link>
             </NavbarMenuItem>
           ))}
-          
+
+          {headerSettings.moreEnabled && (
+            <NavbarMenuItem className={STYLES.mobileMenuItem}>
+              <MoreMenu inline onItemClick={() => setIsMenuOpen(false)} />
+            </NavbarMenuItem>
+          )}
+
           <div className={STYLES.mobileControls}>
             {headerSettings.layoutEnabled && (
               <div className="py-2 flex justify-center">
