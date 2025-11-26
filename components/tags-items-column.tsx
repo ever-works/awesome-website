@@ -72,7 +72,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
         <div className="md:hidden">
           <Accordion
             variant="bordered"
-            className="shadow-sm bg-white dark:bg-gray-900/90 border border-gray-100 dark:border-gray-700 rounded-xl transition-colors duration-300"
+            className="shadow-xs bg-white dark:bg-gray-900/90 border border-gray-100 dark:border-gray-700 rounded-xl transition-colors duration-300"
           >
             <AccordionItem
               key="1"
@@ -99,7 +99,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
           {/* Search Bar */}
           <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {/* Categories Section */}
-          <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-sm dark:shadow-lg transition-colors duration-300">
+          <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xs rounded-xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-xs dark:shadow-lg transition-colors duration-300">
             <div className="p-3 lg:p-4 border-b border-gray-200/50 dark:border-gray-700/50">
               <h2 className="text-base lg:text-lg font-semibold text-gray-900 dark:text-gray-200 transition-colors duration-300">
                 {t("TAGS")}
@@ -112,7 +112,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
   
           {/* Active Filters Section */}
           {(searchTerm || selectedTags.length > 0 || sortBy !== "popularity") && (
-            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden shadow-sm dark:shadow-lg transition-colors duration-300">
+            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xs rounded-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden shadow-xs dark:shadow-lg transition-colors duration-300">
               <div className="p-3 lg:p-4 border-b border-gray-200/50 dark:border-gray-700/50 flex items-center justify-between">
                 <h2 className="text-base lg:text-lg font-semibold text-gray-900 dark:text-gray-200 transition-colors duration-300">
                   Active Filters
@@ -201,7 +201,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
           )}
   
           {/* Sort By Section */}
-          <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-sm dark:shadow-lg transition-colors duration-300">
+          <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xs rounded-xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-xs dark:shadow-lg transition-colors duration-300">
             <div className="p-3 lg:p-4 border-b border-gray-200 dark:border-gray-700/50">
               <h2 className="text-base lg:text-lg font-semibold text-gray-900 dark:text-gray-200 transition-colors duration-300 capitalize">
                 {t("SORT_BY")}
@@ -247,7 +247,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
                 </span>
                 <span
                   className={cn(
-                    "text-xs font-semibold px-2 py-0.5 rounded-full transition-all duration-300 flex-shrink-0 group-hover:scale-105",
+                    "text-xs font-semibold px-2 py-0.5 rounded-full transition-all duration-300 shrink-0 group-hover:scale-105",
                     pathname === "/tags"
                       ? "text-white"
                       : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
@@ -290,7 +290,7 @@ export function TagsItemsColumn(props: { total: number; tag: Tag[] }) {
                       </span>
                       <span
                         className={cn(
-                          "text-xs font-semibold px-1.5 lg:px-2 py-0.5 rounded-full transition-all duration-300 flex-shrink-0 group-hover:scale-105",
+                          "text-xs font-semibold px-1.5 lg:px-2 py-0.5 rounded-full transition-all duration-300 shrink-0 group-hover:scale-105",
                           isActive
                             ? "text-white"
                             : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
