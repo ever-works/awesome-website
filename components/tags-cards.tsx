@@ -27,6 +27,11 @@ export function TagsCards({ tags, className }: TagsCardsProps) {
     setLoadingTag(null);
   }, [pathname, searchParams]);
 
+  // Don't render if tags array is empty or undefined (after all hooks)
+  if (!tags || tags.length === 0) {
+    return null;
+  }
+
   const renderTagCard = (tag: Tag) => {
     // Check if this tag is in the current selection
     const isActive = currentTags.includes(tag.id);
