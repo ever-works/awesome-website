@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { useSettingsModal } from "@/hooks/use-settings-modal";
 import { useTranslations } from "next-intl";
+import SelectPaginationType from "@/components/ui/select-pagination-type";
 import { useFocusManagement } from "@/components/ui/accessibility";
 
 const BACKDROP_CLASSES = cn(
@@ -28,6 +29,8 @@ const MODAL_CLASSES = cn(
 	"overflow-hidden",
 	"transition-all duration-300"
 );
+
+const DIVIDER_CLASSES = cn("border-t border-gray-200 dark:border-gray-700");
 
 export function SettingsModal() {
 	const { isOpen, closeModal } = useSettingsModal();
@@ -84,11 +87,14 @@ export function SettingsModal() {
 				</div>
 
 				{/* Modal Content */}
-				<div className="px-6 py-8">
-					{/* Empty content area - settings will be added in future PRs */}
-					<p className="text-gray-500 dark:text-gray-400 text-center">
-						{t("SETTINGS_PLACEHOLDER")}
-					</p>
+				<div className="px-6 py-8 space-y-6">
+					{/* Pagination Style Section */}
+					<SelectPaginationType />
+
+					{/* Divider for future sections */}
+					<div className={DIVIDER_CLASSES} />
+
+					{/* Future settings sections will go here */}
 				</div>
 			</div>
 		</>,
