@@ -1,5 +1,6 @@
 import { ItemData, CreateItemRequest, UpdateItemRequest, ReviewRequest, ItemListOptions } from '@/lib/types/item';
 import { createItemGitService, ItemGitServiceConfig, ItemGitService } from '@/lib/services/item-git.service';
+import { getContentPath } from '@/lib/lib';
 
 export class ItemRepository {
   private gitService: ItemGitService | null = null;
@@ -27,7 +28,7 @@ export class ItemRepository {
         repo,
         token,
         branch: process.env.GITHUB_BRANCH || 'main',
-        dataDir: './.content',
+        dataDir: getContentPath(), // Use dynamic path (local: .content, Vercel: /tmp/.content)
         itemsDir: 'data',
       };
 

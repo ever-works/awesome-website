@@ -1,5 +1,6 @@
 import { TagData, CreateTagRequest, UpdateTagRequest, TagListResponse } from '@/lib/types/tag';
 import { createTagGitService } from '@/lib/services/tag-git.service';
+import { getContentPath } from '@/lib/lib';
 
 export class TagRepository {
   private gitService: any = null;
@@ -24,7 +25,7 @@ export class TagRepository {
         repo,
         token: process.env.GH_TOKEN || '',
         branch: process.env.GITHUB_BRANCH || 'main',
-        dataDir: '.content',
+        dataDir: getContentPath(), // Use dynamic path (local: .content, Vercel: /tmp/.content)
         tagsFile: 'tags.yml',
       };
 

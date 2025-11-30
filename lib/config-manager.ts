@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import { getContentPath } from '@/lib/lib';
 
 export interface PaginationConfig {
   type: 'standard' | 'infinite';
@@ -23,7 +24,8 @@ export class ConfigManager {
   private configPath: string;
 
   constructor() {
-    this.configPath = path.join(process.cwd(), '.content', 'config.yml');
+    // Use dynamic content path (local: .content, Vercel: /tmp/.content)
+    this.configPath = path.join(getContentPath(), 'config.yml');
   }
 
   private isPrototypePollutingKey(key: string): boolean {
