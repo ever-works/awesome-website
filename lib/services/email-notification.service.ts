@@ -17,15 +17,6 @@ import { EmailService } from "@/lib/mail";
      */
     static async sendAdminNotification(data: EmailNotificationData) {
       try {
-        const template = AdminNotificationEmailHtml({
-          title: data.title,
-          message: data.message,
-          actionUrl: data.actionUrl,
-          actionText: data.actionText,
-          notificationType: data.notificationType,
-          timestamp: data.timestamp,
-        });
-
         // Create a simple email service instance for notifications
         const emailService = new EmailService({
           provider: process.env.EMAIL_PROVIDER || "resend",
@@ -35,6 +26,25 @@ import { EmailService } from "@/lib/mail";
             resend: process.env.RESEND_API_KEY || "",
             novu: process.env.NOVU_API_KEY || "",
           },
+        });
+
+        // Check if email service is available
+        if (!emailService.isServiceAvailable()) {
+          console.warn('[EmailNotification] Skipped - email service not configured');
+          return {
+            success: false,
+            skipped: true,
+            error: "Email service not configured",
+          };
+        }
+
+        const template = AdminNotificationEmailHtml({
+          title: data.title,
+          message: data.message,
+          actionUrl: data.actionUrl,
+          actionText: data.actionText,
+          notificationType: data.notificationType,
+          timestamp: data.timestamp,
         });
 
         const result = await emailService.sendCustomEmail({
@@ -50,6 +60,15 @@ import { EmailService } from "@/lib/mail";
           messageId: result.messageId,
         };
       } catch (error) {
+        // If it's an availability error, return skipped result instead of failing
+        if (error instanceof Error && error.message.includes('not available')) {
+          console.warn('[EmailNotification] Skipped -', error.message);
+          return {
+            success: false,
+            skipped: true,
+            error: error.message,
+          };
+        }
         console.error("Error sending admin notification email:", error);
         return {
           success: false,
