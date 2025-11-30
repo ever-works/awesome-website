@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ItemData } from '@/lib/types/item';
@@ -230,7 +230,7 @@ export function useAdminFeaturedItems(options: UseAdminFeaturedItemsOptions = {}
 
   // Derived data
   const featuredItems = featuredItemsData?.data || [];
-  const allItems = allItemsData?.items || [];
+  const allItems = useMemo(() => allItemsData?.items || [], [allItemsData?.items]);
   const isLoading = featuredItemsLoading || allItemsLoading;
   const isSubmitting = createMutation.isPending || updateMutation.isPending || deleteMutation.isPending;
   const totalPages = featuredItemsData?.pagination.totalPages || 1;

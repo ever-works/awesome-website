@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo } from 'react';
 
 interface RetryConfig {
   maxRetries: number;
@@ -29,7 +29,7 @@ interface UseRetryReturn {
 }
 
 export function useRetry(config: Partial<RetryConfig> = {}): UseRetryReturn {
-  const retryConfig = { ...DEFAULT_RETRY_CONFIG, ...config };
+  const retryConfig = useMemo(() => ({ ...DEFAULT_RETRY_CONFIG, ...config }), [config]);
   const [state, setState] = useState<RetryState>({
     attempt: 0,
     isRetrying: false,

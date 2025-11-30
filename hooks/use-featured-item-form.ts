@@ -120,6 +120,13 @@ export function useFeaturedItemForm({
     return Object.keys(newErrors).length === 0;
   }, [formData]);
 
+  // Reset form to initial state
+  const resetForm = useCallback(() => {
+    setFormData(initialFormData);
+    setIsEditMode(false);
+    setErrors({});
+  }, []);
+
   // Handle form submission
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,14 +147,7 @@ export function useFeaturedItemForm({
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData, validateForm, onSubmit]);
-
-  // Reset form to initial state
-  const resetForm = useCallback(() => {
-    setFormData(initialFormData);
-    setIsEditMode(false);
-    setErrors({});
-  }, []);
+  }, [formData, validateForm, onSubmit, resetForm]);
 
   // Open create modal
   const openCreateModal = useCallback(() => {
