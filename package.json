@@ -155,7 +155,7 @@
     "baseline-browser-mapping": "^2.8.32",
     "cross-env": "^10.1.0",
     "drizzle-kit": "^0.30.5",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "eslint": "^9",
     "eslint-config-next": "^16.0.4",
     "eslint-plugin-react": "^7.37.5",
