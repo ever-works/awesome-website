@@ -114,6 +114,15 @@ export class ItemGitService {
   async readItems(): Promise<ItemData[]> {
     try {
       const dataDir = path.join(this.config.dataDir, 'data');
+      
+      // Check if data directory exists before trying to read it
+      try {
+        await fs.access(dataDir);
+      } catch {
+        console.warn('📁 Data directory does not exist:', dataDir);
+        return [];
+      }
+      
       const itemDirs = await fs.readdir(dataDir);
       
       const items: ItemData[] = [];
