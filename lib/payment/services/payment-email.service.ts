@@ -187,15 +187,17 @@ export class PaymentEmailService {
 
   /**
    * Ensure email service is initialized
+   * Returns true if available, false if not
    */
-  private async ensureEmailService() {
+  private async ensureEmailService(): Promise<boolean> {
     if (!this.emailService || !this.emailConfig) {
       await this.initializeEmailService();
     }
 
     if (!this.emailService) {
-      throw new Error('Email service is not available. Please configure email provider API keys.');
+      return false;
     }
+    return true;
   }
 
   /**
@@ -203,7 +205,11 @@ export class PaymentEmailService {
    */
   async sendPaymentSuccessEmail(data: PaymentEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendPaymentSuccessEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getPaymentSuccessTemplate(data);
       const result = await sendEmailSafely(
@@ -233,7 +239,11 @@ export class PaymentEmailService {
    */
   async sendPaymentFailedEmail(data: PaymentFailedEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendPaymentFailedEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getPaymentFailedTemplate(data);
       
@@ -264,7 +274,11 @@ export class PaymentEmailService {
    */
   async sendNewSubscriptionEmail(data: SubscriptionEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendNewSubscriptionEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getNewSubscriptionTemplate(data);
       
@@ -295,7 +309,11 @@ export class PaymentEmailService {
    */
   async sendUpdatedSubscriptionEmail(data: SubscriptionEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendUpdatedSubscriptionEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getUpdatedSubscriptionTemplate(data);
       
@@ -326,7 +344,11 @@ export class PaymentEmailService {
    */
   async sendCancelledSubscriptionEmail(data: SubscriptionEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendCancelledSubscriptionEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getCancelledSubscriptionTemplate(data);
       
@@ -357,7 +379,11 @@ export class PaymentEmailService {
    */
   async sendSubscriptionPaymentSuccessEmail(data: PaymentEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendSubscriptionPaymentSuccessEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       // Use payment success template with subscription-specific data
       const template = getPaymentSuccessTemplate({
@@ -394,7 +420,11 @@ export class PaymentEmailService {
    */
   async sendSubscriptionPaymentFailedEmail(data: PaymentFailedEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendSubscriptionPaymentFailedEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       // Use payment failure template with subscription-specific data
       const template = getPaymentFailedTemplate({
@@ -431,7 +461,11 @@ export class PaymentEmailService {
    */
   async sendSubscriptionCancellingEmail(data: SubscriptionCancellingEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendSubscriptionCancellingEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getSubscriptionCancellingTemplate(data);
       
@@ -462,7 +496,11 @@ export class PaymentEmailService {
    */
   async sendSubscriptionReactivatedEmail(data: SubscriptionReactivatedEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendSubscriptionReactivatedEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getSubscriptionReactivatedTemplate(data);
       
@@ -493,7 +531,11 @@ export class PaymentEmailService {
    */
   async sendSubscriptionPlanChangedEmail(data: SubscriptionPlanChangedEmailData): Promise<EmailResult> {
     try {
-      await this.ensureEmailService();
+      const isAvailable = await this.ensureEmailService();
+      if (!isAvailable) {
+        console.warn('[PaymentEmail] sendSubscriptionPlanChangedEmail: Skipped - email service not configured');
+        return { success: false, error: 'Email service not configured' };
+      }
       
       const template = getSubscriptionPlanChangedTemplate(data);
       

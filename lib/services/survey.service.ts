@@ -112,17 +112,23 @@ export class SurveyService {
       };
     } catch (error) {
       // Check if error is database-related
-      if (error instanceof Error && (
-        error.message?.includes('DATABASE_URL') ||
-        error.message?.includes('connect ECONNREFUSED') ||
-        error.message?.includes('relation') ||
-        error.message?.includes('database')
-      )) {
-        // Only log in development mode
-        if (process.env.NODE_ENV === 'development') {
-          console.error('[SurveyService] Database error in getMany:', error.message);
+      if (error instanceof Error) {
+        const msg = error.message || '';
+        
+        // Table doesn't exist - need to run migrations
+        if (msg.includes('relation') && msg.includes('does not exist')) {
+          console.error('[SurveyService] Surveys table does not exist. Run: pnpm db:migrate');
+          throw new Error('Surveys table not found. Please run database migrations.');
         }
-        throw new Error('Database not configured');
+        
+        // Connection errors
+        if (msg.includes('DATABASE_URL') ||
+            msg.includes('connect ECONNREFUSED') ||
+            msg.includes('ENOTFOUND') ||
+            msg.includes('connection')) {
+          console.error('[SurveyService] Database connection error:', msg);
+          throw new Error('Database connection failed');
+        }
       }
       throw error;
     }

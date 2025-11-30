@@ -226,7 +226,9 @@ export class EmailService {
   }
 
   getProviderName(): string {
-    this.ensureAvailable();
+    if (!this.isServiceAvailable()) {
+      return 'none (not configured)';
+    }
     return this.provider!.getName();
   }
 }
@@ -259,29 +261,71 @@ async function mailService() {
   });
 }
 
+// Result type for email operations when service is unavailable
+interface EmailSkippedResult {
+  skipped: true;
+  reason: string;
+}
+
+// Helper to check if email service is available and handle gracefully
+async function tryEmailOperation<T>(
+  operation: (service: EmailService) => Promise<T>,
+  operationName: string
+): Promise<T | EmailSkippedResult> {
+  try {
+    const service = await mailService();
+    
+    if (!service.isServiceAvailable()) {
+      console.warn(`[EMAIL] ${operationName}: Skipped - email service not configured`);
+      return { skipped: true, reason: 'Email service not configured' };
+    }
+    
+    return await operation(service);
+  } catch (error) {
+    // If it's an availability error, return skipped result instead of throwing
+    if (error instanceof Error && error.message.includes('not available')) {
+      console.warn(`[EMAIL] ${operationName}: Skipped - ${error.message}`);
+      return { skipped: true, reason: error.message };
+    }
+    // For other errors, log and rethrow
+    console.error(`[EMAIL] ${operationName}: Error -`, error);
+    throw error;
+  }
+}
+
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const service = await mailService();
-  return service.sendVerificationEmail(email, token);
+  return tryEmailOperation(
+    (service) => service.sendVerificationEmail(email, token),
+    'sendVerificationEmail'
+  );
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const service = await mailService();
-  return service.sendPasswordResetEmail(email, token);
+  return tryEmailOperation(
+    (service) => service.sendPasswordResetEmail(email, token),
+    'sendPasswordResetEmail'
+  );
 };
 
 export const sendNewsletterSubscriptionEmail = async (email: string) => {
-  const service = await mailService();
-  return service.sendNewsletterSubscriptionEmail(email);
+  return tryEmailOperation(
+    (service) => service.sendNewsletterSubscriptionEmail(email),
+    'sendNewsletterSubscriptionEmail'
+  );
 };
 
 export const sendNewsletterUnsubscriptionEmail = async (email: string) => {
-  const service = await mailService();
-  return service.sendNewsletterUnsubscriptionEmail(email);
+  return tryEmailOperation(
+    (service) => service.sendNewsletterUnsubscriptionEmail(email),
+    'sendNewsletterUnsubscriptionEmail'
+  );
 };
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
-  const service = await mailService();
-  return service.sendTwoFactorTokenEmail(email, token);
+  return tryEmailOperation(
+    (service) => service.sendTwoFactorTokenEmail(email, token),
+    'sendTwoFactorTokenEmail'
+  );
 };
 
 export const sendPasswordChangeConfirmationEmail = async (
@@ -290,20 +334,10 @@ export const sendPasswordChangeConfirmationEmail = async (
   ipAddress?: string,
   userAgent?: string
 ) => {
-  console.log("🔧 Creating mail service...");
-
-  try {
-    const service = await mailService();
-    console.log("📬 Mail service created, provider:", service.getProviderName());
-
-    const result = await service.sendPasswordChangeConfirmationEmail(email, userName, ipAddress, userAgent);
-    console.log("📤 Email service result:", result);
-
-    return result;
-  } catch (error) {
-    console.error("💥 Error in sendPasswordChangeConfirmationEmail:", error);
-    throw error;
-  }
+  return tryEmailOperation(
+    (service) => service.sendPasswordChangeConfirmationEmail(email, userName, ipAddress, userAgent),
+    'sendPasswordChangeConfirmationEmail'
+  );
 };
 
 export const sendAccountCreatedEmail = async (
@@ -311,20 +345,10 @@ export const sendAccountCreatedEmail = async (
   userEmail: string,
   companyName?: string
 ) => {
-  console.log("🔧 Creating mail service for account created email...");
-
-  try {
-    const service = await mailService();
-    console.log("📬 Mail service created, provider:", service.getProviderName());
-
-    const result = await service.sendAccountCreatedEmail(userName, userEmail, companyName);
-    console.log("📤 Account created email sent successfully:", result);
-
-    return result;
-  } catch (error) {
-    console.error("💥 Error in sendAccountCreatedEmail:", error);
-    throw error;
-  }
+  return tryEmailOperation(
+    (service) => service.sendAccountCreatedEmail(userName, userEmail, companyName),
+    'sendAccountCreatedEmail'
+  );
 };
 
 export const sendVerificationEmailWithTemplate = async (
@@ -332,15 +356,8 @@ export const sendVerificationEmailWithTemplate = async (
   token: string,
   userName?: string
 ) => {
-
-  try {
-    const service = await mailService();
-
-    const result = await service.sendVerificationEmailWithTemplate(email, token, userName);
-
-    return result;
-  } catch (error) {
-    console.error("💥 Error in sendVerificationEmailWithTemplate:", error);
-    throw error;
-  }
+  return tryEmailOperation(
+    (service) => service.sendVerificationEmailWithTemplate(email, token, userName),
+    'sendVerificationEmailWithTemplate'
+  );
 };
