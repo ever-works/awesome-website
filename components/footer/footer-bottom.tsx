@@ -46,7 +46,7 @@ export function FooterBottom({ config, t }: { config: any; t: any }) {
             {/* Left side: Copyright and legal links */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-gray-600 dark:text-gray-400">
               <span className="text-xs sm:text-sm font-medium">
-                &copy; {config.copyright_year || new Date().getFullYear()} {config.company_name}
+                Copyright &copy; {config.copyright_year || new Date().getFullYear()} {config.company_name}. {t("footer.ALL_RIGHTS_RESERVED")}.
               </span>
               <span className="hidden sm:inline text-gray-400 dark:text-gray-600">·</span>
               {[
