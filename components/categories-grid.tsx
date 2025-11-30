@@ -135,13 +135,13 @@ export default function CategoriesGrid({ categories }: { categories: Category[] 
               </div>
             )}
             <Card
-              className="group relative border-0 rounded-lg transition-all duration-700 transform hover:-translate-y-2 backdrop-blur-xl overflow-hidden h-full
-                bg-white/80 dark:bg-gray-900/80 shadow-lg hover:shadow-2xl
+              className="group relative border-0 rounded-lg transition-all duration-700 transform hover:-translate-y-1 backdrop-blur-xl overflow-hidden h-full
+                bg-white/80 dark:bg-gray-900/80 shadow-md hover:shadow-xl
                 ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-theme-primary/70
                 before:absolute before:inset-0 before:bg-linear-to-br before:from-white/60 before:via-transparent before:to-gray-50/40
                 dark:before:from-gray-800/60 dark:before:via-transparent dark:before:to-gray-900/40
                 hover:before:from-blue-50/30 hover:before:to-purple-50/20 dark:hover:before:from-blue-900/20 dark:hover:before:to-purple-900/10
-                px-6 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-10
+                px-4 py-4 sm:px-5 sm:py-5
               "
             >
               {/* Subtle background pattern */}
@@ -153,39 +153,39 @@ export default function CategoriesGrid({ categories }: { categories: Category[] 
                 }}
               />
               {/* Icon with animated background */}
-              <div className="relative flex flex-col items-center justify-center pt-2 pb-4">
+              <div className="relative flex flex-col items-center justify-center pt-1 pb-2">
                 <div className="relative shrink-0">
-                  <div className="w-14 h-14 flex items-center justify-center rounded-lg transition-all duration-500 bg-linear-to-br from-theme-primary-10 to-indigo-100 border border-theme-primary-500 group-hover:from-theme-primary-10 group-hover:to-indigo-200 dark:from-theme-primary-10 dark:to-indigo-900/30 dark:border-theme-primary-700/30 dark:group-hover:from-theme-primary-800/40 dark:group-hover:to-indigo-800/40 group-hover:scale-110 group-hover:rotate-3 shadow-xs group-hover:shadow-md">
+                  <div className="w-11 h-11 flex items-center justify-center rounded-lg transition-all duration-500 bg-linear-to-br from-theme-primary-10 to-indigo-100 border border-theme-primary-500 group-hover:from-theme-primary-10 group-hover:to-indigo-200 dark:from-theme-primary-10 dark:to-indigo-900/30 dark:border-theme-primary-700/30 dark:group-hover:from-theme-primary-800/40 dark:group-hover:to-indigo-800/40 group-hover:scale-110 group-hover:rotate-3 shadow-xs group-hover:shadow-md">
                     {category.icon_url ? (
                       <Image
                         src={category.icon_url}
                         alt={category.name}
-                        width={32}
-                        height={32}
-                        className="w-8 h-8 object-contain transition-transform duration-500 group-hover:scale-110"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6 object-contain transition-transform duration-500 group-hover:scale-110"
                       />
                     ) : (
-                      <FiFolder className="w-8 h-8 text-theme-primary dark:text-theme-primary transition-transform duration-500 group-hover:scale-110" />
+                      <FiFolder className="w-6 h-6 text-theme-primary dark:text-theme-primary transition-transform duration-500 group-hover:scale-110" />
                     )}
                   </div>
                   {/* Pulse effect */}
                   <div className="absolute inset-0 rounded-lg bg-theme-primary-10 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300" />
                 </div>
               </div>
-              <CardHeader className="items-center text-center p-0 mb-3">
-                <CardTitle className="text-lg font-semibold group-hover:text-theme-primary transition-colors mb-1">
+              <CardHeader className="items-center text-center p-0 mb-1">
+                <CardTitle className="text-base font-semibold group-hover:text-theme-primary transition-colors">
                   {category.name}
                 </CardTitle>
               </CardHeader>
               {category.count !== undefined && (
-                <CardContent className="text-xs text-gray-500 dark:text-gray-400 p-0 mb-1">
+                <CardContent className="text-xs text-gray-500 dark:text-gray-400 p-0">
                   {category.count} items
                 </CardContent>
               )}
               {/* Enhanced hover indicator */}
-              <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
-                <div className="w-8 h-8 rounded-full bg-theme-primary-500/10 dark:bg-theme-primary-400/10 flex items-center justify-center backdrop-blur-xs border border-theme-primary-10 dark:border-theme-primary">
-                  <svg className="w-4 h-4 text-theme-primary-600 dark:text-theme-primary-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 7l-10 10M7 7h10v10" /></svg>
+              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
+                <div className="w-6 h-6 rounded-full bg-theme-primary-500/10 dark:bg-theme-primary-400/10 flex items-center justify-center backdrop-blur-xs border border-theme-primary-10 dark:border-theme-primary">
+                  <svg className="w-3 h-3 text-theme-primary-600 dark:text-theme-primary-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 7l-10 10M7 7h10v10" /></svg>
                 </div>
               </div>
               {/* Subtle glow effect */}
