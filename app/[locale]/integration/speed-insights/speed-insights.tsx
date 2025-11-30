@@ -41,14 +41,14 @@ export function SpeedInsights({
 		}
 
 		try {
-			// Priority 1: Check if manually disabled
+			// Priority 1: Check if manually disabled via prop
 			if (enabled === false) {
 				setShouldRender(false);
 				isInitialized.current = true;
 				return;
 			}
 
-			// Priority 2: Check environment variable if explicitly set
+			// Priority 2: Check environment variable
 			const envEnabled = process.env.NEXT_PUBLIC_SPEED_INSIGHTS_ENABLED;
 			if (envEnabled === 'false') {
 				setShouldRender(false);
@@ -76,14 +76,14 @@ export function SpeedInsights({
 			                  (window.location.hostname.includes('vercel.app') || 
 			                   window.location.hostname.includes('vercel.com')));
             
-			if (enabled === true) {
-				// Explicitly enabled - render it (VercelSpeedInsights will handle errors gracefully)
+			if (enabled === true || envEnabled === 'true') {
+				// Explicitly enabled via prop or env var - render it
 				setShouldRender(true);
 			} else if (vercelAnalyticsId) {
 				// Analytics ID present = Speed Insights is enabled and paid
 				setShouldRender(true);
-			} else if (isVercel && enabled === undefined) {
-				// On Vercel but no explicit ID - be conservative
+			} else if (isVercel && enabled === undefined && envEnabled === undefined) {
+				// On Vercel but no explicit config - be conservative
 				// Only render if we're sure it's available (we can't be sure without the ID)
 				// So we default to false to avoid errors
 				setShouldRender(false);
