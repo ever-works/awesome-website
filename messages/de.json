@@ -2164,6 +2164,8 @@
     "TERMS_OF_SERVICE_META_DESCRIPTION": "Nutzungsbedingungen für die Verwendung unseres Verzeichnisdienstes",
     "ABOUT_US_DESCRIPTION": "Erfahren Sie mehr über unser Unternehmen",
     "PRIVACY_POLICY_DESCRIPTION": "Erfahren Sie, wie wir Ihre Daten schützen",
-    "TERMS_OF_SERVICE_DESCRIPTION": "Lesen Sie unsere Nutzungsbedingungen"
+    "TERMS_OF_SERVICE_DESCRIPTION": "Lesen Sie unsere Nutzungsbedingungen",
+    "COOKIES_META_DESCRIPTION": "Informationen über unsere Verwendung von Cookies und ähnlichen Technologien auf unserer Website",
+    "COOKIES_DESCRIPTION": "Erfahren Sie mehr über unsere Cookie-Nutzung"
   }
 }
