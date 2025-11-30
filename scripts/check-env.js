@@ -81,6 +81,12 @@ const CRITICAL_PATTERNS = [
   /^NEXT_PUBLIC_APP_URL$/
 ];
 
+// Define production-recommended variable patterns (warn if missing in production)
+const PRODUCTION_RECOMMENDED_PATTERNS = [
+  /^SEED_ADMIN_EMAIL$/,
+  /^SEED_ADMIN_PASSWORD$/
+];
+
 // Define variable categories based on prefixes or patterns
 const CATEGORY_PATTERNS = [
   { name: 'core', pattern: /^(NODE_ENV|PORT|APP_|BASE_URL)/ },
@@ -253,6 +259,24 @@ if (missingVars.length > 0) {
 if (missingCriticalVars.length > 0) {
   allWarnings.push(`⚠️  Missing critical variables: ${missingCriticalVars.join(', ')}`);
   allWarnings.push('   Application may not function correctly!');
+}
+
+// Check for production-recommended variables
+if (process.env.NODE_ENV === 'production') {
+  const missingProductionVars = [];
+  
+  PRODUCTION_RECOMMENDED_PATTERNS.forEach(pattern => {
+    const varName = pattern.source.replace(/[\^$]/g, '');
+    if (!process.env[varName]) {
+      missingProductionVars.push(varName);
+    }
+  });
+  
+  if (missingProductionVars.length > 0) {
+    allWarnings.push(`⚠️  PRODUCTION WARNING: Missing recommended variables: ${missingProductionVars.join(', ')}`);
+    allWarnings.push('   Database seeding will auto-generate admin credentials (check runtime logs for values).');
+    allWarnings.push('   For better security, set SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD explicitly.');
+  }
 }
 
 // Skip detailed checks in quick mode
