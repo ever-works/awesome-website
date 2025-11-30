@@ -1,18 +1,18 @@
 'use client';
 
-import { SpeedInsights as VercelSpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics as VercelAnalytics, type BeforeSendEvent } from '@vercel/analytics/next';
 import { useEffect, useState, useRef } from 'react';
 
-interface SpeedInsightsConfig {
+interface AnalyticsConfig {
 	/**
-	 * Enable/disable Speed Insights manually (optional)
-	 * If not set, Speed Insights will auto-detect based on Vercel environment
+	 * Enable/disable Analytics manually (optional)
+	 * If not set, Analytics will auto-detect based on Vercel environment
 	 * and feature availability
 	 */
 	enabled?: boolean;
 	
 	/**
-	 * Sample rate for Speed Insights (0.0 to 1.0)
+	 * Sample rate for Analytics (0.0 to 1.0)
 	 * Default: 1.0 (100% of page views)
 	 * Useful for reducing data points on free tier
 	 */
@@ -20,10 +20,10 @@ interface SpeedInsightsConfig {
 }
 
 
-export function SpeedInsights({ 
+export function Analytics({ 
 	enabled, 
 	sampleRate 
-}: SpeedInsightsConfig = {}) {
+}: AnalyticsConfig = {}) {
 	const [shouldRender, setShouldRender] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
 	const [finalSampleRate, setFinalSampleRate] = useState<number>(1.0);
@@ -49,7 +49,7 @@ export function SpeedInsights({
 			}
 
 			// Priority 2: Check environment variable if explicitly set
-			const envEnabled = process.env.NEXT_PUBLIC_SPEED_INSIGHTS_ENABLED;
+			const envEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED;
 			if (envEnabled === 'false') {
 				setShouldRender(false);
 				isInitialized.current = true;
@@ -57,7 +57,7 @@ export function SpeedInsights({
 			}
 
 			// Priority 3: Get sample rate from environment variable or prop (default: 1.0)
-			const envSampleRate = process.env.NEXT_PUBLIC_SPEED_INSIGHTS_SAMPLE_RATE;
+			const envSampleRate = process.env.NEXT_PUBLIC_ANALYTICS_SAMPLE_RATE;
 			const calculatedSampleRate = sampleRate ?? 
 				(envSampleRate ? parseFloat(envSampleRate) : 1.0);
 			
@@ -66,7 +66,7 @@ export function SpeedInsights({
 			setFinalSampleRate(validSampleRate);
 
 			// Priority 4: Check for Vercel Analytics ID (most reliable indicator)
-			// This is set by Vercel ONLY when Speed Insights is enabled AND paid
+			// This is set by Vercel ONLY when Analytics is enabled AND paid
 			const vercelAnalyticsId = process.env.NEXT_PUBLIC_VERCEL_ANALYTICS_ID;
 
 			// Priority 5: Check if we're on Vercel
@@ -77,10 +77,10 @@ export function SpeedInsights({
 			                   window.location.hostname.includes('vercel.com')));
             
 			if (enabled === true) {
-				// Explicitly enabled - render it (VercelSpeedInsights will handle errors gracefully)
+				// Explicitly enabled - render it (VercelAnalytics will handle errors gracefully)
 				setShouldRender(true);
 			} else if (vercelAnalyticsId) {
-				// Analytics ID present = Speed Insights is enabled and paid
+				// Analytics ID present = Analytics is enabled and paid
 				setShouldRender(true);
 			} else if (isVercel && enabled === undefined) {
 				// On Vercel but no explicit ID - be conservative
@@ -95,7 +95,7 @@ export function SpeedInsights({
 			isInitialized.current = true;
 		} catch (err) {
 			// Catch any errors during initialization
-			console.warn('[SpeedInsights] Error during initialization:', err);
+			console.warn('[Analytics] Error during initialization:', err);
 			setError(err instanceof Error ? err : new Error('Unknown error'));
 			setShouldRender(false);
 			isInitialized.current = true;
@@ -108,12 +108,24 @@ export function SpeedInsights({
 	}
 
 	// Apply sample rate if specified and less than 1.0
-	// Note: Speed Insights has built-in sample rate support via props
-	const props = finalSampleRate < 1.0 ? { sampleRate: finalSampleRate } : {};
+	// Note: Analytics has built-in sample rate support via props (but named differently)
+	// The @vercel/analytics package doesn't have sampleRate prop like speed-insights
+	// Instead, we can use beforeSend to implement sampling
+	const props = finalSampleRate < 1.0 
+		? { 
+			beforeSend: (event: BeforeSendEvent): BeforeSendEvent | null => {
+				// Only send events based on sample rate
+				if (Math.random() > finalSampleRate) {
+					return null;
+				}
+				return event;
+			}
+		} 
+		: {};
 
-	// Render Speed Insights component
-	// VercelSpeedInsights handles errors gracefully internally and returns null
+	// Render Analytics component
+	// VercelAnalytics handles errors gracefully internally and returns null
 	// if the feature is not available or not paid/enabled
-	return <VercelSpeedInsights {...props} />;
+	return <VercelAnalytics {...props} />;
 }
 

@@ -15,6 +15,7 @@ import Script from 'next/script';
 import { ConditionalLayout } from '@/components/layout/conditional-layout';
 import { siteConfig } from '@/lib/config';
 import { SpeedInsights } from './integration/speed-insights';
+import { Analytics } from './integration/analytics';
 import { SettingsProvider } from '@/components/providers/settings-provider';
 import { SettingsModalProvider } from '@/components/providers/settings-modal-provider';
 import { SettingsModal } from '@/components/settings-modal';
@@ -137,6 +138,16 @@ export default async function RootLayout({
 			*/}
 			<Suspense fallback={null}>
 				<SpeedInsights />
+			</Suspense>
+			{/*
+				Vercel Analytics Integration
+				- Automatically detects Vercel environment and Analytics availability
+				- Gracefully degrades when not enabled or not on a paid plan
+				- Supports environment variable configuration (NEXT_PUBLIC_ANALYTICS_ENABLED, NEXT_PUBLIC_ANALYTICS_SAMPLE_RATE)
+				- See: app/[locale]/integration/analytics/
+			*/}
+			<Suspense fallback={null}>
+				<Analytics />
 			</Suspense>
 		</>
 	);
