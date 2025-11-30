@@ -111,6 +111,9 @@ copyright_year: ${new Date().getFullYear()}
     const { getContentPath } = await import('./lib');
     const dest = getContentPath();
     await fs.promises.mkdir(dest, { recursive: true });
+    
+    // Create data directory for items (prevents ENOENT errors)
+    await fs.promises.mkdir(path.join(dest, 'data'), { recursive: true });
 
     // Create a minimal config.yml file if it doesn't exist
     const configPath = path.join(dest, "config.yml");
@@ -121,13 +124,8 @@ copyright_year: ${new Date().getFullYear()}
     return;
   }
 
-  // Note: Repository sync will happen during build to ensure content is available
-  // Error handling is in place to gracefully handle any sync issues
-
-  // Ensure content is available (copies from build to runtime on Vercel)
-  const { ensureContentAvailable } = await import('./lib');
-  await ensureContentAvailable();
-
+  // Note: Each container clones directly from Git (no copy from build)
+  // This ensures all containers get the latest content from the repository
   const { getContentPath } = await import('./lib');
   const dest = getContentPath();
   const auth = getGitAuth(token);
@@ -167,6 +165,10 @@ copyright_year: ${new Date().getFullYear()}
 
     // Ensure content directory exists with minimal config
     await fs.promises.mkdir(dest, { recursive: true });
+    
+    // Create data directory for items (prevents ENOENT errors)
+    await fs.promises.mkdir(path.join(dest, 'data'), { recursive: true });
+    
     const configPath = path.join(dest, "config.yml");
     if (!(await fsExists(configPath))) {
       await fs.promises.writeFile(configPath, DEFAULT_CONFIG);
