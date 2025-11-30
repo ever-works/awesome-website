@@ -31,7 +31,7 @@ export const users = pgTable("users", {
 
 export const roles = pgTable("roles", {
   id: text("id").primaryKey(),
-  name: text("name").notNull(),
+  name: text("name").notNull().unique(),
   description: text("description"),
   isAdmin: boolean("is_admin").notNull().default(false),
   status: text("status", { enum: ["active", "inactive"] }).default("active"),
@@ -754,6 +754,24 @@ export const surveyResponses = pgTable(
   })
 );
 
+
+// ######################### Seed Status Schema #########################
+// Singleton table to track database seeding status and prevent concurrent seed races
+export const seedStatus = pgTable("seed_status", {
+  id: text("id").primaryKey().default("singleton"), // Only one row allowed
+  status: text("status", { enum: ["seeding", "completed", "failed"] }).notNull(),
+  startedAt: timestamp("started_at").notNull().defaultNow(),
+  completedAt: timestamp("completed_at"),
+  version: text("version"), // Optional: track seed version/hash
+  error: text("error"), // Optional: store error message if failed
+}, (table) => ({
+  // Unique constraint ensures only one row can exist
+  singletonConstraint: uniqueIndex("seed_status_singleton_idx").on(table.id),
+}));
+
+// Seed status types
+export type SeedStatus = typeof seedStatus.$inferSelect;
+export type NewSeedStatus = typeof seedStatus.$inferInsert;
 
 // Survey types
 export type Survey = typeof surveys.$inferSelect;

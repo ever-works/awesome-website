@@ -35,7 +35,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx lib/db/seed.ts"
+    "db:seed": "tsx scripts/cli-seed.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.8.0",
@@ -136,10 +136,12 @@
     "tailwindcss-animate": "^1.0.7",
     "yaml": "^2.7.0",
     "zod": "^4.0.5",
-    "zustand": "^5.0.6"
+    "zustand": "^5.0.6",
+    "esbuild": "^0.23.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^10.1.0",
     "@next/bundle-analyzer": "^16.0.4",
     "@swc/helpers": "^0.5.17",
     "@tailwindcss/postcss": "^4.1.17",
@@ -155,6 +157,7 @@
     "baseline-browser-mapping": "^2.8.32",
     "cross-env": "^10.1.0",
     "drizzle-kit": "^0.30.5",
+    "drizzle-seed": "^0.3.1",
     "esbuild": "^0.25.0",
     "eslint": "^9",
     "eslint-config-next": "^16.0.4",
@@ -207,7 +210,8 @@
     ],
     "overrides": {
       "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3",
+    "@types/react-dom": "19.2.3",
+      "esbuild": "npm:esbuild@^0.23.0",
       "@opentelemetry/api": "1.9.0"
     }
   }
