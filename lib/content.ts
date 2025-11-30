@@ -414,13 +414,34 @@ function populateTag(tag: string | Tag, tags: Map<string, Tag>) {
 	return populate<Tag>(tag, tags);
 }
 
-export async function fetchItems(options: FetchOptions = {}) {
+// Return type for fetchItems function
+interface FetchItemsResult {
+	total: number;
+	items: ItemData[];
+	categories: Category[];
+	tags: Tag[];
+}
+
+export async function fetchItems(options: FetchOptions = {}): Promise<FetchItemsResult> {
 	// Ensure content is available (copies from build to runtime on Vercel)
-	const { ensureContentAvailable } = await import('./lib');
+	const { ensureContentAvailable, dirExists } = await import('./lib');
 	await ensureContentAvailable();
 
 	// Repository sync now handled by background sync manager (lib/services/sync-service.ts)
 	const dest = path.join(getContentPath(), 'data');
+	
+	// Check if data directory exists before trying to read it
+	// This prevents ENOENT errors when DATA_REPOSITORY is not configured
+	if (!(await dirExists(dest))) {
+		console.warn('[CONTENT] Data directory does not exist:', dest);
+		return {
+			total: 0,
+			items: [],
+			categories: [],
+			tags: []
+		};
+	}
+	
 	const files = await fs.promises.readdir(dest);
 	const categories = await readCategories(options);
 	const tags = await readTags(options);
