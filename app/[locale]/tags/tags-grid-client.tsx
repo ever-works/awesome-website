@@ -79,7 +79,7 @@ function TagsGridContent({ tags }: { tags: Tag[] }) {
       className="min-h-screen text-center"
     >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <TagsCards tags={tagsToShow} />
+        <TagsCards tags={tagsToShow} compact />
       </div>
       {/* Standard Pagination */}
       {paginationType === "standard" && (

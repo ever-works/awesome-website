@@ -11,9 +11,11 @@ interface TagsCardsProps {
   tags: Tag[];
   basePath?: string;
   className?: string;
+  /** Compact mode: smaller cards, no truncation - ideal for tags listing page */
+  compact?: boolean;
 }
 
-export function TagsCards({ tags, className }: TagsCardsProps) {
+export function TagsCards({ tags, className, compact = false }: TagsCardsProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -84,43 +86,59 @@ export function TagsCards({ tags, className }: TagsCardsProps) {
             isActive && "ring-2 ring-theme-primary-500 dark:ring-theme-primary-400"
           )}
         >
-          <CardBody className="p-4 sm:p-6">
+          <CardBody className={cn(
+            compact ? "p-3 sm:p-4" : "p-4 sm:p-6"
+          )}>
             <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
+              <div className={cn(
+                "flex items-center",
+                compact ? "gap-2" : "gap-3"
+              )}>
                 <div className={cn(
-                  "p-2 rounded-lg transition-colors duration-300",
+                  "rounded-lg transition-colors duration-300",
                   "bg-theme-primary-900/40 dark:bg-theme-primary-900/60",
-                  "group-hover:bg-theme-primary-800/60 dark:group-hover:bg-theme-primary-800/80"
+                  "group-hover:bg-theme-primary-800/60 dark:group-hover:bg-theme-primary-800/80",
+                  compact ? "p-1.5" : "p-2"
                 )}>
                   <Hash className={cn(
-                    "w-5 h-5 transition-colors duration-300",
+                    "transition-colors duration-300",
                     "text-theme-primary-500 dark:text-theme-primary-500",
-                    "group-hover:text-theme-primary-300 dark:group-hover:text-theme-primary-500"
+                    "group-hover:text-theme-primary-300 dark:group-hover:text-theme-primary-500",
+                    compact ? "w-4 h-4" : "w-5 h-5"
                   )} />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className={cn(
+                  "flex-1",
+                  !compact && "min-w-0"
+                )}>
                   <h3 className={cn(
-                    "text-lg sm:text-xl font-bold transition-colors duration-300 line-clamp-1",
+                    "font-semibold transition-colors duration-300",
                     "text-gray-800 dark:text-gray-50",
-                    "group-hover:text-theme-primary-500 dark:group-hover:text-theme-primary-500 capitalize"
+                    "group-hover:text-theme-primary-500 dark:group-hover:text-theme-primary-500 capitalize",
+                    compact ? "text-sm sm:text-base" : "text-lg sm:text-xl font-bold line-clamp-1"
                   )}>
                     {tag.name}
                   </h3>
                 </div>
               </div>
               <ArrowRight className={cn(
-                "w-4 h-4 transition-all duration-300 opacity-0 group-hover:opacity-100",
+                "transition-all duration-300 opacity-0 group-hover:opacity-100",
                 "text-theme-primary-400 dark:text-theme-primary-300",
-                "group-hover:translate-x-1"
+                "group-hover:translate-x-1",
+                compact ? "w-3.5 h-3.5" : "w-4 h-4"
               )} />
             </div>
           </CardBody>
-          <CardFooter className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6">
+          <CardFooter className={cn(
+            "pt-0",
+            compact ? "px-3 sm:px-4 pb-3 sm:pb-4" : "px-4 sm:px-6 pb-4 sm:pb-6"
+          )}>
             <div className="flex items-center justify-between w-full">
               <span className={cn(
-                "text-sm font-medium transition-colors duration-300",
+                "font-medium transition-colors duration-300",
                 "text-gray-500 dark:text-gray-500",
-                "group-hover:text-theme-primary-500 dark:group-hover:text-theme-primary-500"
+                "group-hover:text-theme-primary-500 dark:group-hover:text-theme-primary-500",
+                compact ? "text-xs" : "text-sm"
               )}>
                 {tag.count || 0} items
               </span>
