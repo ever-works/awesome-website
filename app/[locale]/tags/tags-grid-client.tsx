@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useRef, Suspense } from "react";
+import { useState, useMemo, useRef, Suspense, useEffect, useCallback } from "react";
 import { Tag } from "@/lib/content";
 import { TagsCards } from "@/components/tags-cards";
 import UniversalPagination from "@/components/universal-pagination";
@@ -11,12 +11,65 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteLoading } from "@/hooks/use-infinite-loading";
 import { GridSkeleton } from "@/components/ui/skeleton";
 
+/**
+ * Hook to calculate optimal items per page based on viewport height
+ * Ensures pagination stays visible without scrolling
+ */
+function useResponsiveItemsPerPage(defaultItemsPerPage: number) {
+  const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
+
+  const calculateItemsPerPage = useCallback(() => {
+    if (typeof window === 'undefined') return defaultItemsPerPage;
+
+    const viewportHeight = window.innerHeight;
+    // Estimate space taken by header, hero section, and pagination
+    // Hero header ~200px, pagination ~80px, margins ~100px
+    const reservedHeight = 380;
+    const availableHeight = viewportHeight - reservedHeight;
+    
+    // Card height estimate: ~90px in compact mode (with gap)
+    const cardHeight = 90;
+    // Get number of columns based on viewport width
+    const viewportWidth = window.innerWidth;
+    let columns = 1;
+    if (viewportWidth >= 1280) columns = 4; // xl
+    else if (viewportWidth >= 1024) columns = 3; // lg
+    else if (viewportWidth >= 640) columns = 2; // sm
+    
+    // Calculate rows that fit
+    const rowsThatFit = Math.max(2, Math.floor(availableHeight / cardHeight));
+    const calculatedItems = rowsThatFit * columns;
+    
+    // Return calculated items, minimum 8, maximum 40
+    return Math.min(40, Math.max(8, calculatedItems));
+  }, [defaultItemsPerPage]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(calculateItemsPerPage());
+    };
+
+    // Calculate on mount
+    handleResize();
+
+    // Recalculate on resize
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [calculateItemsPerPage]);
+
+  return itemsPerPage;
+}
+
 function TagsGridContent({ tags }: { tags: Tag[] }) {
   const t = useTranslations("listing");
   const tCommon = useTranslations("common");
   const tGrid = useTranslations("admin.TAGS_GRID_CLIENT");
-  const { paginationType, itemsPerPage } = useLayoutTheme();
+  const { paginationType, itemsPerPage: defaultItemsPerPage } = useLayoutTheme();
   const [page, setPage] = useState(1);
+  
+  // Use responsive items per page for standard pagination
+  const responsiveItemsPerPage = useResponsiveItemsPerPage(defaultItemsPerPage);
+  const itemsPerPage = paginationType === "standard" ? responsiveItemsPerPage : defaultItemsPerPage;
 
   const {
     displayedItems: loadedTags,
@@ -24,12 +77,19 @@ function TagsGridContent({ tags }: { tags: Tag[] }) {
     isLoading,
     error,
     loadMore,
-  } = useInfiniteLoading({ items: tags, initialPage: 1, perPage: itemsPerPage });
+  } = useInfiniteLoading({ items: tags, initialPage: 1, perPage: defaultItemsPerPage });
 
   // Calculate total pages for pagination
   const totalPages = Math.ceil(tags.length / itemsPerPage);
 
   const pagedTags = useMemo(() => tags.slice((page - 1) * itemsPerPage, page * itemsPerPage), [tags, page, itemsPerPage]);
+  
+  // Reset to page 1 if current page exceeds total pages (can happen on resize)
+  useEffect(() => {
+    if (page > totalPages && totalPages > 0) {
+      setPage(1);
+    }
+  }, [page, totalPages]);
   const tagsToShow = paginationType === "infinite" ? loadedTags : pagedTags;
 
   // Move hooks above early return to avoid conditional hook call
@@ -76,14 +136,14 @@ function TagsGridContent({ tags }: { tags: Tag[] }) {
       description={tCommon("TAGS_DESCRIPTION", {
         defaultValue: "Browse all tags in our directory."
       })}
-      className="min-h-screen text-center"
+      className="min-h-screen text-center flex flex-col"
     >
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex-1">
         <TagsCards tags={tagsToShow} compact />
       </div>
-      {/* Standard Pagination */}
+      {/* Standard Pagination - sticky at bottom */}
       {paginationType === "standard" && (
-        <footer className="flex items-center justify-center mt-8">
+        <footer className="flex items-center justify-center py-6 mt-auto sticky bottom-0 bg-gradient-to-t from-white via-white dark:from-gray-900 dark:via-gray-900 to-transparent">
           <UniversalPagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
         </footer>
       )}
