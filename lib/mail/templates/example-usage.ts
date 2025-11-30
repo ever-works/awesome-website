@@ -6,7 +6,7 @@ export const sendRegularNewsletter = async (subscribers: string[]) => {
   const emailConfig = {
     provider: "resend",
     defaultFrom: "newsletter@ever.works",
-    domain: process.env.NEXT_PUBLIC_APP_URL || "https://ever.works",
+    domain: process.env.NEXT_PUBLIC_APP_URL || "https://app.ever.works",
     apiKeys: {
       resend: process.env.RESEND_API_KEY || "",
       novu: process.env.NOVU_API_KEY || "",
