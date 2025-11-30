@@ -311,8 +311,6 @@ export async function GET() {
       console.log("[VERSION_API] Starting version info request");
     }
 
-    // Repository sync now handled by background sync manager (lib/services/sync-service.ts)
-
     // Step 1: Validate paths and environment
     const contentPath = getContentPath();
     const gitDir = path.join(contentPath, ".git");
@@ -322,7 +320,18 @@ export async function GET() {
       console.warn("[VERSION_API] DATA_REPOSITORY environment variable not set");
     }
 
-    // Step 3: Validate git directory
+    // Step 2: Check if git directory exists, trigger sync if not
+    if (!await fsExists(gitDir)) {
+      // Try to sync repository first (for cold starts on Vercel)
+      try {
+        const { ensureContentAvailable } = await import('@/lib/lib');
+        await ensureContentAvailable();
+      } catch (syncError) {
+        console.warn("[VERSION_API] Content sync failed:", syncError);
+      }
+    }
+
+    // Step 3: Validate git directory (after potential sync)
     await validateGitDirectory(gitDir);
 
     // Step 4: Get latest commit information
