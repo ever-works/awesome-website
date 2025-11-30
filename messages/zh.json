@@ -2145,6 +2145,8 @@
     "TERMS_OF_SERVICE_META_DESCRIPTION": "使用我们目录服务的条款和条件",
     "ABOUT_US_DESCRIPTION": "了解更多关于我们公司的信息",
     "PRIVACY_POLICY_DESCRIPTION": "了解我们如何保护您的数据",
-    "TERMS_OF_SERVICE_DESCRIPTION": "查看我们的条款和条件"
+    "TERMS_OF_SERVICE_DESCRIPTION": "查看我们的条款和条件",
+    "COOKIES_META_DESCRIPTION": "关于我们如何在网站上使用Cookie和类似技术的信息",
+    "COOKIES_DESCRIPTION": "了解我们的Cookie使用情况"
   }
 }

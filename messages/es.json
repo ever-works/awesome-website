@@ -2146,6 +2146,8 @@
     "TERMS_OF_SERVICE_META_DESCRIPTION": "Términos y condiciones para usar nuestro servicio de directorio",
     "ABOUT_US_DESCRIPTION": "Conoce más sobre nuestra empresa",
     "PRIVACY_POLICY_DESCRIPTION": "Descubre cómo protegemos tus datos",
-    "TERMS_OF_SERVICE_DESCRIPTION": "Revisa nuestros términos y condiciones"
+    "TERMS_OF_SERVICE_DESCRIPTION": "Revisa nuestros términos y condiciones",
+    "COOKIES_META_DESCRIPTION": "Información sobre cómo usamos cookies y tecnologías similares en nuestro sitio web",
+    "COOKIES_DESCRIPTION": "Conoce nuestro uso de cookies"
   }
 }

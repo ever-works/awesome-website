@@ -2399,6 +2399,8 @@
     "TERMS_OF_SERVICE_META_DESCRIPTION": "Conditions générales d'utilisation de notre service d'annuaire",
     "ABOUT_US_DESCRIPTION": "En savoir plus sur notre entreprise",
     "PRIVACY_POLICY_DESCRIPTION": "Découvrez comment nous protégeons vos données",
-    "TERMS_OF_SERVICE_DESCRIPTION": "Consultez nos conditions générales"
+    "TERMS_OF_SERVICE_DESCRIPTION": "Consultez nos conditions générales",
+    "COOKIES_META_DESCRIPTION": "Informations sur notre utilisation des cookies et technologies similaires sur notre site web",
+    "COOKIES_DESCRIPTION": "En savoir plus sur notre utilisation des cookies"
   }
 }

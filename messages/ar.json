@@ -2093,6 +2093,8 @@
     "TERMS_OF_SERVICE_META_DESCRIPTION": "الشروط والأحكام لاستخدام خدمة الدليل الخاصة بنا",
     "ABOUT_US_DESCRIPTION": "تعرف على المزيد عن شركتنا",
     "PRIVACY_POLICY_DESCRIPTION": "تعرف على كيفية حماية بياناتك",
-    "TERMS_OF_SERVICE_DESCRIPTION": "راجع الشروط والأحكام الخاصة بنا"
+    "TERMS_OF_SERVICE_DESCRIPTION": "راجع الشروط والأحكام الخاصة بنا",
+    "COOKIES_META_DESCRIPTION": "معلومات حول كيفية استخدامنا لملفات تعريف الارتباط والتقنيات المماثلة على موقعنا",
+    "COOKIES_DESCRIPTION": "تعرف على استخدامنا لملفات تعريف الارتباط"
   }
 }

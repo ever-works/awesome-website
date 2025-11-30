@@ -2564,6 +2564,8 @@
     "TERMS_OF_SERVICE_META_DESCRIPTION": "Terms and conditions for using our directory service",
     "ABOUT_US_DESCRIPTION": "Learn more about our company",
     "PRIVACY_POLICY_DESCRIPTION": "Learn how we protect your data",
-    "TERMS_OF_SERVICE_DESCRIPTION": "Review our terms and conditions"
+    "TERMS_OF_SERVICE_DESCRIPTION": "Review our terms and conditions",
+    "COOKIES_META_DESCRIPTION": "Information about how we use cookies and similar technologies on our website",
+    "COOKIES_DESCRIPTION": "Learn about our cookie usage"
   }
 }
