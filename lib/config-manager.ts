@@ -32,7 +32,7 @@ export class ConfigManager {
     return key === '__proto__' || key === 'constructor' || key === 'prototype';
   }
   /**
-   * Check if we're in a CI/linting environment where warnings should be suppressed
+   * Check if we're in an environment where warnings should be suppressed
    */
   private shouldSuppressWarnings(): boolean {
     // Suppress warnings during CI, linting, or when DATA_REPOSITORY is not set
@@ -46,8 +46,14 @@ export class ConfigManager {
       process.env.TF_BUILD
     );
     
+    // On Vercel runtime, config file won't exist until content is cloned
+    // This is expected behavior during cold start - suppress warning
+    const isVercelRuntime = Boolean(process.env.VERCEL) && 
+      process.env.NEXT_PHASE !== 'phase-production-build';
+    
     return (
       isCI ||
+      isVercelRuntime ||
       process.env.NODE_ENV === 'test' ||
       !process.env.DATA_REPOSITORY ||
       process.argv.some(arg => /(?:^|[/\\])(eslint|lint(?:-staged)?)(?:\.[jt]s)?$/.test(arg))

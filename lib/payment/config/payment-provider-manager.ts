@@ -30,7 +30,7 @@ class ConfigManager {
 	private static lemonsqueezyStoreId: string = process.env.LEMONSQUEEZY_STORE_ID || '';
 	private static lemonsqueezyTestMode: boolean = process.env.LEMONSQUEEZY_TEST_MODE === 'true';
 	private static lemonsqueezyApiVersion: string = process.env.LEMONSQUEEZY_API_VERSION || '2023-10-16';
-	private static lemonsqueezyAppUrl: string = process.env.NEXT_PUBLIC_APP_URL || 'https://app.ever.works';
+	private static lemonsqueezyAppUrl: string = process.env.NEXT_PUBLIC_APP_URL || 'https://demo.ever.works';
 	private static lemonsqueezySiteUrl: string = process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works';
 
 	private static ensureConfig(): ProviderConfig {
