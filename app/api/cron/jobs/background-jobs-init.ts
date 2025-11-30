@@ -5,6 +5,8 @@
  * It ensures that initialization (and logging) happens only ONCE per process,
  * even when called from layout.tsx which renders on every request.
  * 
+ * Uses globalThis to persist state across module reloads in serverless environments.
+ * 
  * Usage:
  *   import { ensureBackgroundJobsInitialized } from '@/app/api/cron/jobs/background-jobs-init';
  *   ensureBackgroundJobsInitialized();
@@ -13,10 +15,28 @@
 import { getSchedulingMode } from '@/lib/background-jobs/config';
 import type { SchedulingMode } from '@/lib/background-jobs/types';
 
-// Module-level singleton state
-let initializationState: 'pending' | 'initializing' | 'completed' = 'pending';
-let initializationPromise: Promise<void> | null = null;
-let loggedMode: SchedulingMode | null = null;
+// Use globalThis for singleton state to persist across module reloads in serverless
+// This is the standard pattern for Next.js/Vercel serverless functions
+const GLOBAL_KEY = '__BACKGROUND_JOBS_INIT__' as const;
+
+interface BackgroundJobsGlobalState {
+	initializationState: 'pending' | 'initializing' | 'completed';
+	initializationPromise: Promise<void> | null;
+	loggedMode: SchedulingMode | null;
+}
+
+// Initialize global state if not exists
+function getGlobalState(): BackgroundJobsGlobalState {
+	const g = globalThis as typeof globalThis & { [GLOBAL_KEY]?: BackgroundJobsGlobalState };
+	if (!g[GLOBAL_KEY]) {
+		g[GLOBAL_KEY] = {
+			initializationState: 'pending',
+			initializationPromise: null,
+			loggedMode: null
+		};
+	}
+	return g[GLOBAL_KEY];
+}
 
 /**
  * Ensures background jobs are initialized exactly once.
@@ -35,27 +55,29 @@ export async function ensureBackgroundJobsInitialized(): Promise<void> {
 		return;
 	}
 
+	const state = getGlobalState();
+
 	// Already completed - fast path
-	if (initializationState === 'completed') {
+	if (state.initializationState === 'completed') {
 		return;
 	}
 
 	// Already in progress - wait for completion
-	if (initializationState === 'initializing' && initializationPromise) {
-		return initializationPromise;
+	if (state.initializationState === 'initializing' && state.initializationPromise) {
+		return state.initializationPromise;
 	}
 
 	// Start initialization
-	initializationState = 'initializing';
-	initializationPromise = doInitialize();
+	state.initializationState = 'initializing';
+	state.initializationPromise = doInitialize();
 	
 	try {
-		await initializationPromise;
-		initializationState = 'completed';
+		await state.initializationPromise;
+		state.initializationState = 'completed';
 	} catch (error) {
 		// Reset state to allow retry on next call
-		initializationState = 'pending';
-		initializationPromise = null;
+		state.initializationState = 'pending';
+		state.initializationPromise = null;
 		throw error;
 	}
 }
@@ -64,11 +86,12 @@ export async function ensureBackgroundJobsInitialized(): Promise<void> {
  * Internal initialization logic - called only once
  */
 async function doInitialize(): Promise<void> {
+	const state = getGlobalState();
 	const schedulingMode = getSchedulingMode();
 
 	// Log only once per mode (prevents duplicate logs even if state resets)
-	if (loggedMode !== schedulingMode) {
-		loggedMode = schedulingMode;
+	if (state.loggedMode !== schedulingMode) {
+		state.loggedMode = schedulingMode;
 		
 		switch (schedulingMode) {
 			case 'vercel':
@@ -100,9 +123,10 @@ export function getInitializationState(): {
 	state: 'pending' | 'initializing' | 'completed';
 	mode: SchedulingMode | null;
 } {
+	const state = getGlobalState();
 	return {
-		state: initializationState,
-		mode: loggedMode
+		state: state.initializationState,
+		mode: state.loggedMode
 	};
 }
 
