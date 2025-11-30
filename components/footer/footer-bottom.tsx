@@ -37,7 +37,7 @@ export function FooterBottom({ config, t }: { config: any; t: any }) {
             
             {/* Disclaimer - smaller text, can be wider now */}
             <div className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 leading-relaxed flex-1">
-              *{t("footer.DISCLAIMER")}
+              {t("footer.DISCLAIMER")}
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export function FooterBottom({ config, t }: { config: any; t: any }) {
                 </div>
               </VersionTooltip>
               <div className="w-px h-4 bg-gray-300 dark:bg-gray-600" />
-              <ThemeToggler />
+              <ThemeToggler openUp />
             </div>
           </div>
         </div>
