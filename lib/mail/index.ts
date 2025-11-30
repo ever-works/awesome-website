@@ -233,8 +233,8 @@ export class EmailService {
 
 const emailConfig: EmailServiceConfig = {
   provider: process.env.EMAIL_PROVIDER || "resend", // Default to resend
-  defaultFrom: process.env.EMAIL_FROM || "onboarding@resend.dev",
-  domain: process.env.NEXT_PUBLIC_APP_URL || 'https://app.ever.works',
+  defaultFrom: process.env.EMAIL_FROM || "noreply@ever.works",
+  domain: process.env.NEXT_PUBLIC_APP_URL || 'https://demo.ever.works',
   apiKeys: {
     resend: process.env.RESEND_API_KEY || "",
     novu: process.env.NOVU_API_KEY || "",

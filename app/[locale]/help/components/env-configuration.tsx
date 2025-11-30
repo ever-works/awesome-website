@@ -54,10 +54,10 @@ export function EnvConfiguration() {
     },
     {
       name: "NEXT_PUBLIC_APP_URL",
-      description: "Base URL of your application",
+      description: "Base URL of your directory website",
       type: "url",
       required: true,
-      example: "http://app.ever.works",
+      example: "http://demo.ever.works",
       category: "auth",
       importance: "critical"
     },
