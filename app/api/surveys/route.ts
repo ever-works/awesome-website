@@ -122,14 +122,43 @@ export async function GET(request: NextRequest) {
             }
         });
     } catch (error) {
-        // Only log errors in development mode
-        if (process.env.NODE_ENV === 'development') {
-            logger.error('Error fetching surveys', error);
+        // Log errors for debugging
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        console.error('[API/surveys] Error:', errorMessage);
+        
+        // Check for common database errors
+        if (errorMessage.includes('DATABASE_URL') || 
+            errorMessage.includes('connect ECONNREFUSED') ||
+            errorMessage.includes('connection') ||
+            errorMessage.includes('ENOTFOUND')) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: 'Database connection failed',
+                    code: 'DATABASE_CONNECTION_ERROR'
+                },
+                { status: 503 }
+            );
         }
+        
+        // Check for schema/table errors
+        if (errorMessage.includes('relation') || 
+            errorMessage.includes('does not exist') ||
+            errorMessage.includes('undefined')) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: 'Database schema not initialized. Run migrations.',
+                    code: 'DATABASE_SCHEMA_ERROR'
+                },
+                { status: 503 }
+            );
+        }
+        
         return NextResponse.json(
             {
                 success: false,
-                error: error instanceof Error ? error.message : 'Failed to fetch surveys'
+                error: errorMessage
             },
             { status: 500 }
         );
