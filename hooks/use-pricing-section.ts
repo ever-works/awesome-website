@@ -51,6 +51,7 @@ export interface UsePricingSectionReturn extends UsePricingSectionState, UsePric
 	premiumPlanFeatures: any[];
 	getPlanConfig: (planId: string) => any;
 	getActionText: (planId: string) => string;
+	getNotLoggedInActionText: (planId: string) => string;
 	isLoading: boolean;
 	error: any;
 	isSuccess: boolean;
@@ -73,7 +74,7 @@ export function usePricingSection(params: UsePricingSectionParams = {}): UsePric
 	const t = useTranslations('pricing');
 	const tBilling = useTranslations('billing');
 
-	const { freePlanFeatures, standardPlanFeatures, premiumPlanFeatures, getPlanConfig, getActionText } =
+	const { freePlanFeatures, standardPlanFeatures, premiumPlanFeatures, getPlanConfig, getActionText, getNotLoggedInActionText } =
 		usePricingFeatures();
 
 		const stripeHook: ReturnType<typeof useCreateCheckoutSession> = useCreateCheckoutSession();
@@ -306,6 +307,7 @@ export function usePricingSection(params: UsePricingSectionParams = {}): UsePric
 		premiumPlanFeatures,
 		getPlanConfig: (planId: string) => getPlanConfig(planId as PaymentPlan),
 		getActionText: (planId: string) => getActionText(planId as PaymentPlan),
+		getNotLoggedInActionText: (planId: string) => getNotLoggedInActionText(planId as PaymentPlan),
 		isLoading,
 		error,
 		provider: paymentProvider,

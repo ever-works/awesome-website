@@ -24,6 +24,7 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 		PREMIUM,
 		getPlanConfig,
 		getActionText,
+		getNotLoggedInActionText,
 		isLoading,
 		error,
 		user,
@@ -153,7 +154,7 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 								error
 									? tBilling('ERROR_TRY_AGAIN')
 									: !user
-										? tBilling('SIGN_IN_TO_CONTINUE')
+										? getNotLoggedInActionText(PaymentPlan.FREE)
 										: processingPlan === FREE?.id && isLoading
 											? tBilling('PROCESSING')
 											: getActionText(PaymentPlan.FREE)
@@ -205,7 +206,7 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 								error
 									? tBilling('ERROR_TRY_AGAIN')
 									: !user
-										? tBilling('SIGN_IN_TO_CONTINUE')
+										? getNotLoggedInActionText(PaymentPlan.STANDARD)
 										: processingPlan === STANDARD?.id && isLoading
 											? tBilling('PROCESSING')
 											: getActionText(PaymentPlan.STANDARD)
@@ -258,7 +259,7 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 								error
 									? tBilling('ERROR_TRY_AGAIN')
 									: !user
-										? tBilling('SIGN_IN_TO_CONTINUE')
+										? getNotLoggedInActionText(PaymentPlan.PREMIUM)
 										: processingPlan === PREMIUM?.id && isLoading
 											? tBilling('PROCESSING')
 											: getActionText(PaymentPlan.PREMIUM)
@@ -358,6 +359,7 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 				selectedFlow={selectedFlow} 
 				isOpen={isModalOpen}
 				onClose={onCloseSelectorModal}
+				onSelect={handleFlowSelect}
 			/>
 		</div>
 	);

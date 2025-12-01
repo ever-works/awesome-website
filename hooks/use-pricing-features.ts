@@ -16,6 +16,7 @@ export interface PricingFeatures {
   getFeaturesByPlan: (planType: PaymentPlan) => PlanFeature[];
   getPlanConfig: (planType: PaymentPlan) => PlanConfig;
   getActionText: (planType: PaymentPlan) => string;
+  getNotLoggedInActionText: (planType: PaymentPlan) => string;
 }
 
 export function usePricingFeatures(): PricingFeatures {
@@ -107,6 +108,19 @@ export function usePricingFeatures(): PricingFeatures {
     }
   };
 
+  const getNotLoggedInActionText = (planType: PaymentPlan): string => {
+    switch (planType) {
+      case "free":
+        return t('SUBMIT_FOR_FREE');
+      case "standard":
+        return t('SUBSCRIBE_NOW');
+      case "premium":
+        return t('SUBSCRIBE_NOW');
+      default:
+        return t('SUBMIT_FOR_FREE');
+    }
+  };
+
   return {
     freePlanFeatures,
     standardPlanFeatures,
@@ -114,5 +128,6 @@ export function usePricingFeatures(): PricingFeatures {
     getFeaturesByPlan,
     getPlanConfig,
     getActionText,
+    getNotLoggedInActionText,
   };
 }
