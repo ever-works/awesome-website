@@ -6,7 +6,7 @@
     "SIGN_IN": "登录",
     "LOGIN": "登录",
     "SIGN_UP": "注册",
-    "CREATE_ACCOUNT": "创建账户",
+    "CREATE_ACCOUNT": "注册",
     "FORGOT_PASSWORD": "忘记密码？",
     "REMEMBER_ME": "记住我",
     "ENTER_YOUR_FULL_NAME": "输入您的姓名",
@@ -446,7 +446,10 @@
     "SUBSCRIPTION_ERROR": "订阅失败。请重试。",
     "SUBSCRIPTION_SUCCESS": "感谢订阅！请查看您的电子邮件以进行确认。",
     "SUBMITTING": "提交中...",
-    "SUBSCRIBE_AGAIN": "订阅另一个电子邮件"
+    "SUBSCRIBE_AGAIN": "订阅另一个电子邮件",
+    "CLIENTS": "客户",
+    "REGISTER": "注册",
+    "ADMIN": "管理"
   },
   "directory": {
     "STEPS": {

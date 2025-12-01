@@ -57,8 +57,9 @@ export function LoginContent({
                   src={isDark ? "/logo-dark.png" : "/logo-light.png"}
                   alt={config.company_name || "Logo"}
                   width={100}
-                  height={100}
-                  className="h-7 w-auto"
+                  height={28}
+                  className="h-7"
+                  style={{ width: 'auto', height: 'auto', maxHeight: '1.75rem' }}
                 />
               </div>
 

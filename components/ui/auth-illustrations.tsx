@@ -147,36 +147,31 @@ export function AnimatedBackground({ className }: { className?: string }) {
 // Animated security icon
 export function SecurityIcon({ className }: { className?: string }) {
   return (
-    <div className={cn('relative', className)}>
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 48 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="text-theme-primary"
-      >
-        <circle
-          cx="24"
-          cy="24"
-          r="20"
-          fill="currentColor"
-          fillOpacity="0.1"
-          className="animate-pulse"
-        />
-        <path
-          d="M24 8L32 12V22C32 28 28 33.5 24 36C20 33.5 16 28 16 22V12L24 8Z"
-          fill="currentColor"
-          fillOpacity="0.2"
-        />
-        <path
-          d="M24 12L28 14V20C28 24 26 27 24 28C22 27 20 24 20 20V14L24 12Z"
-          fill="currentColor"
-        />
-        <circle cx="24" cy="20" r="2" fill="white" />
-        <rect x="23" y="22" width="2" height="4" fill="white" />
-      </svg>
-    </div>
+    <svg
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn('text-theme-primary', className)}
+    >
+      <circle
+        cx="24"
+        cy="24"
+        r="20"
+        fill="currentColor"
+        fillOpacity="0.1"
+      />
+      <path
+        d="M24 8L32 12V22C32 28 28 33.5 24 36C20 33.5 16 28 16 22V12L24 8Z"
+        fill="currentColor"
+        fillOpacity="0.2"
+      />
+      <path
+        d="M24 12L28 14V20C28 24 26 27 24 28C22 27 20 24 20 20V14L24 12Z"
+        fill="currentColor"
+      />
+      <circle cx="24" cy="20" r="2" fill="white" />
+      <rect x="23" y="22" width="2" height="4" fill="white" />
+    </svg>
   );
 }
 

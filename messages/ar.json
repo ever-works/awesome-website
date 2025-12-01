@@ -6,7 +6,7 @@
     "SIGN_IN": "تسجيل الدخول",
     "LOGIN": "دخول",
     "SIGN_UP": "إنشاء حساب",
-    "CREATE_ACCOUNT": "إنشاء حساب جديد",
+    "CREATE_ACCOUNT": "تسجيل",
     "FORGOT_PASSWORD": "نسيت كلمة المرور؟",
     "REMEMBER_ME": "تذكرني",
     "ENTER_YOUR_FULL_NAME": "أدخل اسمك الكامل",
@@ -393,7 +393,10 @@
     "SUBSCRIPTION_ERROR": "فشل الاشتراك. يرجى المحاولة مرة أخرى.",
     "SUBSCRIPTION_SUCCESS": "شكراً لاشتراكك! تحقق من بريدك الإلكتروني للتأكيد.",
     "SUBMITTING": "جاري الإرسال...",
-    "SUBSCRIBE_AGAIN": "اشتراك بريد إلكتروني آخر"
+    "SUBSCRIBE_AGAIN": "اشتراك بريد إلكتروني آخر",
+    "CLIENTS": "العملاء",
+    "REGISTER": "تسجيل",
+    "ADMIN": "المشرف"
   },
   "directory": {
     "STEPS": {

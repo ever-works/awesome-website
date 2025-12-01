@@ -6,7 +6,7 @@
     "SIGN_IN": "Anmelden",
     "LOGIN": "Login",
     "SIGN_UP": "Registrieren",
-    "CREATE_ACCOUNT": "Konto erstellen",
+    "CREATE_ACCOUNT": "Registrieren",
     "FORGOT_PASSWORD": "Passwort vergessen?",
     "REMEMBER_ME": "Angemeldet bleiben",
     "ENTER_YOUR_FULL_NAME": "Geben Sie Ihren vollständigen Namen ein",
@@ -466,7 +466,10 @@
     "SUBSCRIPTION_ERROR": "Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "SUBSCRIPTION_SUCCESS": "Vielen Dank für Ihr Abonnement! Überprüfen Sie Ihre E-Mail für die Bestätigung.",
     "SUBMITTING": "Wird gesendet...",
-    "SUBSCRIBE_AGAIN": "Weitere E-Mail-Adresse abonnieren"
+    "SUBSCRIBE_AGAIN": "Weitere E-Mail-Adresse abonnieren",
+    "CLIENTS": "Kunden",
+    "REGISTER": "Registrieren",
+    "ADMIN": "Admin"
   },
   "directory": {
     "STEPS": {

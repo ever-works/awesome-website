@@ -40,7 +40,7 @@ export function Footer() {
               </div>
 
               {/* Enhanced Navigation links section */}
-              <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                 {Object.entries(footerNavigation(t as (key: string) => string, categoriesEnabled, tagsEnabled)).map(
                   ([category, links], categoryIndex) => (
                     <FooterLinkGroup

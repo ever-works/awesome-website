@@ -26,12 +26,15 @@ export function FooterBottom({ config, t }: { config: any; t: any }) {
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
             <div className="shrink-0">
               {mounted && (
-                <Image 
-                  src={theme !== 'dark' ? "/logo-light.png" : "/logo-dark.png"} 
-                  alt="Everworks" 
-                  width={140} 
-                  height={50} 
-                />
+                <Link href="/" className="block transition-transform duration-200 hover:scale-105">
+                  <Image 
+                    src={theme !== 'dark' ? "/logo-light.png" : "/logo-dark.png"} 
+                    alt="Everworks" 
+                    width={140} 
+                    height={50}
+                    style={{ width: 'auto', height: 'auto' }}
+                  />
+                </Link>
               )}
             </div>
             

@@ -26,7 +26,7 @@ export function BrandLink({ t }: { t: any }) {
               {t("footer.BUILT_WITH")}
             </span>
             <div className="relative w-6 h-6">
-              <Image className="w-full h-full object-cover" src="/logo-symbol.png" alt={siteConfig.attribution.name} width={40} height={40} />
+              <Image className="object-cover" src="/logo-symbol.png" alt={siteConfig.attribution.name} width={24} height={24} style={{ width: '100%', height: '100%' }} />
               <div className="absolute inset-0 bg-linear-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
             <span className="text-sm  text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">

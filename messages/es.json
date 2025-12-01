@@ -6,7 +6,7 @@
     "SIGN_IN": "Iniciar sesión",
     "LOGIN": "Iniciar sesión",
     "SIGN_UP": "Registrarse",
-    "CREATE_ACCOUNT": "Crear cuenta",
+    "CREATE_ACCOUNT": "Registrarse",
     "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
     "REMEMBER_ME": "Recordarme",
     "ENTER_YOUR_FULL_NAME": "Ingresa tu nombre completo",
@@ -267,7 +267,10 @@
     "SUBSCRIPTION_ERROR": "Error al suscribirse. Por favor intenta de nuevo.",
     "SUBSCRIPTION_SUCCESS": "¡Gracias por suscribirte! Revisa tu email para confirmación.",
     "SUBMITTING": "Enviando...",
-    "SUBSCRIBE_AGAIN": "Suscribirse con otro email"
+    "SUBSCRIBE_AGAIN": "Suscribirse con otro email",
+    "CLIENTS": "Clientes",
+    "REGISTER": "Registrarse",
+    "ADMIN": "Admin"
   },
   "listing": {
     "ALL": "Todo",

@@ -67,8 +67,14 @@ export function footerNavigation(t: (key: string) => string, categoriesEnabled =
 
   return {
     product: filteredProductLinks,
+    clients: [
+      { label: t("auth.SIGN_IN"), href: "/auth/signin" },
+      { label: t("footer.REGISTER"), href: "/auth/register" },
+      { label: t("auth.FORGOT_PASSWORD"), href: "/auth/forgot-password" },
+    ],
     company: [
       { label: t("footer.ABOUT_US"), href: "/about" },
+      { label: t("footer.ADMIN"), href: "/admin" },
       {
         label: t("footer.SITEMAP"),
         href: "/sitemap.xml",
@@ -88,6 +94,7 @@ export function footerNavigation(t: (key: string) => string, categoriesEnabled =
 export function categoryLabels(t: (key: string) => string) {
   return {
     product: t("footer.PRODUCT"),
+    clients: t("footer.CLIENTS"),
     company: t("footer.COMPANY"),
     resources: t("footer.RESOURCES"),
   };

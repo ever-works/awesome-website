@@ -6,7 +6,7 @@
     "SIGN_IN": "Se connecter",
     "LOGIN": "Connexion",
     "SIGN_UP": "S'inscrire",
-    "CREATE_ACCOUNT": "Créer un compte",
+    "CREATE_ACCOUNT": "S'inscrire",
     "FORGOT_PASSWORD": "Mot de passe oublié ?",
     "REMEMBER_ME": "Se souvenir de moi",
     "ENTER_YOUR_FULL_NAME": "Entrez votre nom complet",
@@ -314,7 +314,10 @@
     "SUBSCRIPTION_ERROR": "Échec de l'abonnement. Veuillez réessayer.",
     "SUBSCRIPTION_SUCCESS": "Merci de vous être abonné ! Vérifiez votre email pour confirmation.",
     "SUBMITTING": "Soumise en cours...",
-    "SUBSCRIBE_AGAIN": "S'abonner avec un autre email"
+    "SUBSCRIBE_AGAIN": "S'abonner avec un autre email",
+    "CLIENTS": "Clients",
+    "REGISTER": "S'inscrire",
+    "ADMIN": "Admin"
   },
   "listing": {
     "ALL": "Tout",

@@ -6,7 +6,7 @@
     "SIGN_IN": "Sign In",
     "LOGIN": "Login",
     "SIGN_UP": "Sign up",
-    "CREATE_ACCOUNT": "Create Account",
+    "CREATE_ACCOUNT": "Register",
     "FORGOT_PASSWORD": "Forgot password?",
     "REMEMBER_ME": "Remember me",
     "ENTER_YOUR_FULL_NAME": "Enter your full name",
@@ -420,7 +420,10 @@
     "SUBSCRIPTION_ERROR": "Failed to subscribe. Please try again.",
     "SUBSCRIPTION_SUCCESS": "Thank you for subscribing! Check your email for confirmation.",
     "SUBMITTING": "Submitting...",
-    "SUBSCRIBE_AGAIN": "Subscribe another email"
+    "SUBSCRIBE_AGAIN": "Subscribe another email",
+    "CLIENTS": "Clients",
+    "REGISTER": "Register",
+    "ADMIN": "Admin"
   },
   "settings": {
     "PROFILE": "Your Profile",
