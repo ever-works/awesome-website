@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import { isValidImageUrl } from "@/lib/utils/image-domains";
 
 interface AvatarProps {
   src?: string | null;
@@ -23,7 +24,7 @@ export function Avatar({ src, alt = "", fallback, size = "sm", className }: Avat
   );
   const dimensions = tailwindUnit * 4;
 
-  if (src && !imageError) {
+  if (src && !imageError && isValidImageUrl(src)) {
     return (
       <div className={`relative rounded-full overflow-hidden ${sizeMap[size]} ${className ?? ""}`}>
         <Image

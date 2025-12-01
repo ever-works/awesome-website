@@ -141,6 +141,25 @@ export function isProblematicUrl(url: string) {
 	}
 }
 
+/**
+ * Check if a string is a valid image URL format
+ * Only validates URL structure, not if the image actually exists
+ */
+export function isValidImageUrl(url: string): boolean {
+	if (!url) return false;
+
+	// Allow relative URLs starting with /
+	if (url.startsWith('/')) return true;
+
+	// Check for valid absolute URL format
+	try {
+		const parsed = new URL(url);
+		return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+	} catch {
+		return false;
+	}
+}
+
 // If no URL, URL is problematic, or image failed to load, show default icon
 export function shouldShowFallback(url: string) {
 	const shouldShowFallback = !url || isProblematicUrl(url);
