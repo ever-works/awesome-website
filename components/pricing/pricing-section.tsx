@@ -118,10 +118,10 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 					>
 						<span>{tBilling('YEARLY')}</span>
 					</button>
-					{/* Enhanced sliding background - z-0 to stay behind buttons */}
+					{/* Enhanced sliding background - z-0 keeps it behind buttons (which have z-10) */}
 					<div
 						className={cn(
-							'absolute top-1 h-[calc(100%-8px)] bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200/50 dark:border-slate-600/50 transition-all duration-300 ease-out backdrop-blur-xs z-0',
+							'absolute top-1 h-[calc(100%-8px)] bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200/50 dark:border-slate-600/50 transition-all duration-300 ease-out backdrop-blur-xs z-0 pointer-events-none',
 							billingInterval === PaymentInterval.MONTHLY
 								? 'left-1 w-[calc(50%-4px)]'
 								: 'left-[calc(50%+2px)] w-[calc(50%-4px)]'
@@ -131,9 +131,9 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 			</div>
 
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-				<div className="transition duration-700 ease-in-out hover:scale-105">
+				<div className="relative transition duration-700 ease-in-out hover:scale-105">
 					{/* Card Glow Effect */}
-					<div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-600/20 dark:to-purple-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+					<div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-600/20 dark:to-purple-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
 					<div
 						className={cn(
@@ -181,11 +181,9 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 					</div>
 				</div>
 
-				{/* <div className="relative group animate-fade-in-up" style={{ animationDelay: '0.2s' }}> */}
-					{/* Popular Badge */}
-
+					<div className="relative group">
 					{/* Card Glow Effect */}
-					<div className="absolute inset-0 bg-linear-to-r from-purple-500/10 to-pink-500/10 dark:from-purple-600/20 dark:to-pink-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+					<div className="absolute inset-0 bg-linear-to-r from-purple-500/10 to-pink-500/10 dark:from-purple-600/20 dark:to-pink-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
 					<div
 						className={cn(
@@ -235,9 +233,9 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 							)}
 						</PlanCard>
 					</div>
-				{/* </div> */}
+				</div>
 
-				{/* <div className="relative group animate-fade-in-up" style={{ animationDelay: '0.3s' }}> */}
+				<div className="relative group">
 					{/* Card Glow Effect */}
 					{/* <div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-600/20 dark:to-cyan-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" /> */}
 
@@ -289,7 +287,7 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 						</PlanCard>
 					</div>
 				</div>
-			{/* </div> */}
+			</div>
 
 			{/* Enhanced Continue Section */}
 			{selectedPlan && (
