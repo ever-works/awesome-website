@@ -117,10 +117,10 @@ export function PricingSection({ onSelectPlan, isReview }: PricingSectionProps) 
 					>
 						<span>{tBilling('YEARLY')}</span>
 					</button>
-					{/* Enhanced sliding background */}
+					{/* Enhanced sliding background - z-0 to stay behind buttons */}
 					<div
 						className={cn(
-							'absolute top-1 h-[calc(100%-8px)] bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200/50 dark:border-slate-600/50 transition-all duration-300 ease-out backdrop-blur-xs',
+							'absolute top-1 h-[calc(100%-8px)] bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200/50 dark:border-slate-600/50 transition-all duration-300 ease-out backdrop-blur-xs z-0',
 							billingInterval === PaymentInterval.MONTHLY
 								? 'left-1 w-[calc(50%-4px)]'
 								: 'left-[calc(50%+2px)] w-[calc(50%-4px)]'
