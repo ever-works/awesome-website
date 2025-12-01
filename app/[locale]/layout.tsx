@@ -19,7 +19,6 @@ import { Analytics } from './integration/analytics';
 import { SettingsProvider } from '@/components/providers/settings-provider';
 import { SettingsModalProvider } from '@/components/providers/settings-modal-provider';
 import { SettingsModal } from '@/components/settings-modal';
-import { FloatingSettingsButton } from '@/components/floating-settings-button';
 import {
 	getCategoriesEnabled,
 	getTagsEnabled,
@@ -120,10 +119,8 @@ export default async function RootLayout({
 						<SettingsModalProvider>
 							<Providers config={config}>
 								<ConditionalLayout>{children}</ConditionalLayout>
-								{/* Settings Modal - Shared by header and floating button */}
-								<SettingsModal />
-								{/* Floating Settings Button - WordPress customizer style */}
-								{headerSettings.settingsEnabled && <FloatingSettingsButton />}
+							{/* Settings Modal - Shared by header button */}
+							<SettingsModal />
 							</Providers>
 						</SettingsModalProvider>
 					</SettingsProvider>
