@@ -20,7 +20,7 @@ interface ServerConfig {
  * Validates required variables and provides defaults where appropriate
  */
 export function getServerConfig(): ServerConfig {
-  const supportEmail = process.env.SUPPORT_EMAIL || 'support@ever.works';
+  const supportEmail = process.env.EMAIL_SUPPORT || 'support@ever.works';
   const companyName = process.env.COMPANY_NAME || "Ever Works";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://demo.ever.works';
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -29,7 +29,7 @@ export function getServerConfig(): ServerConfig {
 
   // Validate required environment variables
   const requiredVars = {
-    SUPPORT_EMAIL: supportEmail,
+    EMAIL_SUPPORT: supportEmail,
     NEXT_PUBLIC_APP_URL: appUrl,
     STRIPE_SECRET_KEY: stripeSecretKey,
     STRIPE_WEBHOOK_SECRET: stripeWebhookSecret,
@@ -80,14 +80,14 @@ export async function getEmailConfig() {
   // Get values from config file first, then fallback to environment variables
   const supportEmail = (typeof config.mail === 'object' && 'from' in config.mail)
     ? config.mail.from
-    : process.env.SUPPORT_EMAIL;
+    : process.env.EMAIL_SUPPORT;
 
   const companyName = config.company_name || process.env.COMPANY_NAME || "Ever Works";
   const appUrl = config.app_url || process.env.NEXT_PUBLIC_APP_URL || 'https://demo.ever.works';
 
   // Validate required values
   if (!supportEmail) {
-    console.error('SUPPORT_EMAIL not found in config file or environment variables');
+    console.error('EMAIL_SUPPORT not found in config file or environment variables');
     throw new Error('Email configuration is incomplete');
   }
 

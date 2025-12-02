@@ -184,7 +184,7 @@ export async function POST(
         subscriptionId: subscriptionId,
         companyName: "Ever Works",
         companyUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ever.works",
-        supportEmail: process.env.SUPPORT_EMAIL || "support@ever.works",
+        supportEmail: process.env.EMAIL_SUPPORT || "support@ever.works",
         manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`
       };
 

@@ -113,7 +113,7 @@ jobs:
           
           # Email service variables (Resend)
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY || '' }}
-          EMAIL_FROM: ${{ secrets.EMAIL_FROM || 'noreply@demo.ever.works' }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM || 'info@ever.works' }}
 
       - name: Check for build success
         run: |

@@ -120,11 +120,11 @@ export function EnvConfiguration() {
       importance: "important"
     },
     {
-      name: "FROM_EMAIL",
+      name: "EMAIL_FROM",
       description: "Default sender email address",
       type: "string",
       required: false,
-      example: "noreply@yourdomain.com",
+      example: "info@ever.works",
       category: "email",
       importance: "optional"
     },

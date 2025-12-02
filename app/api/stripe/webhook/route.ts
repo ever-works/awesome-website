@@ -322,7 +322,7 @@ async function handleSubscriptionCreated(data: any) {
 			manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/subscription`,
 			companyName: emailConfig?.companyName,
 			companyUrl: emailConfig?.companyUrl,
-			supportEmail: process.env.SUPPORT_EMAI,
+			supportEmail: process.env.EMAIL_SUPPORT,
 			features: getSubscriptionFeatures(planName)
 		};
 
@@ -367,7 +367,7 @@ async function handleSubscriptionUpdated(data: any) {
 			manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/subscription`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
-			supportEmail: process.env.SUPPORT_EMAIL || 'support@ever.works',
+			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works',
 			features: getSubscriptionFeatures(planName)
 		};
 
@@ -409,7 +409,7 @@ async function handleSubscriptionCancelled(data: any) {
 			reactivateUrl: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/reactivate?subscription=${data.id}`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
-			supportEmail: process.env.SUPPORT_EMAIL || 'support@ever.works'
+			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'
 		};
 
 		// Send cancellation email
@@ -457,7 +457,7 @@ async function handleSubscriptionPaymentSucceeded(data: any) {
 			receiptUrl: data.receipt_url,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
-			supportEmail: process.env.SUPPORT_EMAIL || 'support@ever.works'
+			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'
 		};
 
 		// Send confirmation email
@@ -503,7 +503,7 @@ async function handleSubscriptionPaymentFailed(data: any) {
 			updatePaymentUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/payment-methods`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
-			supportEmail: process.env.SUPPORT_EMAIL || 'support@ever.works'
+			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'
 		};
 
 		// Send failure email
@@ -547,7 +547,7 @@ async function handleSubscriptionTrialEnding(data: any) {
 			manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/subscription`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
-			supportEmail: process.env.SUPPORT_EMAIL || 'support@ever.works'
+			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'
 		};
 
 		// Send trial ending notification email
