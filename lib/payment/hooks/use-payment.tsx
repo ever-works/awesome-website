@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { PaymentService } from '../lib/payment-service';
 import { PaymentServiceManager } from '../lib/payment-service-manager';
 import type { SupportedProvider, PaymentProviderConfig } from '../types/payment-types';
+import { PaymentProvider as PaymentProviderEnum } from '@/lib/constants';
 
 type PaymentContextType = {
   service: PaymentService | null;
@@ -26,13 +27,14 @@ export function usePayment() {
 interface PaymentProviderProps {
   children: ReactNode;
   providerConfigs: Record<SupportedProvider, PaymentProviderConfig>;
+  defaultProvider?: SupportedProvider;
 }
 
-export function PaymentProvider({ children, providerConfigs }: PaymentProviderProps) {
+export function PaymentProvider({ children, providerConfigs, defaultProvider }: PaymentProviderProps) {
   const [service, setService] = useState<PaymentService | null>(null);
-  const [currentProvider, setCurrentProvider] = useState<SupportedProvider>('stripe');
+  const [currentProvider, setCurrentProvider] = useState<SupportedProvider>(defaultProvider || PaymentProviderEnum.STRIPE);
   const [availableProviders, setAvailableProviders] = useState<SupportedProvider[]>([]);
-  const serviceManager = PaymentServiceManager.getInstance(providerConfigs);
+  const serviceManager = PaymentServiceManager.getInstance(providerConfigs, defaultProvider);
 
   useEffect(() => {
     setService(serviceManager.getPaymentService());

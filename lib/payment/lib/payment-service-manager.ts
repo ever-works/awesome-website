@@ -1,5 +1,6 @@
 import { PaymentService } from './payment-service';
 import { SupportedProvider, PaymentProviderConfig } from '../types/payment-types';
+import { PaymentProvider } from '@/lib/constants';
 
 /**
  * Manager class for handling payment service instances and provider switching
@@ -8,19 +9,25 @@ export class PaymentServiceManager {
   private static instance: PaymentServiceManager;
   private currentService: PaymentService | null = null;
   private readonly STORAGE_KEY = 'everworks_template.payment_provider.selected';
-  private readonly DEFAULT_PROVIDER = 'stripe';
+  private readonly DEFAULT_PROVIDER: SupportedProvider;
   private providerConfigs: Record<SupportedProvider, PaymentProviderConfig>;
 
-  private constructor(providerConfigs: Record<SupportedProvider, PaymentProviderConfig>) {
+  private constructor(providerConfigs: Record<SupportedProvider, PaymentProviderConfig>, defaultProvider: SupportedProvider = PaymentProvider.STRIPE) {
     this.providerConfigs = providerConfigs;
+    this.DEFAULT_PROVIDER = defaultProvider;
   }
 
   /**
    * Get the singleton instance of PaymentServiceManager
+   * @param providerConfigs - Configuration for all payment providers
+   * @param defaultProvider - Optional default provider to use (defaults to PaymentProvider.STRIPE for backward compatibility)
    */
-  static getInstance(providerConfigs: Record<SupportedProvider, PaymentProviderConfig>): PaymentServiceManager {
+  static getInstance(
+    providerConfigs: Record<SupportedProvider, PaymentProviderConfig>,
+    defaultProvider?: SupportedProvider
+  ): PaymentServiceManager {
     if (!PaymentServiceManager.instance) {
-      PaymentServiceManager.instance = new PaymentServiceManager(providerConfigs);
+      PaymentServiceManager.instance = new PaymentServiceManager(providerConfigs, defaultProvider);
     }
     return PaymentServiceManager.instance;
   }
