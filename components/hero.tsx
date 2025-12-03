@@ -49,7 +49,7 @@ export default function Hero({
       )}
 
       {/* Main Content */}
-      <div className="relative z-10 w-full py-8 sm:py-10 md:py-12">
+      <div className="relative z-10 w-full">
         {/* Header Section - Title and description */}
         <div className="pt-2 pb-1 sm:pt-3 sm:pb-2">
           <Container maxWidth="7xl" padding="default">
