@@ -12,7 +12,6 @@ import type { CommentWithUser } from '@/lib/types/comment';
 import { toast } from 'sonner';
 import { useFeatureFlagsWithSimulation } from '@/hooks/use-feature-flags-with-simulation';
 import { useLoginModal } from '@/hooks/use-login-modal';
-import { FeatureDisabledNotice } from '@/components/ui/feature-disabled-notice';
 import {
 	Modal,
 	ModalContent,
@@ -451,9 +450,9 @@ export function CommentsSection({ itemId }: CommentsSectionProps) {
 
 	// Feature flags error handling removed - simulation mode doesn't expose error
 
-	// Show notice when feature is disabled due to simulation
+	// Hide when feature is disabled due to simulation
 	if (!isFeaturesPending && !features.comments && isSimulationActive) {
-		return <FeatureDisabledNotice feature="Comments" className="mt-4" />;
+		return null;
 	}
 
 	// Hide comments section when feature is disabled (database not configured)

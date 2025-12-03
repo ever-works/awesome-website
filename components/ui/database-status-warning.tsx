@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useFeatureFlags } from '@/hooks/use-feature-flags';
+import { useLayoutTheme } from '@/components/context';
 
 interface DatabaseStatusWarningProps {
 	className?: string;
@@ -13,12 +14,16 @@ interface DatabaseStatusWarningProps {
 export function DatabaseStatusWarning({ className }: DatabaseStatusWarningProps) {
 	const t = useTranslations('settings');
 	const { features } = useFeatureFlags();
+	const { databaseSimulationMode } = useLayoutTheme();
 
 	// Check if database is actually configured (not simulation)
 	const isDatabaseConfigured = features.ratings || features.comments || features.favorites;
 
-	// Only show if database is NOT configured
-	if (isDatabaseConfigured) {
+	// Only show if:
+	// 1. Database is NOT configured
+	// 2. AND simulation mode is "enabled" (features are shown in UI)
+	// Don't show when simulation is "disabled" because features are already hidden
+	if (isDatabaseConfigured || databaseSimulationMode === 'disabled') {
 		return null;
 	}
 

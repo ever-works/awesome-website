@@ -7,7 +7,6 @@ import { Heart, Star } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useLoginModal } from '@/hooks/use-login-modal';
 import { useFeatureFlagsWithSimulation } from '@/hooks/use-feature-flags-with-simulation';
-import { FeatureDisabledNotice } from '@/components/ui/feature-disabled-notice';
 
 interface FavoriteButtonProps {
 	itemSlug: string;
@@ -41,9 +40,9 @@ export function FavoriteButton({
 	const [isHovered, setIsHovered] = useState(false);
 	const loginModal = useLoginModal();
 
-	// Show notice when feature is disabled due to simulation
+	// Hide when feature is disabled due to simulation
 	if (!isFeaturesLoading && !features.favorites && isSimulationActive) {
-		return <FeatureDisabledNotice feature="Favorites" hideInSimilarProducts={hideIndicatorInSimilarProducts} />;
+		return null;
 	}
 
 	// Hide favorite button when feature is disabled (database not configured)

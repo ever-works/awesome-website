@@ -321,7 +321,7 @@
     "DATABASE_DISABLED_LABEL": "معطل",
     "FEATURE_DISABLED_IN_SETTINGS": "ميزات {feature} معطلة حاليًا في الإعدادات",
     "DATABASE_PREVIEW_MODE": "وضع المعاينة",
-    "DATABASE_PREVIEW_MODE_DESC": "قاعدة البيانات غير مكونة. تُظهر المؤشرات المرئية كيف تظهر الميزات عند تعطيلها في الإعدادات.",
+    "DATABASE_PREVIEW_MODE_DESC": "قاعدة البيانات غير مكونة. نعرض الميزات في الواجهة لمراجعتك، لكنها لن تعمل لأن قاعدة البيانات غير متاحة.",
     "PAGINATION_CHANGED_TO_STANDARD": "تم تغيير الترقيم إلى قياسي",
     "PAGINATION_CHANGED_TO_INFINITE": "تم تغيير الترقيم إلى التمرير اللانهائي",
     "DATABASE_MODE_ENABLED": "تم تفعيل ميزات قاعدة البيانات",
