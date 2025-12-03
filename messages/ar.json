@@ -17,6 +17,9 @@
     "NEED_AN_ACCOUNT": "تحتاج حساب؟ سجل الآن",
     "ALREADY_HAVE_AN_ACCOUNT": "لديك حساب بالفعل؟ سجل دخول"
   },
+  "header": {
+    "OPEN_USER_MENU": "Open user menu"
+  },
   "common": {
     "DISCOVER": "اكتشف",
     "HOME": "الرئيسية",
@@ -33,14 +36,47 @@
     "MODERN_GRID": "شبكة حديثة",
     "VIEW_DEMO": "عرض تجريبي",
     "CURRENT": "الحالي",
+    "CLASSIC_LAYOUT_DESC": "Classic layout with traditional design",
+    "GRID_LAYOUT_DESC": "Grid layout with organized cards",
     "NO_CONTENT_PROVIDED": "لا يوجد محتوى",
     "OR_CONTINUE_WITH": "أو تابع باستخدام",
+    "SECURE_CONNECTION": "Secure SSL Connection",
+    "SIGN_IN_WITH": "Sign in with",
+    "WELCOME_BACK": "Welcome back",
+    "AMONG_US": "to our platform",
+    "JOIN_OUR": "Join our",
+    "COMMUNITY": "community",
+    "ACCESS_THOUSANDS": "Access thousands of items and find exactly what you're looking for in our professional ecosystem.",
+    "CREATE_ACCOUNT_DESC": "Create your account to list your items in our directory and explore our extensive directory of items.",
+    "ADVANCED_SEARCH": "Advanced Search",
+    "EXPLORE_THOUSANDS": "Explore thousands of listings",
+    "LIST_YOUR_BUSINESS": "List your items in our directory",
+    "INCREASE_VISIBILITY": "Increase your visibility",
+    "PROFESSIONAL_NETWORK": "Professional Network",
+    "CONNECT_WITH_EXPERTS": "Connect with experts",
+    "SECURED_BY_SSL": "Secured by SSL",
+    "WELCOME": "Welcome!",
+    "BACK_TO_HOME": "Back to Home",
+    "PASSWORD_RECOVERY": "Password Recovery",
+    "RESET_PASSWORD": "Reset Password",
+    "SECURE_RESET_LINK": "Secure Reset Link",
+    "ENCRYPTED_TIME_LIMITED": "Encrypted and time-limited for your safety",
+    "EMAIL_VERIFICATION": "Email Verification",
+    "CHECK_INBOX_INSTRUCTIONS": "Check your inbox for reset instructions",
+    "RECOVERY_EMAIL_SENT": "Recovery Email Sent!",
+    "DIDNT_RECEIVE_EMAIL": "Didn't receive the email?",
+    "SEND_RECOVERY_EMAIL": "Send Recovery Email",
+    "BACK_TO_LOGIN": "Back to Login",
+    "EMAIL_ADDRESS": "Email Address",
+    "ENTER_EMAIL_ADDRESS": "Enter your email address",
+    "ENTER_EMAIL_ASSOCIATED": "Enter the email address associated with your account",
     "SAVE": "حفظ",
     "SHARE": "مشاركة",
     "VISIT_WEBSITE": "زيارة الموقع",
     "FEATURED": "مميز",
     "SHOW_ALL": "عرض الكل",
     "SHOW_LESS": "عرض أقل",
+    "SHOW_MORE": "Show {count} more",
     "MORE": "المزيد",
     "CATEGORY": "التصنيفات",
     "ITEM": "عنصر",
@@ -58,6 +94,44 @@
     "DOCS": "المستندات",
     "API_DOCS": "مستندات API",
     "CONTACTS": "اتصل بنا",
+    "COPY_LINK": "نسخ الرابط",
+    "LINK_COPIED": "تم نسخ الرابط إلى الحافظة!",
+    "SHARE_ERROR": "خطأ في مشاركة المحتوى",
+    "SHARE_ON_X": "مشاركة على X",
+    "SHARE_ON_FACEBOOK": "مشاركة على فيسبوك",
+    "SHARE_ON_LINKEDIN": "مشاركة على لينكد إن",
+    "LOADED_PAGES": "الصفحات المحملة",
+    "OF": "من",
+    "LOADING": "جاري التحميل...",
+    "END_OF_CONTENT": "لقد وصلت إلى النهاية",
+    "RETRY": "إعادة المحاولة",
+    "USER_MANAGEMENT": "User Management",
+    "USER_MANAGEMENT_DESC": "Manage platform users and permissions",
+    "CONTENT_MODERATION": "Content Moderation",
+    "CONTENT_MODERATION_DESC": "Review and approve new submissions",
+    "ANALYTICS_DASHBOARD": "Analytics Dashboard",
+    "ANALYTICS_DASHBOARD_DESC": "Access platform statistics and reports",
+    "DASHBOARD": "لوحة التحكم",
+    "USE_CODE": "استخدم الكود",
+    "EXPIRED": "منتهي الصلاحية",
+    "PROMO_CODE": "كود الخصم",
+    "COPIED": "تم النسخ!",
+    "COPY": "نسخ",
+    "TERMS": "الشروط",
+    "EXPIRES": "تنتهي",
+    "ID_LABEL": "المعرف:",
+    "COMMENTS": "التعليقات",
+    "ROLES": "الأدوار",
+    "MANAGE_CLIENTS": "إدارة العملاء",
+    "MANAGE_CLIENTS_DESC": "عرض وإدارة ملفات العملاء",
+    "MANAGE_COMPANIES": "إدارة الشركات",
+    "MANAGE_COMPANIES_DESC": "عرض وإدارة معلومات الشركات",
+    "YOUR_PROFILE": "Your Profile",
+    "YOUR_PROFILE_DESC": "View and edit your profile",
+    "MANAGE_CATEGORIES_DESC": "Manage categories",
+    "MANAGE_TAGS_DESC": "Manage tags",
+    "MANAGE_ITEMS_DESC": "Manage items",
+    "MANAGE_COMMENTS_DESC": "Manage comments",
     "COMPLETED": "مكتمل",
     "AVAILABLE": "متاح",
     "QUESTIONS": "أسئلة",
@@ -94,32 +168,19 @@
     "TO": "إلى",
     "CLEAR_DATES": "مسح التواريخ",
     "IMPORTING": "جارٍ الاستيراد...",
-    "COPY_LINK": "نسخ الرابط",
-    "LINK_COPIED": "تم نسخ الرابط إلى الحافظة!",
-    "SHARE_ERROR": "خطأ في مشاركة المحتوى",
-    "SHARE_ON_X": "مشاركة على X",
-    "SHARE_ON_FACEBOOK": "مشاركة على فيسبوك",
-    "SHARE_ON_LINKEDIN": "مشاركة على لينكد إن",
-    "LOADED_PAGES": "الصفحات المحملة",
-    "OF": "من",
-    "LOADING": "جاري التحميل...",
-    "END_OF_CONTENT": "لقد وصلت إلى النهاية",
-    "RETRY": "إعادة المحاولة",
-    "COMMENTS": "التعليقات",
-    "ROLES": "الأدوار",
-    "MANAGE_CLIENTS": "إدارة العملاء",
-    "MANAGE_CLIENTS_DESC": "عرض وإدارة ملفات العملاء",
-    "MANAGE_COMPANIES": "إدارة الشركات",
-    "MANAGE_COMPANIES_DESC": "عرض وإدارة معلومات الشركات",
-    "DASHBOARD": "لوحة التحكم",
-    "USE_CODE": "استخدم الكود",
-    "EXPIRED": "منتهي الصلاحية",
-    "PROMO_CODE": "كود الخصم",
-    "COPIED": "تم النسخ!",
-    "COPY": "نسخ",
-    "TERMS": "الشروط",
-    "EXPIRES": "تنتهي",
-    "ID_LABEL": "المعرف:"
+    "MANAGE_USER_ROLES_DESC": "Manage user roles",
+    "FAVORITES": "Favorites",
+    "FAVORITES_DESCRIPTION": "Your saved items and tools. Access them quickly from here.",
+    "SIGN_IN_TO_VIEW_FAVORITES": "Sign in to view your favorites",
+    "FAVORITES_SIGN_IN_DESCRIPTION": "Create an account or sign in to save and view your favorite items.",
+    "ERROR_LOADING_FAVORITES": "Error loading favorites",
+    "FAVORITES_ERROR_DESCRIPTION": "There was an error loading your favorites. Please try again.",
+    "NO_FAVORITES_YET": "No favorites yet",
+    "FAVORITES_EMPTY_DESCRIPTION": "Start exploring and add items to your favorites to see them here.",
+    "FAVORITE_ITEMS": "favorite items",
+    "EXPLORE_ITEMS": "Explore Items",
+    "VIEW_DETAILS": "View Details",
+    "ADDED_ON": "Added"
   },
   "survey": {
     "SURVEYS": "الاستطلاعات",
@@ -144,6 +205,9 @@
     "BACK_TO_SURVEYS": "العودة إلى الاستطلاعات",
     "SURVEYS_MANAGEMENT": "إدارة الاستطلاعات",
     "SURVEYS_MANAGEMENT_DESC": "إدارة ومراقبة جميع الاستطلاعات",
+    "SURVEYS_DISABLED_WARNING": "Surveys feature is currently disabled in settings",
+    "SURVEYS_DISABLED_MESSAGE": "Surveys are hidden from the public site. You can still manage surveys here, but they won't be visible to non-admin users until re-enabled.",
+    "GO_TO_SETTINGS": "Go to Settings",
     "ALL_SURVEYS": "جميع الاستطلاعات",
     "GLOBAL_SURVEY": "استطلاع عام",
     "ITEM_SURVEY": "استطلاع العنصر",
@@ -229,7 +293,10 @@
     "VIEW_RESPONSES": "عرض الردود",
     "PREVIEW": "معاينة",
     "COPY_PUBLIC_LINK": "نسخ الرابط العام",
-    "BACK_TO_ITEM": "العودة إلى العنصر"
+    "BACK_TO_ITEM": "العودة إلى العنصر",
+    "WARNING_DISABLED_TITLE": "Surveys are currently disabled site-wide",
+    "WARNING_DISABLED_MESSAGE": "Surveys are hidden from the public site. You can still view surveys here as an admin, but they won't be accessible to users until re-enabled.",
+    "WARNING_DISABLED_ACTION": "Go to Settings to Enable"
   },
   "listing": {
     "ALL": "الكل",
@@ -272,7 +339,29 @@
     "NAME_Z_A": "الاسم ي-أ",
     "NEWEST": "الأحدث",
     "OLDEST": "الأقدم",
-    "POPULARITY": "الشعبية"
+    "POPULARITY": "الشعبية",
+    "FULL_NAME": "Full Name",
+    "EMAIL_ADDRESS": "Email Address",
+    "SIGN_IN": "Sign In",
+    "SIGN_UP": "Sign Up",
+    "PASSWORD": "Password",
+    "FORGOT_PASSWORD": "Forgot Password?",
+    "REMEMBER_ME": "Remember me",
+    "DONT_HAVE_ACCOUNT": "Don't have an account?",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "AGREE_TERMS": "I agree to the",
+    "TERMS_CONDITIONS": "Terms & Conditions",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "AND": "and",
+    "LOADING": "Loading...",
+    "END_OF_CONTENT": "You've reached the end",
+    "RETRY": "Retry",
+    "FILTER_STATUS_MATCH_ALL": "Showing {filtered} of {total} items that match all selected tags",
+    "FILTER_STATUS": "Showing {filtered} of {total} items",
+    "SHOWING_TOTAL_ITEMS": "Showing {total} items"
   },
   "tagsModal": {
     "SELECTED_TAGS": "الوسوم المحددة",
@@ -291,7 +380,55 @@
     "PUBLISHER": "الناشر",
     "WEBSITE": "الموقع الإلكتروني",
     "PUBLISHED": "تم النشر",
-    "NO_TAGS_AVAILABLE": "لا توجد وسوم متاحة"
+    "NO_TAGS_AVAILABLE": "لا توجد وسوم متاحة",
+    "RATING": "Rating",
+    "PROMO_CODE": "Promo Code"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "جميع الحقوق محفوظة",
+    "BUILT_WITH": "تم البناء باستخدام",
+    "CONNECT_WITH_US": "تواصل معنا",
+    "CURRENT_THEME": "السمة الحالية",
+    "PRODUCT": "المنتج",
+    "RESOURCES": "الموارد",
+    "PAGES": "الصفحات",
+    "COMPANY": "الشركة",
+    "SEARCH": "بحث",
+    "COLLECTION": "المجموعة",
+    "TAG": "وسم",
+    "BLOG": "المدونة",
+    "SUBMIT": "إرسال",
+    "HELP": "Help",
+    "PRICING": "Pricing",
+    "STUDIO": "الاستوديو",
+    "HOME_2": "الرئيسية 2",
+    "HOME_3": "الرئيسية 3",
+    "COLLECTION_1": "المجموعة 1",
+    "COLLECTION_2": "المجموعة 2",
+    "ABOUT_US": "من نحن",
+    "PRIVACY_POLICY": "سياسة الخصوصية",
+    "TERMS_OF_SERVICE": "شروط الخدمة",
+    "SITEMAP": "خريطة الموقع",
+    "DESCRIPTION": "أفضل قالب موقع دليل لعرض مشاريعك وأدواتك ومواردك بأسلوب ووظائف مميزة.",
+    "DISCLAIMER": "جميع أسماء المنتجات والشعارات والعلامات التجارية هي ملك لأصحابها. جميع أسماء الشركات والمنتجات والخدمات المستخدمة في هذا المستودع والمستودعات ذات الصلة والمواقع المرتبطة هي لأغراض التعريف فقط. استخدام هذه الأسماء والشعارات والعلامات التجارية لا يعني التأييد أو الانتماء أو الرعاية. قد يحتوي هذا الدليل على محتوى تم إنشاؤه بواسطة الذكاء الاصطناعي.",
+    "STAY_UPDATED": "ابق على اطلاع",
+    "NEWSLETTER_DESCRIPTION": "احصل على آخر التحديثات والمحتوى الحصري مباشرة في صندوق بريدك.",
+    "SUBSCRIBE": "اشتراك",
+    "CRAFTED_WITH_EXCELLENCE": "صنع بتميز",
+    "MADE_WITH_LOVE": "صنع بحب",
+    "FOR_DEVELOPERS": "للمطورين في جميع أنحاء العالم",
+    "VIEW_DETAILS": "عرض التفاصيل",
+    "BUILDING_FUTURE": "نبني مستقبل التجارب الرقمية بحلول مبتكرة وتصميم استثنائي.",
+    "ENTER_EMAIL": "أدخل بريدك الإلكتروني",
+    "COOKIES": "ملفات تعريف الارتباط",
+    "INVALID_EMAIL": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "SUBSCRIPTION_ERROR": "فشل الاشتراك. يرجى المحاولة مرة أخرى.",
+    "SUBSCRIPTION_SUCCESS": "شكراً لاشتراكك! تحقق من بريدك الإلكتروني للتأكيد.",
+    "SUBMITTING": "جاري الإرسال...",
+    "SUBSCRIBE_AGAIN": "اشتراك بريد إلكتروني آخر",
+    "CLIENTS": "العملاء",
+    "REGISTER": "تسجيل",
+    "ADMIN": "المشرف"
   },
   "settings": {
     "PROFILE": "ملفك الشخصي",
@@ -310,6 +447,7 @@
     "LOGOUT_DESC": "تسجيل الخروج من حسابك",
     "PROFILE_DESC": "عرض وتعديل ملفك الشخصي",
     "ACCOUNT_SETTINGS_DESC": "إعدادات الحساب والتفضيلات",
+    "ADMIN_SETTINGS_DESC": "Manage site configuration and preferences",
     "PROFILE_SETTINGS": "إعدادات الملف الشخصي",
     "PAGINATION_STYLE": "نمط الترقيم",
     "PAGINATION_STYLE_DESC": "اختر كيفية عرض المحتوى عند تصفح القوائم",
@@ -352,6 +490,52 @@
         "TITLE": "الفواتير",
         "DESCRIPTION": "أدر معلومات الفواتير الخاصة بك وتفاصيل الاشتراك"
       }
+    },
+    "SECURITY_PAGE": {
+      "TITLE": "Security Settings",
+      "BACK_TO_SETTINGS": "Back to Settings",
+      "CHANGE_PASSWORD": {
+        "TITLE": "Change Password",
+        "DESCRIPTION": "Choose a strong password that you don't use elsewhere. We'll send you a confirmation email after your password is changed."
+      },
+      "SECURITY_TIPS": {
+        "TITLE": "Security Tips",
+        "TIP_1": "Use a unique password that you haven't used for other accounts",
+        "TIP_2": "Include a combination of uppercase, lowercase, numbers, and special characters",
+        "TIP_3": "Consider enabling two-factor authentication for enhanced security",
+        "TIP_4": "Regularly review your login activity and active sessions"
+      },
+      "CHANGE_PASSWORD_FORM": {
+        "CURRENT_PASSWORD": "Current Password",
+        "CURRENT_PASSWORD_PLACEHOLDER": "Enter your current password",
+        "NEW_PASSWORD": "New Password",
+        "NEW_PASSWORD_PLACEHOLDER": "Enter your new password",
+        "CONFIRM_PASSWORD": "Confirm New Password",
+        "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your new password",
+        "UPDATE_PASSWORD": "Update Password",
+        "UPDATING_PASSWORD": "Updating password...",
+        "CANCEL": "Cancel",
+        "SHOW_PASSWORD": "Show password",
+        "HIDE_PASSWORD": "Hide password",
+        "SUCCESS_MESSAGE": "Password changed successfully!",
+        "SUCCESS_DESCRIPTION": "A confirmation email has been sent to your email address.",
+        "VALIDATION": {
+          "CURRENT_REQUIRED": "Current password is required",
+          "NEW_REQUIRED": "New password is required",
+          "MIN_LENGTH": "Password must be at least 8 characters",
+          "UPPERCASE": "Password must contain at least one uppercase letter",
+          "LOWERCASE": "Password must contain at least one lowercase letter",
+          "NUMBER": "Password must contain at least one number",
+          "SPECIAL": "Password must contain at least one special character",
+          "CONFIRM_REQUIRED": "Please confirm your password",
+          "PASSWORDS_MATCH": "Passwords don't match"
+        },
+        "ERRORS": {
+          "CURRENT_INCORRECT": "Current password is incorrect",
+          "SAME_PASSWORD": "New password must be different from current password",
+          "GENERIC_ERROR": "An error occurred while updating your password. Please try again."
+        }
+      }
     }
   },
   "newsletter": {
@@ -376,50 +560,6 @@
     "BACK_TO_HOME": "العودة إلى الرئيسية",
     "EMAIL_ADDRESS": "عنوان البريد الإلكتروني",
     "ENTER_YOUR_EMAIL": "أدخل بريدك الإلكتروني"
-  },
-  "footer": {
-    "ALL_RIGHTS_RESERVED": "جميع الحقوق محفوظة",
-    "BUILT_WITH": "تم البناء باستخدام",
-    "CONNECT_WITH_US": "تواصل معنا",
-    "CURRENT_THEME": "السمة الحالية",
-    "PRODUCT": "المنتج",
-    "RESOURCES": "الموارد",
-    "PAGES": "الصفحات",
-    "COMPANY": "الشركة",
-    "SEARCH": "بحث",
-    "COLLECTION": "المجموعة",
-    "TAG": "وسم",
-    "BLOG": "المدونة",
-    "SUBMIT": "إرسال",
-    "STUDIO": "الاستوديو",
-    "HOME_2": "الرئيسية 2",
-    "HOME_3": "الرئيسية 3",
-    "COLLECTION_1": "المجموعة 1",
-    "COLLECTION_2": "المجموعة 2",
-    "ABOUT_US": "من نحن",
-    "PRIVACY_POLICY": "سياسة الخصوصية",
-    "TERMS_OF_SERVICE": "شروط الخدمة",
-    "SITEMAP": "خريطة الموقع",
-    "DESCRIPTION": "أفضل قالب موقع دليل لعرض مشاريعك وأدواتك ومواردك بأسلوب ووظائف مميزة.",
-    "DISCLAIMER": "جميع أسماء المنتجات والشعارات والعلامات التجارية هي ملك لأصحابها. جميع أسماء الشركات والمنتجات والخدمات المستخدمة في هذا المستودع والمستودعات ذات الصلة والمواقع المرتبطة هي لأغراض التعريف فقط. استخدام هذه الأسماء والشعارات والعلامات التجارية لا يعني التأييد أو الانتماء أو الرعاية. قد يحتوي هذا الدليل على محتوى تم إنشاؤه بواسطة الذكاء الاصطناعي.",
-    "STAY_UPDATED": "ابق على اطلاع",
-    "NEWSLETTER_DESCRIPTION": "احصل على آخر التحديثات والمحتوى الحصري مباشرة في صندوق بريدك.",
-    "SUBSCRIBE": "اشتراك",
-    "CRAFTED_WITH_EXCELLENCE": "صنع بتميز",
-    "MADE_WITH_LOVE": "صنع بحب",
-    "FOR_DEVELOPERS": "للمطورين في جميع أنحاء العالم",
-    "VIEW_DETAILS": "عرض التفاصيل",
-    "BUILDING_FUTURE": "نبني مستقبل التجارب الرقمية بحلول مبتكرة وتصميم استثنائي.",
-    "ENTER_EMAIL": "أدخل بريدك الإلكتروني",
-    "COOKIES": "ملفات تعريف الارتباط",
-    "INVALID_EMAIL": "يرجى إدخال عنوان بريد إلكتروني صالح",
-    "SUBSCRIPTION_ERROR": "فشل الاشتراك. يرجى المحاولة مرة أخرى.",
-    "SUBSCRIPTION_SUCCESS": "شكراً لاشتراكك! تحقق من بريدك الإلكتروني للتأكيد.",
-    "SUBMITTING": "جاري الإرسال...",
-    "SUBSCRIBE_AGAIN": "اشتراك بريد إلكتروني آخر",
-    "CLIENTS": "العملاء",
-    "REGISTER": "تسجيل",
-    "ADMIN": "المشرف"
   },
   "directory": {
     "STEPS": {
@@ -560,8 +700,8 @@
     "PREMIUM_SUPPORT": "دعم متميز",
     "MOST_POPULAR": "الأكثر شعبية",
     "GET_STARTED_FREE": "ابدأ مجاناً",
-    "UPGRADE_TO_PRO": "الترقية إلى الاحترافي",
-    "GO_ENTERPRISE": "اختر المؤسسات",
+    "UPGRADE_TO_STANDARD": "Submit Now",
+    "GO_PREMIUM": "Subscribe",
     "SUBMIT_FOR_FREE": "أرسل مجاناً",
     "SUBSCRIBE_NOW": "اشترك الآن",
     "SELECTED": "محدد",
@@ -572,6 +712,23 @@
     "GET_STARTED_IMMEDIATELY": "ابدأ فوراً",
     "PAY_ONLY_WHAT_YOU_USE": "ادفع فقط مقابل ما تستخدمه",
     "EXPERT_ASSISTANCE": "مساعدة خبراء 24/7",
+    "PLANS": {
+      "FREE": {
+        "NAME": "Free",
+        "PERIOD": "/submission",
+        "DESCRIPTION": "Submit a product or service for free"
+      },
+      "STANDARD": {
+        "NAME": "Standard",
+        "PERIOD": "/submission",
+        "DESCRIPTION": "Everything in Free plan with enhanced features"
+      },
+      "PREMIUM": {
+        "NAME": "Premium",
+        "PERIOD": "/month",
+        "DESCRIPTION": "Maximum visibility with all premium features"
+      }
+    },
     "FREE_PLAN_FEATURES": {
       "SUBMIT_PRODUCT_SERVICE": "إرسال منتج أو خدمة",
       "BASIC_DESCRIPTION": "وصف أساسي (حتى 200 كلمة)",
@@ -606,48 +763,79 @@
       "DETAILED_ANALYTICS": "إحصائيات مفصلة + تحليلات متقدمة",
       "PHONE_SUPPORT": "دعم هاتفي مخصص",
       "UNLIMITED_SUBMISSIONS": "إرسالات غير محدودة مضمنة"
+    },
+    "UPGRADE_TO_PRO": "الترقية إلى الاحترافي",
+    "GO_ENTERPRISE": "اختر المؤسسات"
+  },
+  "payment": {
+    "title": "Complete Your Order",
+    "form": {
+      "processing": "Processing payment...",
+      "pay_button": "Pay Now",
+      "loading": "Loading payment form...",
+      "error": {
+        "default": "An error occurred during payment",
+        "setup": "An error occurred during setup",
+        "unexpected": "An unexpected error occurred",
+        "payment_method_required": "Please provide a payment method"
+      }
+    },
+    "status": {
+      "success": "Payment successful",
+      "failed": "Payment failed",
+      "pending": "Payment pending"
     }
   },
   "help": {
-    "PAGE_TITLE": "مركز المساعدة",
-    "PAGE_SUBTITLE": "دليل شامل خطوة بخطوة لتثبيت وتكوين واستخدام منصة دليل Ever Works. كل ما تحتاجه لإطلاق دليلك في دقائق.",
-    "TABLE_OF_CONTENTS": "جدول المحتويات",
-    "QUICK_START": "البداية السريعة",
-    "QUICK_START_DESC": "ابدأ في 3 خطوات بسيطة",
-    "INSTALLATION": "التثبيت",
-    "INSTALLATION_DESC": "دليل الإعداد التفصيلي",
-    "USAGE_GUIDE": "دليل الاستخدام",
-    "USAGE_GUIDE_DESC": "تعلم كيفية استخدام الميزات",
-    "TECH_STACK": "مجموعة التقنيات",
-    "TECH_STACK_DESC": "التقنيات التي نستخدمها",
-    "MONETIZATION": "تحقيق الدخل",
-    "MONETIZATION_DESC": "كيفية كسب المال",
-    "SUPPORT": "الدعم",
-    "SUPPORT_DESC": "احصل على المساعدة عندما تحتاجها",
-    "NEED_HELP": "هل تحتاج إلى مساعدة؟",
-    "NEED_HELP_DESC": "لا تجد ما تبحث عنه؟ نحن هنا للمساعدة!",
-    "DOCUMENTATION": "التوثيق",
-    "DOCUMENTATION_DESC": "وثائق شاملة ومرجع API",
-    "DOCS_PAGE_TITLE": "توثيق API",
-    "DOCS_PAGE_DESCRIPTION": "توثيق API تفاعلي لقالب موقع Ever Works",
-    "VIEW_DOCUMENTATION": "عرض التوثيق ←",
-    "COMMUNITY": "المجتمع",
-    "COMMUNITY_DESC": "انضم إلى مجتمع Discord للحصول على الدعم",
-    "JOIN_DISCORD": "انضم إلى Discord ←",
-    "CONTACT_SUPPORT": "اتصل بالدعم",
-    "CONTACT_SUPPORT_DESC": "دعم مباشر للمستخدمين المميزين",
-    "EMAIL_SUPPORT": "الدعم عبر البريد الإلكتروني ←",
-    "FAQ": "الأسئلة الشائعة",
-    "FAQ_SETUP_TIME": "كم من الوقت يستغرق الإعداد؟",
-    "FAQ_SETUP_TIME_ANSWER": "باستخدام دليل البداية السريعة، يمكنك تشغيل Ever Works في أقل من 10 دقائق.",
-    "FAQ_CODING_EXPERIENCE": "هل أحتاج إلى خبرة في البرمجة؟",
-    "FAQ_CODING_EXPERIENCE_ANSWER": "المعرفة الأساسية بتطوير الويب مفيدة، لكن أدلتنا التفصيلية تجعلها في متناول المبتدئين.",
-    "FAQ_CUSTOMIZE_DESIGN": "هل يمكنني تخصيص التصميم؟",
-    "FAQ_CUSTOMIZE_DESIGN_ANSWER": "نعم! تم إنشاء Ever Works باستخدام Tailwind CSS ويقدم خيارات تخصيص واسعة.",
-    "FAQ_HOSTING": "ما هي الاستضافة التي توصون بها؟",
-    "FAQ_HOSTING_ANSWER": "نوصي بـ Vercel للحصول على أفضل أداء، لكن Ever Works يعمل مع أي مزود استضافة Node.js.",
-    "INSTALLATION_GUIDE_TITLE": "دليل التثبيت",
-    "INSTALLATION_GUIDE_SUBTITLE": "دليل خطوة بخطوة لتثبيت المشروع",
+    "HERO_BADGE_TEXT": "The Professional Directory Platform Builder",
+    "HERO_MAIN_TITLE": "Easily Launch Your AI-powered",
+    "HERO_MAIN_TITLE_HIGHLIGHT": "Directory",
+    "HERO_SUBTITLE": "The most complete directory boilerplate, enhanced with AI and packed with all the essential features: listings, payments, submissions, CMS, blog, authentication, newsletter, SEO, themes, and more.",
+    "HERO_FEATURE_1_TITLE": "Smart Content Management",
+    "HERO_FEATURE_1_DESC": "Streamlined content organization and automated workflows",
+    "HERO_FEATURE_2_TITLE": "Professional Design",
+    "HERO_FEATURE_2_DESC": "Modern, responsive layouts that convert visitors",
+    "HERO_FEATURE_3_TITLE": "Revenue Optimization",
+    "HERO_FEATURE_3_DESC": "Built-in monetization tools for sustainable growth",
+    "HERO_CTA_PRIMARY": "Launch Your Directory",
+    "HERO_CTA_SECONDARY": "Explore Features",
+    "HERO_STATS_USERS": "Active Directories",
+    "HERO_STATS_COUNTRIES": "Countries",
+    "HERO_STATS_UPTIME": "Uptime",
+    "HERO_SCROLL_TEXT": "Scroll to explore",
+    "HERO_DEMO_BADGE": "Live Demo",
+    "HERO_DEMO_TITLE": "Professional Directory Platform",
+    "HERO_DEMO_DESCRIPTION": "Experience the power of modern directory solutions",
+    "HERO_DEMO_FEATURE_1": "Strategic Listings",
+    "HERO_DEMO_FEATURE_2": "Intelligent Search",
+    "HERO_DEMO_FEATURE_3": "Mobile Optimized",
+    "HERO_DEMO_CTA": "Try It Now",
+    "HERO_IN_MINUTES": "in Minutes",
+    "HERO_SPECIAL_OFFER": "🔥 Limited Time: Free Premium Templates",
+    "HERO_CREATE_YOUR": "Create Your",
+    "HERO_DIRECTORY": "Directory",
+    "HERO_AI": "AI-powered",
+    "HERO_LISTINGS": "smart listings",
+    "HERO_PAYMENT": "payment processing",
+    "HERO_SUBTITLE_FEATURES": "and everything you need to build a successful directory platform.",
+    "HERO_CTA_START": "Start Building Now",
+    "HERO_CTA_PREVIEW": "See Live Demo",
+    "HERO_SOCIAL_PROOF": "developers already building with Ever Works",
+    "HOW_IT_WORKS_STEP1_TITLE": "Setup Your Directory",
+    "HOW_IT_WORKS_STEP1_DESC": "Clone the repository and install dependencies to get your directory builder ready",
+    "HOW_IT_WORKS_STEP2_TITLE": "Configure Your Platform",
+    "HOW_IT_WORKS_STEP2_DESC": "Set up your database, authentication, and customize your directory settings",
+    "HOW_IT_WORKS_STEP3_TITLE": "Launch Your Directory",
+    "HOW_IT_WORKS_STEP3_DESC": "Deploy your directory platform and start accepting submissions from users",
+    "MONETIZATION_AFFILIATION_TITLE": "Affiliate Marketing",
+    "MONETIZATION_AFFILIATION_DESC": "Earn commissions by promoting relevant products and services to your directory visitors",
+    "MONETIZATION_PAID_SUBMISSION_TITLE": "Paid Listings",
+    "MONETIZATION_PAID_SUBMISSION_DESC": "Charge for premium directory listings with enhanced visibility and featured placement",
+    "MONETIZATION_SPONSORED_ADS_TITLE": "Sponsored Ads",
+    "MONETIZATION_SPONSORED_ADS_DESC": "Display targeted advertisements and earn revenue from sponsors and advertisers",
+    "MONETIZATION_BADGE": "Directory Monetization",
+    "MONETIZATION_SECTION_TITLE": "Monetize Your Directory Platform",
+    "MONETIZATION_SECTION_SUBTITLE": "Multiple revenue streams built-in to help you generate income from your directory from day one",
     "INSTALLATION_STEP1_TITLE": "1. استنساخ المستودع",
     "INSTALLATION_STEP1_DESC": "ابدأ بتسخ مستودع Ever Works على جهازك المحلي.",
     "INSTALLATION_STEP2_TITLE": "2. تثبيت التبعيات",
@@ -658,6 +846,207 @@
     "INSTALLATION_STEP4_DESC": "قم بتكوين قاعدة بيانات Supabase وتشغيل الهجرات.",
     "INSTALLATION_STEP5_TITLE": "5. تشغيل خادم التطوير",
     "INSTALLATION_STEP5_DESC": "قم بتشغيل خادم التطوير وابدأ في بناء دليلك.",
+    "INSTALLATION_GUIDE_TITLE": "دليل التثبيت",
+    "INSTALLATION_GUIDE_SUBTITLE": "دليل خطوة بخطوة لتثبيت المشروع",
+    "INSTALLATION_GUIDE_DESC": "Follow these steps to get your directory platform up and running in minutes",
+    "INSTALLATION_PROGRESS": "Installation Progress",
+    "USAGE_CREATING_ITEMS_TITLE": "Creating Directory Items",
+    "USAGE_CREATING_ITEMS_DESC": "Learn how to add and manage items in your directory platform",
+    "USAGE_MANAGING_CATEGORIES_TITLE": "Managing Categories",
+    "USAGE_MANAGING_CATEGORIES_DESC": "Organize your directory with custom categories and tags",
+    "USAGE_CUSTOMIZING_THEMES_TITLE": "Customizing Themes",
+    "USAGE_CUSTOMIZING_THEMES_DESC": "Personalize your directory's appearance with custom themes and layouts",
+    "USAGE_SETTING_UP_PAYMENTS_TITLE": "Setting Up Payments",
+    "USAGE_SETTING_UP_PAYMENTS_DESC": "Configure payment processing for premium listings and monetization",
+    "USAGE_BEST_PRACTICES_TITLE": "Directory Best Practices",
+    "USAGE_BEST_PRACTICE_1_TITLE": "Optimize for Search",
+    "USAGE_BEST_PRACTICE_1_DESC": "Implement SEO best practices to make your directory discoverable",
+    "USAGE_BEST_PRACTICE_2_TITLE": "Secure Your Platform",
+    "USAGE_BEST_PRACTICE_2_DESC": "Follow security guidelines to protect user data and maintain trust",
+    "USAGE_BEST_PRACTICE_3_TITLE": "Optimize Performance",
+    "USAGE_BEST_PRACTICE_3_DESC": "Implement caching, lazy loading, and other performance optimizations for better user experience",
+    "USAGE_BEST_PRACTICE_4_TITLE": "Monitor & Analytics",
+    "USAGE_BEST_PRACTICE_4_DESC": "Set up monitoring tools and analytics to track your directory's performance and user engagement",
+    "USAGE_CUSTOMIZING_DESIGN_TITLE": "Customizing Design",
+    "USAGE_CUSTOMIZING_DESIGN_DESC": "Learn how to customize themes, layouts, and visual elements of your directory",
+    "USAGE_MANAGING_USERS_TITLE": "Managing Users",
+    "USAGE_MANAGING_USERS_DESC": "Handle user authentication, roles, and permissions in your directory platform",
+    "USAGE_PAYMENTS_SETUP_TITLE": "Payment Setup",
+    "USAGE_PAYMENTS_SETUP_DESC": "Configure Stripe integration and payment processing for premium listings",
+    "USAGE_DEPLOYMENT_TITLE": "Deployment Guide",
+    "USAGE_DEPLOYMENT_DESC": "Deploy your directory to production with Vercel, Netlify, or other platforms",
+    "USAGE_GUIDE_TITLE": "Complete Usage Guide",
+    "USAGE_GUIDE_SUBTITLE": "Master your directory platform with comprehensive tutorials and best practices",
+    "DOCUMENTATION": "التوثيق",
+    "DOCUMENTATION_DESC": "وثائق شاملة ومرجع API",
+    "DOCS_PAGE_TITLE": "توثيق API",
+    "DOCS_PAGE_DESCRIPTION": "توثيق API تفاعلي لقالب موقع Ever Works",
+    "COMMUNITY": "المجتمع",
+    "COMMUNITY_DESC": "انضم إلى مجتمع Discord للحصول على الدعم",
+    "EMAIL_SUPPORT": "الدعم عبر البريد الإلكتروني ←",
+    "EMAIL_SUPPORT_DESC": "Get personalized help from our directory experts",
+    "CONTACT_SUPPORT_DESC": "دعم مباشر للمستخدمين المميزين",
+    "NEED_HELP_DESC": "لا تجد ما تبحث عنه؟ نحن هنا للمساعدة!",
+    "HOW_IT_WORKS_PROCESS_STEP1": "Initialize Your Directory",
+    "HOW_IT_WORKS_PROCESS_STEP1_DESC": "Set up the foundation of your directory platform with our starter template",
+    "HOW_IT_WORKS_PROCESS_STEP2": "Customize & Configure",
+    "HOW_IT_WORKS_PROCESS_STEP2_DESC": "Personalize your directory with themes, categories, and custom settings",
+    "HOW_IT_WORKS_PROCESS_STEP3": "Add Content & Launch",
+    "HOW_IT_WORKS_PROCESS_STEP3_DESC": "Populate your directory with items and deploy to production",
+    "HOW_IT_WORKS_PROCESS_STEP4": "Deploy & Optimize",
+    "HOW_IT_WORKS_PROCESS_STEP4_DESC": "Deploy your directory to production and optimize for performance and security",
+    "PROCESS_OVERVIEW_BADGE": "Process Overview",
+    "HOW_IT_WORKS_PROCESS_TITLE": "Directory Building Process",
+    "HOW_IT_WORKS_PROCESS_DESC": "Follow our proven methodology to create a successful directory platform",
+    "TECH_NEXTJS_DESC": "React framework for building directory platforms with server-side rendering",
+    "TECH_NEXTJS_CATEGORY": "Frontend Framework",
+    "TECH_TYPESCRIPT_DESC": "Type-safe JavaScript for building robust directory applications",
+    "TECH_TYPESCRIPT_CATEGORY": "Programming Language",
+    "TECH_TAILWIND_DESC": "Utility-first CSS framework for styling your directory interface",
+    "TECH_TAILWIND_CATEGORY": "CSS Framework",
+    "TECH_SUPABASE_DESC": "Open-source backend for directory data storage and authentication - perfectly integrated with our GitHub-native approach",
+    "TECH_SUPABASE_CATEGORY": "Backend Service",
+    "TECH_CARD_POPULAR": "Popular",
+    "TECH_CARD_STABLE": "Stable",
+    "TECH_CARD_NICHE": "Niche",
+    "TECH_CARD_USAGE_IN_PROJECT": "Usage in Project",
+    "BENEFITS_FAST_TITLE": "سريع كالبرق",
+    "BENEFITS_FAST_DESC": "شغّل منصة الدليل الخاصة بك في أقل من 10 دقائق",
+    "BENEFITS_SECURE_TITLE": "آمن افتراضياً",
+    "BENEFITS_SECURE_DESC": "أفضل ممارسات الأمان المدمجة والمصادقة للأدلة",
+    "BENEFITS_MOBILE_TITLE": "جاهز للجوال",
+    "BENEFITS_MOBILE_DESC": "تصميم متجاوب بالكامل يعمل بشكل مثالي على جميع الأجهزة",
+    "BENEFITS_CUSTOMIZABLE_TITLE": "قابل للتخصيص بدرجة عالية",
+    "BENEFITS_CUSTOMIZABLE_DESC": "سهل التخصيص مع السمات والتخطيطات والميزات الخاصة بالأدلة",
+    "HOW_IT_WORKS_TITLE": "How It Works",
+    "HOW_IT_WORKS_SUBTITLE": "Build Your Directory in 3 Simple Steps",
+    "HOW_IT_WORKS_DESCRIPTION": "Follow our streamlined process to create a professional directory platform that's ready to accept submissions and generate revenue.",
+    "TECH_STACK_BADGE": "Technology Stack",
+    "TECH_STACK_TITLE": "Built with Modern Directory Technologies",
+    "TECH_STACK_SUBTITLE": "Industry-standard technologies optimized for building scalable directory platforms",
+    "TECH_STACK_TOTAL_TECH": "Total Technologies",
+    "TECH_STACK_HIGH_POPULARITY": "High Popularity",
+    "TECH_STACK_AVG_PERFORMANCE": "Avg Performance",
+    "ENV_CONFIG_BADGE": "Environment Configuration",
+    "ENV_CONFIG_TITLE": "Configure Your Directory Platform",
+    "ENV_CONFIG_DESC": "Set up the essential environment variables needed to run your directory platform securely and efficiently",
+    "ENV_CONFIG_GENERATE": "Generate .env File",
+    "ENV_CONFIG_REQUIRED": "Required",
+    "ENV_CONFIG_OPTIONAL": "Optional",
+    "ENV_CONFIG_CRITICAL": "Critical",
+    "ENV_CONFIG_IMPORTANT": "Important",
+    "ENV_CONFIG_EXAMPLE": "Example",
+    "ENV_CONFIG_COPIED": "Copied!",
+    "ENV_CONFIG_COPY": "Copy",
+    "ENV_CONFIG_DEFAULT_VALUE": "Default Value",
+    "ENV_CONFIG_LOCAL_DEV": "Local Development",
+    "ENV_CONFIG_LOCAL_DEV_DESC": "Set up your local development environment",
+    "ENV_CONFIG_PRODUCTION": "Production Deployment",
+    "ENV_CONFIG_PRODUCTION_DESC": "Configure your production environment",
+    "ENV_CONFIG_NEED_HELP": "Need Help with Configuration?",
+    "ENV_CONFIG_NEED_HELP_DESC": "Our support team is here to help you configure your directory platform correctly",
+    "ENV_CONFIG_GET_SUPPORT": "Get Support",
+    "ENV_CONFIG_VIEW_DOCS": "View Documentation",
+    "FAQ_SETUP_TIME": "كم من الوقت يستغرق الإعداد؟",
+    "FAQ_SETUP_TIME_ANSWER": "باستخدام دليل البداية السريعة، يمكنك تشغيل Ever Works في أقل من 10 دقائق.",
+    "FAQ_CODING_EXPERIENCE": "هل أحتاج إلى خبرة في البرمجة؟",
+    "FAQ_CODING_EXPERIENCE_ANSWER": "المعرفة الأساسية بتطوير الويب مفيدة، لكن أدلتنا التفصيلية تجعلها في متناول المبتدئين.",
+    "FAQ_CUSTOMIZE_DESIGN": "هل يمكنني تخصيص التصميم؟",
+    "FAQ_CUSTOMIZE_DESIGN_ANSWER": "نعم! تم إنشاء Ever Works باستخدام Tailwind CSS ويقدم خيارات تخصيص واسعة.",
+    "FAQ_HOSTING": "ما هي الاستضافة التي توصون بها؟",
+    "FAQ_HOSTING_ANSWER": "نوصي بـ Vercel للحصول على أفضل أداء، لكن Ever Works يعمل مع أي مزود استضافة Node.js.",
+    "FAQ_PAYMENT_INTEGRATION": "How do I integrate payment processing?",
+    "FAQ_PAYMENT_INTEGRATION_ANSWER": "Our directory platform comes with pre-configured Stripe integration. Simply add your API keys in the environment variables and the payment system will be ready for premium listings.",
+    "FAQ_CUSTOM_DOMAIN": "Can I use my own domain?",
+    "FAQ_CUSTOM_DOMAIN_ANSWER": "Yes! You can easily connect your custom domain to your directory. We provide step-by-step instructions for domain configuration with popular providers.",
+    "QUICK_START": "البداية السريعة",
+    "QUICK_START_DESC": "ابدأ في 3 خطوات بسيطة",
+    "ENV_SETUP": "Environment Setup",
+    "ENV_SETUP_DESC": "Configure your environment variables and API keys",
+    "INSTALLATION": "التثبيت",
+    "INSTALLATION_DESC": "دليل الإعداد التفصيلي",
+    "USAGE_GUIDE": "دليل الاستخدام",
+    "USAGE_GUIDE_DESC": "تعلم كيفية استخدام الميزات",
+    "TECH_STACK": "مجموعة التقنيات",
+    "TECH_STACK_DESC": "التقنيات التي نستخدمها",
+    "MONETIZATION": "تحقيق الدخل",
+    "MONETIZATION_DESC": "كيفية كسب المال",
+    "SUPPORT": "الدعم",
+    "SUPPORT_DESC": "احصل على المساعدة عندما تحتاجها",
+    "WHY_CHOOSE_PLATFORM": "Why Choose Our Directory Builder?",
+    "READY_TO_GET_STARTED": "Ready to Build Your Directory?",
+    "JOIN_DEVELOPERS_DESC": "Join thousands of developers who are already building amazing directory platforms with our open-source, AI-powered builder. Free template. GitHub-native. SaaS optional.",
+    "START_BUILDING_NOW": "Start Building Now",
+    "VIEW_DOCUMENTATION": "عرض التوثيق ←",
+    "CATEGORY_ALL_TECH": "All Technologies",
+    "CATEGORY_FRONTEND": "Frontend",
+    "CATEGORY_BACKEND": "Backend",
+    "CATEGORY_DATABASE": "Database",
+    "CATEGORY_AUTH": "Authentication",
+    "CATEGORY_PAYMENT": "Payment",
+    "CATEGORY_MONITORING": "Monitoring",
+    "CATEGORY_DEPLOYMENT": "Deployment",
+    "SORT_BY_POPULARITY": "Sort by Popularity",
+    "SORT_BY_PERFORMANCE": "Sort by Performance",
+    "SORT_BY_NAME": "Sort by Name",
+    "SHOWING_TECHNOLOGIES": "Showing {filtered} of {total} technologies",
+    "NO_TECH_FOUND": "No technologies found",
+    "TRY_ADJUSTING_FILTERS": "Try adjusting your filters to see more results",
+    "READY_TO_BUILD_WITH_TECH": "Ready to Build Your Directory with These Technologies?",
+    "ALL_TECH_PRECONFIGURED": "All these technologies are pre-configured and ready to use in your directory platform",
+    "GET_STARTED_NOW": "Get Started Now",
+    "STAT_AVERAGE_REVENUE": "Average Revenue",
+    "STAT_ACTIVE_USERS": "Active Users",
+    "STAT_CONVERSION_RATE": "Conversion Rate",
+    "STAT_PLATFORM_GROWTH": "Platform Growth",
+    "STAT_MONTHLY": "monthly",
+    "STAT_YEARLY": "yearly",
+    "REVENUE_POTENTIAL": "Revenue Potential",
+    "SETUP_TIME": "Setup Time",
+    "DIFFICULTY": "Difficulty",
+    "KEY_FEATURES": "Key Features",
+    "PROS": "Pros",
+    "CONS": "Cons",
+    "HIDE_DETAILS": "Hide Details",
+    "SHOW_DETAILS": "Show Details",
+    "START_MONETIZING_TODAY": "Start Monetizing Your Directory Today",
+    "START_MONETIZING_DESC": "Choose the monetization strategy that best fits your directory platform and start generating revenue immediately.",
+    "VIEW_CASE_STUDIES": "View Case Studies",
+    "INTERACTIVE_GUIDE": "Interactive Directory Guide",
+    "INTERACTIVE_GUIDE_DESC": "Follow the steps to build your directory platform",
+    "SEARCH_GUIDES_PLACEHOLDER": "Search directory guides...",
+    "PROGRESS": "Progress",
+    "COMPLETE": "Complete",
+    "CURRENT": "Current",
+    "QUICK_NAVIGATION": "Quick Navigation",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "STEP_OF": "Step {current} of {total}",
+    "STEP1_FEATURE_1": "Repository cloning",
+    "STEP1_FEATURE_2": "Dependency installation",
+    "STEP1_FEATURE_3": "Environment setup",
+    "STEP1_FEATURE_4": "Project initialization",
+    "STEP2_FEATURE_1": "Environment variables",
+    "STEP2_FEATURE_2": "Database configuration",
+    "STEP2_FEATURE_3": "Authentication setup",
+    "STEP2_FEATURE_4": "External services",
+    "STEP3_FEATURE_1": "Development server",
+    "STEP3_FEATURE_2": "Production build",
+    "STEP3_FEATURE_3": "Vercel deployment",
+    "STEP3_FEATURE_4": "Live directory platform",
+    "PAGE_NOT_FOUND": "Page Not Found",
+    "PAGE_NOT_FOUND_DESCRIPTION": "Sorry, the page you're looking for doesn't exist or has been moved.",
+    "GO_BACK": "Go Back",
+    "BACK_TO_HOME": "Back to Home",
+    "TRY_SEARCHING": "Try searching instead",
+    "SEARCH_SUGGESTION": "Use the search bar above to find what you're looking for.",
+    "NEED_HELP": "هل تحتاج إلى مساعدة؟",
+    "CONTACT_SUPPORT": "اتصل بالدعم",
+    "PAGE_TITLE": "مركز المساعدة",
+    "PAGE_SUBTITLE": "دليل شامل خطوة بخطوة لتثبيت وتكوين واستخدام منصة دليل Ever Works. كل ما تحتاجه لإطلاق دليلك في دقائق.",
+    "TABLE_OF_CONTENTS": "جدول المحتويات",
+    "JOIN_DISCORD": "انضم إلى Discord ←",
+    "FAQ": "الأسئلة الشائعة",
     "INSTALLATION_OF": "من",
     "INSTALLATION_NEXT_STEP": "الخطوة التالية ←",
     "INSTALLATION_TERMINAL": "الطرفية",
@@ -668,15 +1057,7 @@
     "INSTALLATION_TIP2_TITLE": "فحص البيئة",
     "INSTALLATION_TIP2_DESC": "للتحقق من الإعداد",
     "INSTALLATION_TIP3_TITLE": "وضع التطوير",
-    "INSTALLATION_TIP3_DESC": "إعادة تحميل تلقائي ورسائل خطأ مفصلة",
-    "BENEFITS_FAST_TITLE": "سريع كالبرق",
-    "BENEFITS_FAST_DESC": "شغّل منصة الدليل الخاصة بك في أقل من 10 دقائق",
-    "BENEFITS_SECURE_TITLE": "آمن افتراضياً",
-    "BENEFITS_SECURE_DESC": "أفضل ممارسات الأمان المدمجة والمصادقة للأدلة",
-    "BENEFITS_MOBILE_TITLE": "جاهز للجوال",
-    "BENEFITS_MOBILE_DESC": "تصميم متجاوب بالكامل يعمل بشكل مثالي على جميع الأجهزة",
-    "BENEFITS_CUSTOMIZABLE_TITLE": "قابل للتخصيص بدرجة عالية",
-    "BENEFITS_CUSTOMIZABLE_DESC": "سهل التخصيص مع السمات والتخطيطات والميزات الخاصة بالأدلة"
+    "INSTALLATION_TIP3_DESC": "إعادة تحميل تلقائي ورسائل خطأ مفصلة"
   },
   "success": {
     "SUBSCRIPTION_ACTIVATED": "تم تفعيل الاشتراك!",
@@ -725,6 +1106,59 @@
     "ERROR_TRY_AGAIN": "خطأ - حاول مرة أخرى",
     "SIGN_IN_TO_CONTINUE": "سجل الدخول للمتابعة",
     "PROCESSING": "جاري المعالجة...",
+    "BILLING_AMOUNT": "Billing Amount",
+    "NEXT_BILLING": "Next Billing",
+    "STARTED_ON": "Started On",
+    "SUBSCRIPTION_CANCELLING_WARNING": "Subscription Cancelling",
+    "SUBSCRIPTION_CANCELLING_DESCRIPTION": "Your subscription will be cancelled at the end of the current billing period. You can reactivate it anytime before then.",
+    "UPGRADE_TO_PREMIUM": "Upgrade to Premium",
+    "DOWNGRADE_TO_STANDARD": "Downgrade to Standard",
+    "CANCEL_SUBSCRIPTION": "Cancel Subscription",
+    "CANCEL_SUBSCRIPTION_TITLE": "Cancel Subscription",
+    "CANCEL_SUBSCRIPTION_DESCRIPTION": "Are you sure you want to cancel your subscription? You'll continue to have access until the end of your current billing period.",
+    "KEEP_SUBSCRIPTION": "Keep Subscription",
+    "CONFIRM_CANCEL": "Yes, Cancel",
+    "CANCELLING": "Cancelling...",
+    "REACTIVATE_SUBSCRIPTION": "Reactivate Subscription",
+    "REACTIVATING": "Reactivating...",
+    "UPGRADE_TO_PREMIUM_TITLE": "Upgrade to Premium",
+    "UPGRADE_TO_PREMIUM_DESCRIPTION": "Upgrade your plan to unlock premium features and get more value from our platform.",
+    "PREMIUM_FEATURES": "Premium Features",
+    "PREMIUM_FEATURE_1": "Unlimited submissions",
+    "PREMIUM_FEATURE_2": "Priority support",
+    "PREMIUM_FEATURE_3": "Advanced analytics",
+    "PREMIUM_FEATURE_4": "Featured listings",
+    "SUBSCRIPTION_CANCELLED_SUCCESS": "Subscription cancelled successfully",
+    "SUBSCRIPTION_CANCELLED_ERROR": "Failed to cancel subscription",
+    "SUBSCRIPTION_REACTIVATED_SUCCESS": "Subscription reactivated successfully",
+    "SUBSCRIPTION_REACTIVATED_ERROR": "Failed to reactivate subscription",
+    "SUBSCRIPTION_UPDATED_SUCCESS": "Subscription updated successfully",
+    "SUBSCRIPTION_UPDATED_ERROR": "Failed to update subscription",
+    "MANAGE_SUBSCRIPTION": "Manage Subscription",
+    "SUBSCRIPTION_DETAILS": "Subscription Details",
+    "BILLING_HISTORY": "Billing History",
+    "PAYMENT_METHOD": "Payment Method",
+    "UPDATE_PAYMENT_METHOD": "Update Payment Method",
+    "DOWNLOAD_INVOICE": "Download Invoice",
+    "INVOICE_DATE": "Invoice Date",
+    "INVOICE_AMOUNT": "Amount",
+    "INVOICE_STATUS": "Status",
+    "PAID": "Paid",
+    "PENDING": "Pending",
+    "FAILED": "Failed",
+    "REFUNDED": "Refunded",
+    "CANCELLED": "Cancelled",
+    "TRIAL": "Trial",
+    "ACTIVE": "Active",
+    "PAST_DUE": "Past Due",
+    "INCOMPLETE": "Incomplete",
+    "INCOMPLETE_EXPIRED": "Incomplete Expired",
+    "TRIALING": "Trialing",
+    "UNPAID": "Unpaid",
+    "NO_PAYMENT_HISTORY": "No payment history",
+    "NO_PAYMENT_HISTORY_DESCRIPTION": "Your payment transactions will appear here once you make a purchase.",
+    "BILLING_HISTORY_DESCRIPTION": "View all your past payments and invoices",
+    "VIEW_INVOICE": "View Invoice",
     "TITLE": "الفواتير",
     "SUBTITLE": "إدارة طرق الدفع ومعلومات الفواتير",
     "ADD_CARD": "إضافة بطاقة",
@@ -758,43 +1192,11 @@
     "CVC_PLACEHOLDER": "123",
     "SET_AS_DEFAULT_PAYMENT": "تعيين كطريقة دفع افتراضية",
     "PAYMENT_INFO_SECURED": "معلومات الدفع الخاصة بك آمنة ومشفرة",
+    "SECURITY_NOTICE": "لأسباب أمنية، يمكن تعديل معلومات معينة فقط",
     "CARD_NUMBER_NOT_MODIFIABLE": "رقم البطاقة غير قابل للتعديل",
     "CANCEL": "إلغاء",
-    "ADD_CARD_BUTTON": "إضافة البطاقة",
-    "ADDING_CARD": "جاري إضافة البطاقة...",
-    "VALIDATION_REQUIRED": "هذا الحقل مطلوب",
-    "VALIDATION_INVALID_CARD": "رقم بطاقة غير صحيح",
-    "VALIDATION_INVALID_MONTH": "شهر غير صحيح",
-    "VALIDATION_INVALID_YEAR": "سنة غير صحيحة",
-    "VALIDATION_INVALID_CVC": "CVC غير صحيح",
-    "VALIDATION_CARDHOLDER_REQUIRED": "اسم حامل البطاقة مطلوب",
-    "VALIDATION_CARD_NUMBER_REQUIRED": "رقم البطاقة مطلوب",
-    "VALIDATION_EXPIRY_MONTH_REQUIRED": "شهر انتهاء الصلاحية مطلوب",
-    "VALIDATION_EXPIRY_YEAR_REQUIRED": "سنة انتهاء الصلاحية مطلوبة",
-    "VALIDATION_CVC_REQUIRED": "CVC مطلوب",
-    "FEATURES_INCLUDED": "الميزات المتضمنة:",
-    "FEATURE_PAYMENT_DISPLAY": "عرض طرق الدفع مع نوع البطاقة (فيزا، ماستركارد، إلخ)",
-    "FEATURE_LAST_DIGITS": "عرض آخر 4 أرقام وتاريخ انتهاء الصلاحية",
-    "FEATURE_EDIT_DELETE": "أزرار \"تعديل\" و \"حذف\" لكل طريقة",
-    "FEATURE_ADD_MODAL": "نافذة إضافة بطاقة جديدة مع التحقق",
-    "FEATURE_DEFAULT_MANAGEMENT": "إدارة البطاقات الافتراضية",
-    "FEATURE_EXPIRY_ALERTS": "تنبيهات للبطاقات المنتهية الصلاحية أو التي ستنتهي قريباً",
-    "FEATURE_RESPONSIVE": "واجهة متجاوبة وقابلة للوصول",
-    "CONFIRM_DELETE": "هل أنت متأكد من أنك تريد حذف طريقة الدفع هذه؟ هذا الإجراء لا يمكن التراجع عنه.",
-    "DEFAULT_CARD_WARNING": "البطاقة الافتراضية",
-    "DEFAULT_CARD_WARNING_DESC": "هذه البطاقة مُعيّنة حالياً كطريقة الدفع الافتراضية. ستحتاج إلى تعيين بطاقة أخرى كافتراضية إذا كان لديك بطاقات أخرى.",
-    "DELETE_CONSEQUENCES": "عواقب الحذف:",
-    "DELETE_CONSEQUENCE_1": "لن تتمكن من استخدام هذه البطاقة للمدفوعات",
-    "DELETE_CONSEQUENCE_2": "قد تتأثر الاشتراكات النشطة التي تستخدم هذه البطاقة",
-    "DELETE_CONSEQUENCE_3": "لا يمكن التراجع عن هذا الإجراء",
-    "DELETING_CARD": "جاري الحذف...",
-    "DELETE_CARD_BUTTON": "حذف البطاقة",
-    "CARD_NUMBER_NOT_EDITABLE": "رقم البطاقة غير قابل للتعديل",
-    "SECURITY_NOTICE": "لأسباب أمنية، يمكن تعديل معلومات معينة فقط",
-    "UPDATING_CARD": "جاري التحديث...",
     "SAVE": "حفظ",
     "WELCOME_TO_EVER_WORKS": "مرحباً بك في Ever Works!",
-    "FREE_PLAN_MESSAGE": "أنت حالياً على الخطة المجانية. قم بالترقية لفتح الميزات المتميزة وابدأ في بناء نجاحك.",
     "VIEW_PLANS": "عرض الخطط",
     "BACK_TO_SETTINGS": "العودة إلى الإعدادات",
     "REFRESH_ALL": "تحديث الكل",
@@ -817,7 +1219,39 @@
     "REFRESH": "تحديث",
     "SEARCH_AND_FILTERS": "البحث والمرشحات",
     "TOTAL_RESULTS": "إجمالي النتائج",
+    "ADD_CARD_BUTTON": "إضافة البطاقة",
+    "ADDING_CARD": "جاري إضافة البطاقة...",
+    "UPDATING_CARD": "جاري التحديث...",
+    "DELETING_CARD": "جاري الحذف...",
+    "CONFIRM_DELETE": "هل أنت متأكد من أنك تريد حذف طريقة الدفع هذه؟ هذا الإجراء لا يمكن التراجع عنه.",
+    "DEFAULT_CARD_WARNING": "البطاقة الافتراضية",
+    "DEFAULT_CARD_WARNING_DESC": "هذه البطاقة مُعيّنة حالياً كطريقة الدفع الافتراضية. ستحتاج إلى تعيين بطاقة أخرى كافتراضية إذا كان لديك بطاقات أخرى.",
+    "DELETE_CONSEQUENCES": "عواقب الحذف:",
+    "DELETE_CONSEQUENCE_1": "لن تتمكن من استخدام هذه البطاقة للمدفوعات",
+    "DELETE_CONSEQUENCE_2": "قد تتأثر الاشتراكات النشطة التي تستخدم هذه البطاقة",
+    "DELETE_CONSEQUENCE_3": "لا يمكن التراجع عن هذا الإجراء",
+    "DELETE_CARD_BUTTON": "حذف البطاقة",
+    "VALIDATION_REQUIRED": "هذا الحقل مطلوب",
+    "VALIDATION_INVALID_CARD": "رقم بطاقة غير صحيح",
+    "VALIDATION_INVALID_MONTH": "شهر غير صحيح",
+    "VALIDATION_INVALID_YEAR": "سنة غير صحيحة",
+    "VALIDATION_INVALID_CVC": "CVC غير صحيح",
+    "VALIDATION_CARDHOLDER_REQUIRED": "اسم حامل البطاقة مطلوب",
+    "VALIDATION_CARD_NUMBER_REQUIRED": "رقم البطاقة مطلوب",
+    "VALIDATION_EXPIRY_MONTH_REQUIRED": "شهر انتهاء الصلاحية مطلوب",
+    "VALIDATION_EXPIRY_YEAR_REQUIRED": "سنة انتهاء الصلاحية مطلوبة",
+    "VALIDATION_CVC_REQUIRED": "CVC مطلوب",
+    "FEATURES_INCLUDED": "الميزات المتضمنة:",
+    "FEATURE_PAYMENT_DISPLAY": "عرض طرق الدفع مع نوع البطاقة (فيزا، ماستركارد، إلخ)",
+    "FEATURE_LAST_DIGITS": "عرض آخر 4 أرقام وتاريخ انتهاء الصلاحية",
+    "FEATURE_EDIT_DELETE": "أزرار \"تعديل\" و \"حذف\" لكل طريقة",
+    "FEATURE_ADD_MODAL": "نافذة إضافة بطاقة جديدة مع التحقق",
+    "FEATURE_DEFAULT_MANAGEMENT": "إدارة البطاقات الافتراضية",
+    "FEATURE_EXPIRY_ALERTS": "تنبيهات للبطاقات المنتهية الصلاحية أو التي ستنتهي قريباً",
+    "FEATURE_RESPONSIVE": "واجهة متجاوبة وقابلة للوصول",
+    "CARD_NUMBER_NOT_EDITABLE": "رقم البطاقة غير قابل للتعديل",
     "WELCOME_TITLE": "مرحباً بك في Ever Works!",
+    "FREE_PLAN_MESSAGE": "أنت حالياً على الخطة المجانية. قم بالترقية لفتح الميزات المتميزة وابدأ في بناء نجاحك.",
     "UPGRADE_NOW": "ترقية الآن",
     "CURRENT_SUBSCRIPTION": "الاشتراك الحالي",
     "SUBSCRIPTION_EMPTY_STATE": "لم يتم العثور على اشتراك نشط",
@@ -888,7 +1322,9 @@
   },
   "page": {
     "documentation": {
-      "DOCS_PAGE_DESCRIPTION": "استكشف واختبر واجهات برمجة التطبيقات لقالب موقع Ever Works. تتيح لك هذه الوثائق التفاعلية فهم وتجربة جميع النقاط النهائية المتاحة."
+      "DOCS_PAGE_DESCRIPTION": "استكشف واختبر واجهات برمجة التطبيقات لقالب موقع Ever Works. تتيح لك هذه الوثائق التفاعلية فهم وتجربة جميع النقاط النهائية المتاحة.",
+      "DOCS_PAGE_FOOTER_LINE_1": "This documentation is automatically generated from our OpenAPI specification.",
+      "DOCS_PAGE_FOOTER_LINE_2": "For questions or support, please contact the Ever Works team."
     }
   },
   "admin": {
@@ -1287,9 +1723,9 @@
         "DESCRIPTION_LENGTH": "يجب أن يكون وصف العنصر بين {min} و {max} حرف",
         "SOURCE_URL_REQUIRED": "رابط المصدر مطلوب",
         "SOURCE_URL_INVALID": "يرجى إدخال رابط صحيح",
-        "CATEGORY_REQUIRED": "فئة واحدة على الأقل مطلوبة",
         "ICON_URL_INVALID": "يرجى إدخال رابط أيقونة صحيح",
         "ICON_URL_LOAD_FAILED": "فشل تحميل الأيقونة من الرابط",
+        "CATEGORY_REQUIRED": "فئة واحدة على الأقل مطلوبة",
         "TAGS_REQUIRED": "وسم واحد على الأقل مطلوب",
         "STATUS_REQUIRED": "الحالة مطلوبة"
       },
@@ -1662,7 +2098,10 @@
       "TAG_CREATE_ERROR": "فشل في إنشاء الوسم",
       "TAG_UPDATE_ERROR": "فشل في تحديث الوسم",
       "TAG_DELETE_ERROR": "فشل في حذف الوسم",
-      "DELETE_CONFIRMATION": "هل أنت متأكد من أنك تريد حذف هذا الوسم؟"
+      "DELETE_CONFIRMATION": "هل أنت متأكد من أنك تريد حذف هذا الوسم؟",
+      "WARNING_DISABLED_TITLE": "Tags are currently disabled site-wide",
+      "WARNING_DISABLED_MESSAGE": "Tags are hidden from the public site including navigation, filters, and item pages. You can still manage tags here, but they won't be visible to users until re-enabled.",
+      "WARNING_DISABLED_ACTION": "Go to Settings to Enable"
     },
     "ADMIN_ROLES_PAGE": {
       "TITLE": "إدارة الأدوار",
@@ -1876,31 +2315,6 @@
       "BILLING_DESCRIPTION": "ستظهر تفاصيل الدفع والاشتراك هنا بمجرد التكوين.",
       "SET_UP_BILLING": "إعداد الفوترة"
     },
-    "ADMIN_CATEGORIES_PAGE": {
-      "TITLE": "إدارة الفئات",
-      "SUBTITLE": "تنظيم وإدارة فئات المحتوى الخاصة بك",
-      "TOTAL": "إجمالي",
-      "ADD_CATEGORY": "إضافة فئة",
-      "TOTAL_CATEGORIES": "إجمالي الفئات",
-      "ACTIVE_CATEGORIES": "الفئات النشطة",
-      "CATEGORIES_TITLE": "الفئات",
-      "CATEGORIES_COUNT": "فئة",
-      "ID_LABEL": "المعرف:",
-      "INACTIVE": "غير نشط",
-      "ACTIVE": "نشط",
-      "NO_CATEGORIES_FOUND": "لم يتم العثور على فئات",
-      "NO_CATEGORIES_DESCRIPTION": "أنشئ فئتك الأولى لبدء تنظيم المحتوى الخاص بك.",
-      "CREATE_FIRST_CATEGORY": "إنشاء أول فئة",
-      "SHOWING_RANGE": "عرض {start} إلى {end} من {total} فئة",
-      "PAGE_OF": "صفحة {current} من {total}",
-      "PER_PAGE": "في الصفحة",
-      "CREATE_CATEGORY": "إنشاء فئة",
-      "EDIT_CATEGORY": "تعديل الفئة",
-      "LOADING_CATEGORIES": "جاري تحميل الفئات...",
-      "DELETE_CONFIRMATION": "هل أنت متأكد من أنك تريد {action} هذه الفئة؟",
-      "PERMANENTLY_DELETE": "حذف نهائياً",
-      "DEACTIVATE": "إلغاء تفعيل"
-    },
     "ADMIN_COMPANIES_PAGE": {
       "TITLE": "إدارة الشركات",
       "SUBTITLE": "إدارة الشركات ومعلوماتها",
@@ -1939,7 +2353,10 @@
       "EDIT_COMPANY_SUBTITLE": "تحديث معلومات الشركة",
       "UPDATE_COMPANY": "تحديث الشركة",
       "DELETE_COMPANY": "حذف الشركة",
-      "DELETE_CONFIRMATION": "هل أنت متأكد من أنك تريد حذف هذه الشركة؟ لا يمكن التراجع عن هذا الإجراء."
+      "DELETE_CONFIRMATION": "هل أنت متأكد من أنك تريد حذف هذه الشركة؟ لا يمكن التراجع عن هذا الإجراء.",
+      "WARNING_DISABLED_TITLE": "Companies are currently disabled site-wide",
+      "WARNING_DISABLED_MESSAGE": "Companies are hidden from the public site including item company assignments. You can still manage companies here, but they won't be visible to users until re-enabled.",
+      "WARNING_DISABLED_ACTION": "Go to Settings to Enable"
     },
     "ITEM_COMPANY": {
       "TITLE": "تعيين الشركة",
@@ -1952,6 +2369,75 @@
       "HELPER_TEXT": "ابحث وعيّن شركة لهذا العنصر. يتم عرض الشركات النشطة فقط.",
       "DOMAIN": "النطاق",
       "CLOSE_DROPDOWN": "إغلاق القائمة"
+    },
+    "ADMIN_CATEGORIES_PAGE": {
+      "TITLE": "إدارة الفئات",
+      "SUBTITLE": "تنظيم وإدارة فئات المحتوى الخاصة بك",
+      "TOTAL": "إجمالي",
+      "ADD_CATEGORY": "إضافة فئة",
+      "TOTAL_CATEGORIES": "إجمالي الفئات",
+      "ACTIVE_CATEGORIES": "الفئات النشطة",
+      "CATEGORIES_TITLE": "الفئات",
+      "CATEGORIES_COUNT": "فئة",
+      "ID_LABEL": "المعرف:",
+      "INACTIVE": "غير نشط",
+      "ACTIVE": "نشط",
+      "NO_CATEGORIES_FOUND": "لم يتم العثور على فئات",
+      "NO_CATEGORIES_DESCRIPTION": "أنشئ فئتك الأولى لبدء تنظيم المحتوى الخاص بك.",
+      "CREATE_FIRST_CATEGORY": "إنشاء أول فئة",
+      "SHOWING_RANGE": "عرض {start} إلى {end} من {total} فئة",
+      "PAGE_OF": "صفحة {current} من {total}",
+      "PER_PAGE": "في الصفحة",
+      "CREATE_CATEGORY": "إنشاء فئة",
+      "EDIT_CATEGORY": "تعديل الفئة",
+      "LOADING_CATEGORIES": "جاري تحميل الفئات...",
+      "DELETE_CONFIRMATION": "هل أنت متأكد من أنك تريد {action} هذه الفئة؟",
+      "PERMANENTLY_DELETE": "حذف نهائياً",
+      "DEACTIVATE": "إلغاء تفعيل",
+      "WARNING_DISABLED_TITLE": "Categories are currently disabled site-wide",
+      "WARNING_DISABLED_MESSAGE": "Categories are hidden from the public site including navigation, filters, and item pages. You can still manage categories here, but they won't be visible to users until re-enabled.",
+      "WARNING_DISABLED_ACTION": "Go to Settings to Enable"
+    },
+    "ADMIN_SETTINGS_PAGE": {
+      "CATEGORIES_ENABLED_LABEL": "Enable Categories",
+      "CATEGORIES_ENABLED_DESC": "Enable or disable categories throughout the site. When disabled, category filters, pages, and navigation will be hidden.",
+      "COMPANIES_ENABLED_LABEL": "Enable Companies",
+      "COMPANIES_ENABLED_DESC": "Enable or disable companies throughout the site. When disabled, company management and item company assignments will be hidden.",
+      "TAGS_ENABLED_LABEL": "Enable Tags",
+      "TAGS_ENABLED_DESC": "Enable or disable tags throughout the site. When disabled, tag filters, pages, and navigation will be hidden.",
+      "SURVEYS_ENABLED_LABEL": "Enable Surveys",
+      "SURVEYS_ENABLED_DESC": "Enable or disable surveys throughout the site. When disabled, survey features will be hidden from non-admin users.",
+      "SURVEYS_DISABLED_WARNING": "Surveys feature is currently disabled in settings",
+      "HEADER_SUBMIT_ENABLED_LABEL": "Show Submit Button",
+      "HEADER_SUBMIT_ENABLED_DESC": "Show or hide the Submit button in the header navigation.",
+      "HEADER_PRICING_ENABLED_LABEL": "Show Pricing Menu",
+      "HEADER_PRICING_ENABLED_DESC": "Show or hide the Pricing link in the header navigation.",
+      "HEADER_LAYOUT_ENABLED_LABEL": "Show Layout Switcher",
+      "HEADER_LAYOUT_ENABLED_DESC": "Show or hide the layout switcher control in the header.",
+      "HEADER_LANGUAGE_ENABLED_LABEL": "Show Language Selector",
+      "HEADER_LANGUAGE_ENABLED_DESC": "Show or hide the language selector control in the header.",
+      "HEADER_THEME_ENABLED_LABEL": "Show Theme Toggle",
+      "HEADER_THEME_ENABLED_DESC": "Show or hide the dark/light theme toggle in the header.",
+      "HEADER_LAYOUT_DEFAULT_LABEL": "Default Layout",
+      "HEADER_LAYOUT_DEFAULT_DESC": "Set the default layout style for the homepage.",
+      "HEADER_PAGINATION_DEFAULT_LABEL": "Default Pagination",
+      "HEADER_PAGINATION_DEFAULT_DESC": "Set the default pagination type for item lists.",
+      "HEADER_THEME_DEFAULT_LABEL": "Default Theme",
+      "HEADER_THEME_DEFAULT_DESC": "Set the default color theme for the site.",
+      "HERO_ENABLED_LABEL": "Show Hero Section",
+      "HERO_ENABLED_DESC": "Show or hide the hero section on the homepage.",
+      "SEARCH_ENABLED_LABEL": "Show Search",
+      "SEARCH_ENABLED_DESC": "Show or hide the search functionality on the homepage.",
+      "DEFAULT_VIEW_LABEL": "Default View",
+      "DEFAULT_VIEW_DESC": "Set the default view layout for the item list.",
+      "DEFAULT_SORT_LABEL": "Default Sort Order",
+      "DEFAULT_SORT_DESC": "Set the default sort order for items.",
+      "FOOTER_SUBSCRIBE_ENABLED_LABEL": "Show Subscribe Form",
+      "FOOTER_SUBSCRIBE_ENABLED_DESC": "Show or hide the 'Stay Updated' newsletter subscription form in the footer.",
+      "FOOTER_VERSION_ENABLED_LABEL": "Show Version Information",
+      "FOOTER_VERSION_ENABLED_DESC": "Show or hide the version information in the footer.",
+      "FOOTER_THEME_SELECTOR_ENABLED_LABEL": "Show Theme Selector",
+      "FOOTER_THEME_SELECTOR_ENABLED_DESC": "Show or hide the theme selector control in the footer."
     },
     "AUTH_FORM": {
       "ADMIN_WELCOME_TITLE": "مرحباً بك في لوحة تحكم الإدارة",
