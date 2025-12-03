@@ -28,6 +28,7 @@
     "LAYOUT_SELECTION": "Layout Selection",
     "CHOOSE_PREFERRED_DESIGN": "Choose your preferred homepage design",
     "CONTAINER_WIDTH": "Lebar konten",
+    "CONTAINER_WIDTH_DESC": "Choose between fixed-width or full-width layout",
     "FIXED_WIDTH": "Tetap",
     "FULL_WIDTH": "Lebar penuh",
     "FIXED_WIDTH_DESC": "Content is centered with a maximum width for optimal readability",

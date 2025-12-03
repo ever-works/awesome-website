@@ -28,6 +28,7 @@
     "LAYOUT_SELECTION": "Layout Selection",
     "CHOOSE_PREFERRED_DESIGN": "Choose your preferred homepage design",
     "CONTAINER_WIDTH": "콘텐츠 너비",
+    "CONTAINER_WIDTH_DESC": "Choose between fixed-width or full-width layout",
     "FIXED_WIDTH": "고정",
     "FULL_WIDTH": "전체 너비",
     "FIXED_WIDTH_DESC": "Content is centered with a maximum width for optimal readability",

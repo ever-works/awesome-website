@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { useSettingsModal } from "@/hooks/use-settings-modal";
 import { useTranslations } from "next-intl";
+import SelectContainerWidth from "@/components/ui/select-container-width";
 import SelectPaginationType from "@/components/ui/select-pagination-type";
 import SelectDatabaseMode from "@/components/ui/select-database-mode";
 import { DatabaseStatusWarning } from "@/components/ui/database-status-warning";
@@ -116,6 +117,9 @@ export function SettingsModal() {
 
 				{/* Modal Content */}
 				<div className="px-6 py-8 space-y-5">
+					{/* Container Width Section */}
+					<SelectContainerWidth />
+
 					{/* Pagination Style Section */}
 					<SelectPaginationType />
 

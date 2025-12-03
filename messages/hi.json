@@ -28,6 +28,7 @@
     "LAYOUT_SELECTION": "Layout Selection",
     "CHOOSE_PREFERRED_DESIGN": "Choose your preferred homepage design",
     "CONTAINER_WIDTH": "सामग्री चौड़ाई",
+    "CONTAINER_WIDTH_DESC": "Choose between fixed-width or full-width layout",
     "FIXED_WIDTH": "निश्चित",
     "FULL_WIDTH": "पूर्ण चौड़ाई",
     "FIXED_WIDTH_DESC": "Content is centered with a maximum width for optimal readability",
