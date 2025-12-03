@@ -329,6 +329,18 @@
     "PAGINATION_STYLE_DESC": "Wählen Sie aus, wie Inhalte beim Durchsuchen von Listen angezeigt werden",
     "PAGINATION_STANDARD_LABEL": "Standard",
     "PAGINATION_INFINITE_LABEL": "Unendliches Scrollen",
+    "DATABASE_MODE": "Datenbankfunktionen",
+    "DATABASE_MODE_DESC": "Steuert die Sichtbarkeit datenbankabhängiger Funktionen wie Bewertungen, Kommentare und Favoriten",
+    "DATABASE_ENABLED_LABEL": "Aktiviert",
+    "DATABASE_DISABLED_LABEL": "Deaktiviert",
+    "FEATURE_DISABLED_IN_SETTINGS": "{feature}-Funktionen sind derzeit in den Einstellungen deaktiviert",
+    "DATABASE_PREVIEW_MODE": "Vorschaumodus",
+    "DATABASE_PREVIEW_MODE_DESC": "Datenbank nicht konfiguriert. Visuelle Indikatoren zeigen, wie Funktionen aussehen, wenn sie in den Einstellungen deaktiviert sind.",
+    "PAGINATION_CHANGED_TO_STANDARD": "Paginierung auf Standard geändert",
+    "PAGINATION_CHANGED_TO_INFINITE": "Paginierung auf Unendliches Scrollen geändert",
+    "DATABASE_MODE_ENABLED": "Datenbankfunktionen aktiviert",
+    "DATABASE_MODE_DISABLED": "Datenbankfunktionen deaktiviert",
+    "SETTINGS_SAVED_AUTOMATICALLY": "Einstellungen automatisch gespeichert",
     "SETTINGS_CARDS": {
       "BASIC_INFO": {
         "TITLE": "Grundinformationen",

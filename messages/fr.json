@@ -409,6 +409,18 @@
     "PAGINATION_STYLE_DESC": "Choisissez comment le contenu est affiché lors de la navigation dans les listes",
     "PAGINATION_STANDARD_LABEL": "Standard",
     "PAGINATION_INFINITE_LABEL": "Défilement infini",
+    "DATABASE_MODE": "Fonctionnalités de Base de Données",
+    "DATABASE_MODE_DESC": "Contrôle la visibilité des fonctionnalités dépendantes de la base de données comme les évaluations, les commentaires et les favoris",
+    "DATABASE_ENABLED_LABEL": "Activé",
+    "DATABASE_DISABLED_LABEL": "Désactivé",
+    "FEATURE_DISABLED_IN_SETTINGS": "Les fonctionnalités de {feature} sont actuellement désactivées dans les paramètres",
+    "DATABASE_PREVIEW_MODE": "Mode Aperçu",
+    "DATABASE_PREVIEW_MODE_DESC": "Base de données non configurée. Les indicateurs visuels montrent comment les fonctionnalités apparaissent lorsqu'elles sont désactivées dans les paramètres.",
+    "PAGINATION_CHANGED_TO_STANDARD": "Pagination changée en Standard",
+    "PAGINATION_CHANGED_TO_INFINITE": "Pagination changée en Défilement Infini",
+    "DATABASE_MODE_ENABLED": "Fonctionnalités de base de données activées",
+    "DATABASE_MODE_DISABLED": "Fonctionnalités de base de données désactivées",
+    "SETTINGS_SAVED_AUTOMATICALLY": "Paramètres enregistrés automatiquement",
     "SETTINGS_CARDS": {
       "BASIC_INFO": {
         "TITLE": "Informations de base",

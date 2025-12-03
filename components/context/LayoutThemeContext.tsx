@@ -11,14 +11,21 @@ interface ConfigDefaults {
 
 // Constants
 const DEFAULT_LAYOUT: LayoutKey = "classic";
+
 const DEFAULT_THEME = "everworks" as const;
+
 export enum LayoutHome {
   HOME_ONE = 'Home_One',
   HOME_TWO = 'Home_Two',
   HOME_THREE = 'Home_Three',
 }
+
 export type PaginationType = "standard" | "infinite";
+
 export type ContainerWidth = "fixed" | "fluid";
+export type DatabaseSimulationMode = "enabled" | "disabled";
+
+const DEFAULT_DATABASE_SIMULATION_MODE: DatabaseSimulationMode = "enabled";
 const DEFAULT_LAYOUT_HOME: LayoutHome = LayoutHome.HOME_ONE;
 const DEFAULT_PAGINATION_TYPE: PaginationType = "standard";
 const DEFAULT_CONTAINER_WIDTH: ContainerWidth = "fixed";
@@ -32,6 +39,7 @@ const STORAGE_KEYS = {
   LAYOUT_HOME: "layoutHome",
   PAGINATION_TYPE: "paginationType",
   ITEMS_PER_PAGE: "itemsPerPage",
+  DATABASE_SIMULATION_MODE: "databaseSimulationMode",
   CONTAINER_WIDTH: "containerWidth",
 } as const;
 
@@ -60,6 +68,8 @@ interface LayoutThemeContextType {
   setPaginationType: (type: PaginationType) => void;
   itemsPerPage: number;
   setItemsPerPage: (itemsPerPage: number) => void;
+  databaseSimulationMode: DatabaseSimulationMode;
+  setDatabaseSimulationMode: (mode: DatabaseSimulationMode) => void;
   containerWidth: ContainerWidth;
   setContainerWidth: (width: ContainerWidth) => void;
   isInitialized: boolean;
@@ -163,6 +173,10 @@ const isValidContainerWidth = (key: string): key is ContainerWidth => {
 
 const isValidItemsPerPage = (value: number): boolean => {
   return Number.isInteger(value) && value >= MIN_ITEMS_PER_PAGE && value <= MAX_ITEMS_PER_PAGE;
+};
+
+const isValidDatabaseSimulationMode = (mode: string): mode is DatabaseSimulationMode => {
+  return mode === "enabled" || mode === "disabled";
 };
 
 // Context
@@ -324,6 +338,35 @@ const useItemsPerPageManager = () => {
   };
 };
 
+// Custom hook for database simulation mode management
+const useDatabaseSimulationModeManager = () => {
+  // Always initialize with default to prevent hydration mismatch
+  const [databaseSimulationMode, setDatabaseSimulationModeState] = useState<DatabaseSimulationMode>(DEFAULT_DATABASE_SIMULATION_MODE);
+
+  // Hydrate from localStorage after mount
+  useEffect(() => {
+    const saved = safeLocalStorage.getItem(STORAGE_KEYS.DATABASE_SIMULATION_MODE);
+    if (saved && isValidDatabaseSimulationMode(saved)) {
+      setDatabaseSimulationModeState(saved);
+    }
+  }, []);
+
+  const setDatabaseSimulationMode = useCallback((mode: DatabaseSimulationMode) => {
+    if (!isValidDatabaseSimulationMode(mode)) {
+      console.warn(`Invalid database simulation mode: ${mode}`);
+      return;
+    }
+
+    setDatabaseSimulationModeState(mode);
+    safeLocalStorage.setItem(STORAGE_KEYS.DATABASE_SIMULATION_MODE, mode);
+  }, []);
+
+  return {
+    databaseSimulationMode,
+    setDatabaseSimulationMode,
+  };
+};
+    
 // Custom hook for container width management
 const useContainerWidthManager = () => {
   // Track if we've loaded from localStorage
@@ -410,6 +453,7 @@ export const LayoutThemeProvider: React.FC<LayoutThemeProviderProps> = ({ childr
   const layoutHomeManager = useLayoutHomeManager();
   const paginationTypeManager = usePaginationTypeManager();
   const itemsPerPageManager = useItemsPerPageManager();
+  const databaseSimulationModeManager = useDatabaseSimulationModeManager();
   const containerWidthManager = useContainerWidthManager();
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -435,6 +479,8 @@ export const LayoutThemeProvider: React.FC<LayoutThemeProviderProps> = ({ childr
         setPaginationType: paginationTypeManager.setPaginationType,
         itemsPerPage: itemsPerPageManager.itemsPerPage,
         setItemsPerPage: itemsPerPageManager.setItemsPerPage,
+        databaseSimulationMode: databaseSimulationModeManager.databaseSimulationMode,
+        setDatabaseSimulationMode: databaseSimulationModeManager.setDatabaseSimulationMode,
         containerWidth: containerWidthManager.containerWidth,
         setContainerWidth: containerWidthManager.setContainerWidth,
         isInitialized,
@@ -451,6 +497,8 @@ export const LayoutThemeProvider: React.FC<LayoutThemeProviderProps> = ({ childr
         paginationTypeManager.setPaginationType,
         itemsPerPageManager.itemsPerPage,
         itemsPerPageManager.setItemsPerPage,
+        databaseSimulationModeManager.databaseSimulationMode,
+        databaseSimulationModeManager.setDatabaseSimulationMode,
         containerWidthManager.containerWidth,
         containerWidthManager.setContainerWidth,
         isInitialized,
@@ -501,13 +549,14 @@ export const getAllThemes = (): Array<{ key: ThemeKey; config: ThemeConfig }> =>
 // Additional utility functions for better developer experience
 export const resetToDefaults = (): void => {
   if (typeof window === "undefined") return;
-  
+
   try {
     safeLocalStorage.setItem(STORAGE_KEYS.LAYOUT, DEFAULT_LAYOUT);
     safeLocalStorage.setItem(STORAGE_KEYS.THEME, DEFAULT_THEME);
     safeLocalStorage.setItem(STORAGE_KEYS.LAYOUT_HOME, DEFAULT_LAYOUT_HOME);
     safeLocalStorage.setItem(STORAGE_KEYS.PAGINATION_TYPE, DEFAULT_PAGINATION_TYPE);
     safeLocalStorage.setItem(STORAGE_KEYS.ITEMS_PER_PAGE, DEFAULT_ITEMS_PER_PAGE.toString());
+    safeLocalStorage.setItem(STORAGE_KEYS.DATABASE_SIMULATION_MODE, DEFAULT_DATABASE_SIMULATION_MODE);
     safeLocalStorage.setItem(STORAGE_KEYS.CONTAINER_WIDTH, DEFAULT_CONTAINER_WIDTH);
   } catch (error) {
     console.warn("Failed to reset to defaults:", error);

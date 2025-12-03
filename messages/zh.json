@@ -315,6 +315,18 @@
     "PAGINATION_STYLE_DESC": "选择浏览列表时内容的显示方式",
     "PAGINATION_STANDARD_LABEL": "标准",
     "PAGINATION_INFINITE_LABEL": "无限滚动",
+    "DATABASE_MODE": "数据库功能",
+    "DATABASE_MODE_DESC": "控制依赖数据库的功能的可见性，如评分、评论和收藏",
+    "DATABASE_ENABLED_LABEL": "启用",
+    "DATABASE_DISABLED_LABEL": "禁用",
+    "FEATURE_DISABLED_IN_SETTINGS": "{feature}功能当前在设置中已禁用",
+    "DATABASE_PREVIEW_MODE": "预览模式",
+    "DATABASE_PREVIEW_MODE_DESC": "数据库未配置。视觉指示器显示在设置中禁用功能时的外观。",
+    "PAGINATION_CHANGED_TO_STANDARD": "分页已更改为标准",
+    "PAGINATION_CHANGED_TO_INFINITE": "分页已更改为无限滚动",
+    "DATABASE_MODE_ENABLED": "数据库功能已启用",
+    "DATABASE_MODE_DISABLED": "数据库功能已禁用",
+    "SETTINGS_SAVED_AUTOMATICALLY": "设置自动保存",
     "SETTINGS_CARDS": {
       "BASIC_INFO": {
         "TITLE": "基本信息",

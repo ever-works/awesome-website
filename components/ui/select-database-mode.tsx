@@ -5,26 +5,26 @@ import { cn } from '@/lib/utils';
 import { useLayoutTheme } from '@/components/context';
 import { useTranslations } from 'next-intl';
 import { SegmentedToggle } from './segmented-toggle';
-import { Layers, Infinity as InfinityIcon } from 'lucide-react';
+import { Database } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface SelectPaginationTypeProps {
+interface SelectDatabaseModeProps {
 	className?: string;
 	disabled?: boolean;
 }
 
-const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({ className, disabled = false }) => {
-	const { paginationType, setPaginationType } = useLayoutTheme();
+const SelectDatabaseMode: React.FC<SelectDatabaseModeProps> = ({ className, disabled = false }) => {
+	const { databaseSimulationMode, setDatabaseSimulationMode } = useLayoutTheme();
 	const t = useTranslations('settings');
 
-	const handleToggle = (isInfinite: boolean) => {
+	const handleToggle = (isDisabled: boolean) => {
 		if (disabled) return;
-		const newType = isInfinite ? 'infinite' : 'standard';
-		setPaginationType(newType);
+		const newMode = isDisabled ? 'disabled' : 'enabled';
+		setDatabaseSimulationMode(newMode);
 
 		// Toast notification
 		toast.success(
-			t(isInfinite ? 'PAGINATION_CHANGED_TO_INFINITE' : 'PAGINATION_CHANGED_TO_STANDARD'),
+			t(isDisabled ? 'DATABASE_MODE_DISABLED' : 'DATABASE_MODE_ENABLED'),
 			{
 				duration: 2000,
 				description: t('SETTINGS_SAVED_AUTOMATICALLY')
@@ -37,15 +37,15 @@ const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({ className, 
 			// Structure
 			'group p-5 rounded-xl',
 
-			// Blue/Indigo/Purple gradient - navigation feel
-			'bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-purple-50/40',
-			'dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-purple-950/20',
+			// Emerald/Teal/Cyan gradient - data/storage feel
+			'bg-gradient-to-br from-emerald-50/80 via-teal-50/60 to-cyan-50/40',
+			'dark:from-emerald-950/40 dark:via-teal-950/30 dark:to-cyan-950/20',
 
 			// Glassmorphism
 			'backdrop-blur-xl backdrop-saturate-150',
 
-			// Border with blue tones
-			'border border-blue-200/40 dark:border-blue-800/30',
+			// Border with green tones
+			'border border-emerald-200/40 dark:border-emerald-800/30',
 
 			// Enhanced shadow
 			'shadow-lg shadow-black/5 dark:shadow-black/20',
@@ -55,8 +55,8 @@ const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({ className, 
 
 			// Hover effects - lift and enhanced border
 			'hover:scale-[1.02] hover:-translate-y-1',
-			'hover:shadow-2xl hover:shadow-blue-500/10',
-			'hover:border-blue-300/60 dark:hover:border-blue-700/50',
+			'hover:shadow-2xl hover:shadow-emerald-500/10',
+			'hover:border-emerald-300/60 dark:hover:border-emerald-700/50',
 
 			// Press feedback
 			'active:scale-[0.98]',
@@ -69,50 +69,40 @@ const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({ className, 
 			<div className="flex items-start justify-between gap-4">
 				{/* Icon + Title/Description */}
 				<div className="flex items-start gap-3 flex-1 min-w-0">
-					{/* Icon container with blue gradient and glassmorphism */}
+					{/* Icon container with emerald gradient and glassmorphism */}
 					<div className={cn(
 						'p-2 rounded-lg flex-shrink-0',
-						'bg-gradient-to-br from-blue-100 to-indigo-200',
-						'dark:from-blue-900/40 dark:to-indigo-900/40',
+						'bg-gradient-to-br from-emerald-100 to-teal-200',
+						'dark:from-emerald-900/40 dark:to-teal-900/40',
 						'backdrop-blur-md',
-						'border border-blue-300/50 dark:border-blue-700/50',
+						'border border-emerald-300/50 dark:border-emerald-700/50',
 						'shadow-inner',
 						// Icon animation
 						'transition-transform duration-700 ease-in-out',
 						'group-hover:scale-110 group-hover:rotate-3'
 					)}>
-						<Layers className="h-5 w-5 text-blue-700 dark:text-blue-300" />
+						<Database className="h-5 w-5 text-emerald-700 dark:text-emerald-300" />
 					</div>
 
 					{/* Text content with improved typography */}
 					<div className="flex-1 min-w-0">
 						<h3 className="text-base font-semibold tracking-tight leading-tight text-gray-900 dark:text-gray-100">
-							{t('PAGINATION_STYLE')}
+							{t('DATABASE_MODE')}
 						</h3>
 						<p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mt-1">
-							{t('PAGINATION_STYLE_DESC')}
+							{t('DATABASE_MODE_DESC')}
 						</p>
 					</div>
 				</div>
 
-				{/* Toggle with icons */}
+				{/* Toggle - using text labels (Database doesn't need icons in toggle) */}
 				<div className="flex-shrink-0">
 					<SegmentedToggle
-						value={paginationType === 'infinite'}
+						value={databaseSimulationMode === 'disabled'}
 						onChange={handleToggle}
 						disabled={disabled}
-						leftLabel={
-							<span className="flex items-center gap-1.5">
-								<Layers className="h-3.5 w-3.5" />
-								<span>{t('PAGINATION_STANDARD_LABEL')}</span>
-							</span>
-						}
-						rightLabel={
-							<span className="flex items-center gap-1.5">
-								<InfinityIcon className="h-3.5 w-3.5" />
-								<span>{t('PAGINATION_INFINITE_LABEL')}</span>
-							</span>
-						}
+						leftLabel={t('DATABASE_ENABLED_LABEL')}
+						rightLabel={t('DATABASE_DISABLED_LABEL')}
 					/>
 				</div>
 			</div>
@@ -120,4 +110,4 @@ const SelectPaginationType: React.FC<SelectPaginationTypeProps> = ({ className, 
 	);
 };
 
-export default SelectPaginationType;
+export default SelectDatabaseMode;
