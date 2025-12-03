@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import { useItemRating } from "@/hooks/use-item-rating";
 import { Rating } from "@/components/ui/rating";
 import { useFeatureFlagsWithSimulation } from "@/hooks/use-feature-flags-with-simulation";
-import { FeatureDisabledNotice } from "@/components/ui/feature-disabled-notice";
 
 interface RatingDisplayProps {
   itemId: string;
@@ -15,9 +14,9 @@ export function RatingDisplay({ itemId }: RatingDisplayProps) {
   const { features, isPending, isSimulationActive } = useFeatureFlagsWithSimulation();
   const { rating } = useItemRating(itemId);
 
-  // Show notice when feature is disabled due to simulation
+  // Hide when feature is disabled due to simulation
   if (!isPending && !features.ratings && isSimulationActive) {
-    return <FeatureDisabledNotice feature="Ratings" />;
+    return null;
   }
 
   // Hide rating display when feature is disabled (database not configured)

@@ -415,7 +415,7 @@
     "DATABASE_DISABLED_LABEL": "Désactivé",
     "FEATURE_DISABLED_IN_SETTINGS": "Les fonctionnalités de {feature} sont actuellement désactivées dans les paramètres",
     "DATABASE_PREVIEW_MODE": "Mode Aperçu",
-    "DATABASE_PREVIEW_MODE_DESC": "Base de données non configurée. Les indicateurs visuels montrent comment les fonctionnalités apparaissent lorsqu'elles sont désactivées dans les paramètres.",
+    "DATABASE_PREVIEW_MODE_DESC": "Base de données non configurée. Nous affichons les fonctionnalités dans l'interface pour votre examen, mais elles ne fonctionneront pas car la base de données n'est pas disponible.",
     "PAGINATION_CHANGED_TO_STANDARD": "Pagination changée en Standard",
     "PAGINATION_CHANGED_TO_INFINITE": "Pagination changée en Défilement Infini",
     "DATABASE_MODE_ENABLED": "Fonctionnalités de base de données activées",

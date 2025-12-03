@@ -321,7 +321,7 @@
     "DATABASE_DISABLED_LABEL": "禁用",
     "FEATURE_DISABLED_IN_SETTINGS": "{feature}功能当前在设置中已禁用",
     "DATABASE_PREVIEW_MODE": "预览模式",
-    "DATABASE_PREVIEW_MODE_DESC": "数据库未配置。视觉指示器显示在设置中禁用功能时的外观。",
+    "DATABASE_PREVIEW_MODE_DESC": "数据库未配置。我们在界面中显示功能供您查看，但由于数据库不可用，它们将无法工作。",
     "PAGINATION_CHANGED_TO_STANDARD": "分页已更改为标准",
     "PAGINATION_CHANGED_TO_INFINITE": "分页已更改为无限滚动",
     "DATABASE_MODE_ENABLED": "数据库功能已启用",

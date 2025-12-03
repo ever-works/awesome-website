@@ -335,7 +335,7 @@
     "DATABASE_DISABLED_LABEL": "Deaktiviert",
     "FEATURE_DISABLED_IN_SETTINGS": "{feature}-Funktionen sind derzeit in den Einstellungen deaktiviert",
     "DATABASE_PREVIEW_MODE": "Vorschaumodus",
-    "DATABASE_PREVIEW_MODE_DESC": "Datenbank nicht konfiguriert. Visuelle Indikatoren zeigen, wie Funktionen aussehen, wenn sie in den Einstellungen deaktiviert sind.",
+    "DATABASE_PREVIEW_MODE_DESC": "Datenbank nicht konfiguriert. Wir zeigen die Funktionen in der Benutzeroberfläche zur Überprüfung an, aber sie funktionieren nicht, da die Datenbank nicht verfügbar ist.",
     "PAGINATION_CHANGED_TO_STANDARD": "Paginierung auf Standard geändert",
     "PAGINATION_CHANGED_TO_INFINITE": "Paginierung auf Unendliches Scrollen geändert",
     "DATABASE_MODE_ENABLED": "Datenbankfunktionen aktiviert",
