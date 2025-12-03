@@ -45,8 +45,8 @@ export default function Item(props: ItemProps) {
 	const getDetailPath = () => `${isSourceUrl}/items/${props.slug}`;
 
 	const cardClassName = cn(
-		'group relative border-0 rounded-2xl transition-all duration-700 transform hover:-translate-y-3 backdrop-blur-xl overflow-hidden h-full',
-		'bg-white/80 dark:bg-gray-900/80 shadow-lg hover:shadow-2xl',
+		'group relative border-0 rounded-2xl transition-all duration-300 backdrop-blur-xl overflow-hidden h-full',
+		'bg-white/80 dark:bg-gray-900/80 shadow-lg hover:shadow-xl',
 		'ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-gray-300/70 dark:hover:ring-gray-600/70',
 		'before:absolute before:inset-0 before:bg-linear-to-br before:from-white/60 before:via-transparent before:to-gray-50/40',
 		'dark:before:from-gray-800/60 dark:before:via-transparent dark:before:to-gray-900/40',
@@ -95,26 +95,26 @@ export default function Item(props: ItemProps) {
 						<div className="flex justify-between items-start gap-3">
 							<div className="flex items-center gap-4">
 								<div className="relative shrink-0">
-									<div className="w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-500 bg-linear-to-br from-theme-primary-10 to-indigo-100 border border-theme-primary-500 group-hover:from-theme-primary-10 group-hover:to-indigo-200 dark:from-theme-primary-10 dark:to-indigo-900/30 dark:border-theme-primary-700/30 dark:group-hover:from-theme-primary-800/40 dark:group-hover:to-indigo-800/40 group-hover:scale-110 group-hover:rotate-3 shadow-xs group-hover:shadow-md">
+									{/* Pulse/wave effect on hover */}
+									<div className="absolute inset-0 w-12 h-12 rounded-2xl bg-theme-primary-500/30 dark:bg-theme-primary-400/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none" />
+									<div className="w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 bg-linear-to-br from-theme-primary-10 to-indigo-100 border border-theme-primary-500 group-hover:from-theme-primary-10 group-hover:to-indigo-200 dark:from-theme-primary-10 dark:to-indigo-900/30 dark:border-theme-primary-700/30 dark:group-hover:from-theme-primary-800/40 dark:group-hover:to-indigo-800/40 shadow-xs group-hover:shadow-md group-hover:scale-105 group-hover:rotate-2">
 										{shouldShowFallbackIcon ? (
-											<FiFolder className="w-6 h-6 text-theme-primary dark:text-theme-primary transition-transform duration-500 group-hover:scale-110" />
+											<FiFolder className="w-6 h-6 text-theme-primary dark:text-theme-primary transition-transform duration-300 group-hover:scale-110" />
 										) : (
 											<Image
 												src={props.icon_url!}
 												alt={`${props.name} icon`}
-												className="w-6 h-6 object-contain transition-transform duration-500 group-hover:scale-110"
+												className="w-6 h-6 object-contain transition-transform duration-300 group-hover:scale-110"
 												width={24}
 												height={24}
 												unoptimized={isProblematicUrl(props.icon_url!)}
 											/>
 										)}
 									</div>
-									{/* Pulse effect */}
-									<div className="absolute inset-0 rounded-2xl bg-theme-primary-10 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300" />
 								</div>
 
 								<div className="flex-1 min-w-0">
-									<div className="text-lg sm:text-base font-semibold leading-tight text-gray-900 dark:text-white mb-1 transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+									<div className="text-lg sm:text-base font-semibold leading-tight text-left text-gray-900 dark:text-white mb-1 transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
 										{props.name}
 									</div>
 									<div className="w-0 h-0.5 bg-gray-300 dark:bg-gray-600 group-hover:w-12 transition-all duration-500 ease-out" />
@@ -230,16 +230,18 @@ export default function Item(props: ItemProps) {
 				</CardBody>
 			</div>
 
-			{/* Enhanced hover indicator */}
-			<div
-				className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0 w-8 h-8 rounded-full bg-theme-primary-500/10 dark:bg-theme-primary-400/10 flex items-center justify-center backdrop-blur-xs border border-theme-primary-10 dark:border-theme-primary"
-				aria-hidden="true"
-			>
-				<FiArrowUpRight className="w-4 h-4 text-theme-primary-600 dark:text-theme-primary-400" />
-			</div>
+			{/* Hover indicator - only show in list view where there's enough space */}
+			{props.layout === 'classic' && (
+				<div
+					className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 rounded-full bg-theme-primary-500/10 dark:bg-theme-primary-400/10 flex items-center justify-center backdrop-blur-xs border border-theme-primary-10 dark:border-theme-primary"
+					aria-hidden="true"
+				>
+					<FiArrowUpRight className="w-4 h-4 text-theme-primary-600 dark:text-theme-primary-400" />
+				</div>
+			)}
 
 			{/* Subtle glow effect */}
-			<div className="absolute inset-0 rounded-2xl bg-linear-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+			<div className="absolute inset-0 rounded-2xl bg-linear-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
 			{/* Loading overlay */}
 			{isNavigating && (
