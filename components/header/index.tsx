@@ -282,19 +282,20 @@ export default function Header() {
             <MoreMenu />
           </NavbarItem>
         )}
-        {headerSettings.settingsEnabled && (
-          <NavbarItem key="settings">
-            <SettingsButton />
-          </NavbarItem>
-        )}
       </>
     ),
-    [navigationItems, renderNavigationItem, headerSettings.moreEnabled, headerSettings.settingsEnabled]
+    [navigationItems, renderNavigationItem, headerSettings.moreEnabled]
   );
 
   const renderRightSection = useCallback(
     () => (
       <NavbarContent justify="end" className={STYLES.rightSection}>
+        {headerSettings.settingsEnabled && (
+          <NavbarItem className={STYLES.largeUp}>
+            <SettingsButton />
+          </NavbarItem>
+        )}
+        
         <NavbarItem className={STYLES.largeUp}>
           <NavigationControls />
         </NavbarItem>
@@ -311,7 +312,7 @@ export default function Header() {
         />
       </NavbarContent>
     ),
-    [isMenuOpen]
+    [isMenuOpen, headerSettings.settingsEnabled]
   );
 
   return (
