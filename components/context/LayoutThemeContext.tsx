@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { LayoutKey, layoutComponents } from "@/components/layouts";
 import { applyThemeWithPalettes } from "@/lib/theme-color-manager";
+import { ContainerWidthProvider } from "@/components/ui/container";
 
 // Config defaults interface
 interface ConfigDefaults {
@@ -17,8 +18,10 @@ export enum LayoutHome {
   HOME_THREE = 'Home_Three',
 }
 export type PaginationType = "standard" | "infinite";
+export type ContainerWidth = "fixed" | "fluid";
 const DEFAULT_LAYOUT_HOME: LayoutHome = LayoutHome.HOME_ONE;
 const DEFAULT_PAGINATION_TYPE: PaginationType = "standard";
+const DEFAULT_CONTAINER_WIDTH: ContainerWidth = "fixed";
 const DEFAULT_ITEMS_PER_PAGE = 12;
 const MIN_ITEMS_PER_PAGE = 1;
 const MAX_ITEMS_PER_PAGE = 100;
@@ -29,6 +32,7 @@ const STORAGE_KEYS = {
   LAYOUT_HOME: "layoutHome",
   PAGINATION_TYPE: "paginationType",
   ITEMS_PER_PAGE: "itemsPerPage",
+  CONTAINER_WIDTH: "containerWidth",
 } as const;
 
 // Types
@@ -56,6 +60,8 @@ interface LayoutThemeContextType {
   setPaginationType: (type: PaginationType) => void;
   itemsPerPage: number;
   setItemsPerPage: (itemsPerPage: number) => void;
+  containerWidth: ContainerWidth;
+  setContainerWidth: (width: ContainerWidth) => void;
   isInitialized: boolean;
 }
 
@@ -149,6 +155,10 @@ const isValidLayoutHome = (key: string): key is LayoutHome => {
 
 const isValidPaginationType = (key: string): key is PaginationType => {
   return key === "standard" || key === "infinite";
+};
+
+const isValidContainerWidth = (key: string): key is ContainerWidth => {
+  return key === "fixed" || key === "fluid";
 };
 
 const isValidItemsPerPage = (value: number): boolean => {
@@ -314,6 +324,39 @@ const useItemsPerPageManager = () => {
   };
 };
 
+// Custom hook for container width management
+const useContainerWidthManager = () => {
+  // Track if we've loaded from localStorage
+  const [isLoaded, setIsLoaded] = useState(false);
+  // Always initialize with default to prevent hydration mismatch
+  const [containerWidth, setContainerWidthState] = useState<ContainerWidth>(DEFAULT_CONTAINER_WIDTH);
+
+  // Hydrate from localStorage after mount - run synchronously on first render
+  useEffect(() => {
+    const saved = safeLocalStorage.getItem(STORAGE_KEYS.CONTAINER_WIDTH);
+    if (saved && isValidContainerWidth(saved)) {
+      setContainerWidthState(saved);
+    }
+    setIsLoaded(true);
+  }, []);
+
+  const setContainerWidth = useCallback((width: ContainerWidth) => {
+    if (!isValidContainerWidth(width)) {
+      console.warn(`Invalid container width: ${width}`);
+      return;
+    }
+
+    setContainerWidthState(width);
+    safeLocalStorage.setItem(STORAGE_KEYS.CONTAINER_WIDTH, width);
+  }, []);
+
+  return {
+    containerWidth,
+    setContainerWidth,
+    isContainerWidthLoaded: isLoaded,
+  };
+};
+
 // Custom hook for layout management
 const useLayoutManager = (configDefaults?: ConfigDefaults) => {
   // Determine the effective default from config or fallback
@@ -367,6 +410,7 @@ export const LayoutThemeProvider: React.FC<LayoutThemeProviderProps> = ({ childr
   const layoutHomeManager = useLayoutHomeManager();
   const paginationTypeManager = usePaginationTypeManager();
   const itemsPerPageManager = useItemsPerPageManager();
+  const containerWidthManager = useContainerWidthManager();
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Mark as initialized after mount with delay to show skeleton and ensure stable hydration
@@ -391,6 +435,8 @@ export const LayoutThemeProvider: React.FC<LayoutThemeProviderProps> = ({ childr
         setPaginationType: paginationTypeManager.setPaginationType,
         itemsPerPage: itemsPerPageManager.itemsPerPage,
         setItemsPerPage: itemsPerPageManager.setItemsPerPage,
+        containerWidth: containerWidthManager.containerWidth,
+        setContainerWidth: containerWidthManager.setContainerWidth,
         isInitialized,
       }),
       [
@@ -405,13 +451,20 @@ export const LayoutThemeProvider: React.FC<LayoutThemeProviderProps> = ({ childr
         paginationTypeManager.setPaginationType,
         itemsPerPageManager.itemsPerPage,
         itemsPerPageManager.setItemsPerPage,
+        containerWidthManager.containerWidth,
+        containerWidthManager.setContainerWidth,
         isInitialized,
       ]
     );
 
   return (
     <LayoutThemeContext.Provider value={contextValue}>
-      {children}
+      <ContainerWidthProvider value={{ 
+        width: containerWidthManager.containerWidth, 
+        isLoaded: containerWidthManager.isContainerWidthLoaded 
+      }}>
+        {children}
+      </ContainerWidthProvider>
     </LayoutThemeContext.Provider>
   );
 };
@@ -455,6 +508,7 @@ export const resetToDefaults = (): void => {
     safeLocalStorage.setItem(STORAGE_KEYS.LAYOUT_HOME, DEFAULT_LAYOUT_HOME);
     safeLocalStorage.setItem(STORAGE_KEYS.PAGINATION_TYPE, DEFAULT_PAGINATION_TYPE);
     safeLocalStorage.setItem(STORAGE_KEYS.ITEMS_PER_PAGE, DEFAULT_ITEMS_PER_PAGE.toString());
+    safeLocalStorage.setItem(STORAGE_KEYS.CONTAINER_WIDTH, DEFAULT_CONTAINER_WIDTH);
   } catch (error) {
     console.warn("Failed to reset to defaults:", error);
   }
