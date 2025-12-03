@@ -134,7 +134,7 @@ export function Tags({
           basePath={basePath}
           resetPath={resetPath}
           showAllTags={showAllTags}
-          visibleTags={visibleTags}
+          visibleTags={showAllTags ? visibleTags : tags} // Pass all tags in single row mode for scroll behavior
           isAnyTagActive={isAnyTagActive}
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
