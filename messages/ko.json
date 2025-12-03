@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "성명",
+    "EMAIL_ADDRESS": "이메일 주소",
+    "PASSWORD": "비밀번호",
+    "SIGN_IN": "로그인",
+    "LOGIN": "로그인",
+    "SIGN_UP": "회원가입",
+    "CREATE_ACCOUNT": "회원가입",
+    "FORGOT_PASSWORD": "비밀번호를 잊으셨나요?",
+    "REMEMBER_ME": "로그인 유지"
+  },
+  "common": {
+    "DISCOVER": "탐색",
+    "HOME": "홈",
+    "ABOUT": "소개",
+    "LAYOUT": "레이아웃",
+    "CONTAINER_WIDTH": "콘텐츠 너비",
+    "FIXED_WIDTH": "고정",
+    "FULL_WIDTH": "전체 너비",
+    "SAVE": "저장",
+    "SHARE": "공유",
+    "FEATURED": "추천",
+    "SHOW_ALL": "모두 보기",
+    "MORE": "더보기",
+    "CATEGORY": "카테고리",
+    "ITEMS": "항목",
+    "SUBMIT": "제출",
+    "TAG": "태그",
+    "PRICING": "요금",
+    "BLOG": "블로그",
+    "HELP": "도움말",
+    "LOADING": "로딩 중...",
+    "CANCEL": "취소",
+    "DELETE": "삭제",
+    "SEARCH_ITEMS": "검색..."
+  },
+  "listing": {
+    "ALL": "전체",
+    "ALL_CATEGORIES": "모든 카테고리",
+    "ALL_TAGS": "모든 태그",
+    "CATEGORIES": "카테고리",
+    "TAGS": "태그",
+    "SEARCH": "검색",
+    "NO_ITEMS_FOUND": "항목을 찾을 수 없습니다",
+    "NEWEST": "최신순",
+    "OLDEST": "오래된순"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "모든 권리 보유",
+    "PRODUCT": "제품",
+    "RESOURCES": "리소스",
+    "COMPANY": "회사",
+    "ABOUT_US": "회사 소개",
+    "PRIVACY_POLICY": "개인정보 처리방침",
+    "TERMS_OF_SERVICE": "이용약관",
+    "CLIENTS": "고객",
+    "REGISTER": "회원가입",
+    "ADMIN": "관리자"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "완벽한 플랜 선택",
+    "MOST_POPULAR": "가장 인기",
+    "GET_STARTED_FREE": "무료로 시작"
+  },
+  "billing": {
+    "MONTHLY": "월간",
+    "YEARLY": "연간",
+    "SAVE_UP_TO": "최대 25% 절약"
+  },
+  "settings": {
+    "SETTINGS": "설정",
+    "PROFILE": "프로필",
+    "SECURITY": "보안",
+    "LOGOUT": "로그아웃"
+  }
+}

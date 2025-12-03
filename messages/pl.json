@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Imię i nazwisko",
+    "EMAIL_ADDRESS": "Adres e-mail",
+    "PASSWORD": "Hasło",
+    "SIGN_IN": "Zaloguj się",
+    "LOGIN": "Logowanie",
+    "SIGN_UP": "Zarejestruj się",
+    "CREATE_ACCOUNT": "Zarejestruj się",
+    "FORGOT_PASSWORD": "Zapomniałeś hasła?",
+    "REMEMBER_ME": "Zapamiętaj mnie"
+  },
+  "common": {
+    "DISCOVER": "Odkryj",
+    "HOME": "Strona główna",
+    "ABOUT": "O nas",
+    "LAYOUT": "Układ",
+    "CONTAINER_WIDTH": "Szerokość treści",
+    "FIXED_WIDTH": "Stała",
+    "FULL_WIDTH": "Pełna szerokość",
+    "SAVE": "Zapisz",
+    "SHARE": "Udostępnij",
+    "FEATURED": "Wyróżnione",
+    "SHOW_ALL": "Pokaż wszystko",
+    "MORE": "Więcej",
+    "CATEGORY": "Kategorie",
+    "ITEMS": "Elementy",
+    "SUBMIT": "Wyślij",
+    "TAG": "Tagi",
+    "PRICING": "Cennik",
+    "BLOG": "Blog",
+    "HELP": "Pomoc",
+    "LOADING": "Ładowanie...",
+    "CANCEL": "Anuluj",
+    "DELETE": "Usuń",
+    "SEARCH_ITEMS": "Szukaj..."
+  },
+  "listing": {
+    "ALL": "Wszystkie",
+    "ALL_CATEGORIES": "Wszystkie kategorie",
+    "ALL_TAGS": "Wszystkie tagi",
+    "CATEGORIES": "Kategorie",
+    "TAGS": "Tagi",
+    "SEARCH": "Szukaj",
+    "NO_ITEMS_FOUND": "Nie znaleziono elementów",
+    "NEWEST": "Najnowsze",
+    "OLDEST": "Najstarsze"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Wszelkie prawa zastrzeżone",
+    "PRODUCT": "Produkt",
+    "RESOURCES": "Zasoby",
+    "COMPANY": "Firma",
+    "ABOUT_US": "O nas",
+    "PRIVACY_POLICY": "Polityka prywatności",
+    "TERMS_OF_SERVICE": "Regulamin",
+    "CLIENTS": "Klienci",
+    "REGISTER": "Zarejestruj się",
+    "ADMIN": "Admin"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Wybierz idealny plan",
+    "MOST_POPULAR": "Najpopularniejszy",
+    "GET_STARTED_FREE": "Zacznij za darmo"
+  },
+  "billing": {
+    "MONTHLY": "Miesięcznie",
+    "YEARLY": "Rocznie",
+    "SAVE_UP_TO": "Oszczędź do 25%"
+  },
+  "settings": {
+    "SETTINGS": "Ustawienia",
+    "PROFILE": "Profil",
+    "SECURITY": "Bezpieczeństwo",
+    "LOGOUT": "Wyloguj"
+  }
+}

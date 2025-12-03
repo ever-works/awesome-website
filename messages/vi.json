@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Họ và tên",
+    "EMAIL_ADDRESS": "Địa chỉ email",
+    "PASSWORD": "Mật khẩu",
+    "SIGN_IN": "Đăng nhập",
+    "LOGIN": "Đăng nhập",
+    "SIGN_UP": "Đăng ký",
+    "CREATE_ACCOUNT": "Đăng ký",
+    "FORGOT_PASSWORD": "Quên mật khẩu?",
+    "REMEMBER_ME": "Ghi nhớ đăng nhập"
+  },
+  "common": {
+    "DISCOVER": "Khám phá",
+    "HOME": "Trang chủ",
+    "ABOUT": "Giới thiệu",
+    "LAYOUT": "Bố cục",
+    "CONTAINER_WIDTH": "Độ rộng nội dung",
+    "FIXED_WIDTH": "Cố định",
+    "FULL_WIDTH": "Toàn chiều rộng",
+    "SAVE": "Lưu",
+    "SHARE": "Chia sẻ",
+    "FEATURED": "Nổi bật",
+    "SHOW_ALL": "Hiển thị tất cả",
+    "MORE": "Xem thêm",
+    "CATEGORY": "Danh mục",
+    "ITEMS": "Mục",
+    "SUBMIT": "Gửi",
+    "TAG": "Thẻ",
+    "PRICING": "Bảng giá",
+    "BLOG": "Blog",
+    "HELP": "Trợ giúp",
+    "LOADING": "Đang tải...",
+    "CANCEL": "Hủy",
+    "DELETE": "Xóa",
+    "SEARCH_ITEMS": "Tìm kiếm..."
+  },
+  "listing": {
+    "ALL": "Tất cả",
+    "ALL_CATEGORIES": "Tất cả danh mục",
+    "ALL_TAGS": "Tất cả thẻ",
+    "CATEGORIES": "Danh mục",
+    "TAGS": "Thẻ",
+    "SEARCH": "Tìm kiếm",
+    "NO_ITEMS_FOUND": "Không tìm thấy mục nào",
+    "NEWEST": "Mới nhất",
+    "OLDEST": "Cũ nhất"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Đã đăng ký bản quyền",
+    "PRODUCT": "Sản phẩm",
+    "RESOURCES": "Tài nguyên",
+    "COMPANY": "Công ty",
+    "ABOUT_US": "Về chúng tôi",
+    "PRIVACY_POLICY": "Chính sách bảo mật",
+    "TERMS_OF_SERVICE": "Điều khoản dịch vụ",
+    "CLIENTS": "Khách hàng",
+    "REGISTER": "Đăng ký",
+    "ADMIN": "Quản trị"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Chọn gói hoàn hảo",
+    "MOST_POPULAR": "Phổ biến nhất",
+    "GET_STARTED_FREE": "Bắt đầu miễn phí"
+  },
+  "billing": {
+    "MONTHLY": "Hàng tháng",
+    "YEARLY": "Hàng năm",
+    "SAVE_UP_TO": "Tiết kiệm đến 25%"
+  },
+  "settings": {
+    "SETTINGS": "Cài đặt",
+    "PROFILE": "Hồ sơ",
+    "SECURITY": "Bảo mật",
+    "LOGOUT": "Đăng xuất"
+  }
+}

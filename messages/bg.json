@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Пълно име",
+    "EMAIL_ADDRESS": "Имейл адрес",
+    "PASSWORD": "Парола",
+    "SIGN_IN": "Вход",
+    "LOGIN": "Влизане",
+    "SIGN_UP": "Регистрация",
+    "CREATE_ACCOUNT": "Регистрация",
+    "FORGOT_PASSWORD": "Забравена парола?",
+    "REMEMBER_ME": "Запомни ме"
+  },
+  "common": {
+    "DISCOVER": "Открий",
+    "HOME": "Начало",
+    "ABOUT": "За нас",
+    "LAYOUT": "Оформление",
+    "CONTAINER_WIDTH": "Ширина на съдържанието",
+    "FIXED_WIDTH": "Фиксирана",
+    "FULL_WIDTH": "Пълна ширина",
+    "SAVE": "Запази",
+    "SHARE": "Сподели",
+    "FEATURED": "Препоръчани",
+    "SHOW_ALL": "Покажи всички",
+    "MORE": "Още",
+    "CATEGORY": "Категории",
+    "ITEMS": "Елементи",
+    "SUBMIT": "Изпрати",
+    "TAG": "Тагове",
+    "PRICING": "Цени",
+    "BLOG": "Блог",
+    "HELP": "Помощ",
+    "LOADING": "Зареждане...",
+    "CANCEL": "Отказ",
+    "DELETE": "Изтрий",
+    "SEARCH_ITEMS": "Търсене..."
+  },
+  "listing": {
+    "ALL": "Всички",
+    "ALL_CATEGORIES": "Всички категории",
+    "ALL_TAGS": "Всички тагове",
+    "CATEGORIES": "Категории",
+    "TAGS": "Тагове",
+    "SEARCH": "Търсене",
+    "NO_ITEMS_FOUND": "Няма намерени елементи",
+    "NEWEST": "Най-нови",
+    "OLDEST": "Най-стари"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Всички права запазени",
+    "PRODUCT": "Продукт",
+    "RESOURCES": "Ресурси",
+    "COMPANY": "Компания",
+    "ABOUT_US": "За нас",
+    "PRIVACY_POLICY": "Политика за поверителност",
+    "TERMS_OF_SERVICE": "Условия за ползване",
+    "CLIENTS": "Клиенти",
+    "REGISTER": "Регистрация",
+    "ADMIN": "Админ"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Изберете перфектния план",
+    "MOST_POPULAR": "Най-популярен",
+    "GET_STARTED_FREE": "Започнете безплатно"
+  },
+  "billing": {
+    "MONTHLY": "Месечно",
+    "YEARLY": "Годишно",
+    "SAVE_UP_TO": "Спестете до 25%"
+  },
+  "settings": {
+    "SETTINGS": "Настройки",
+    "PROFILE": "Профил",
+    "SECURITY": "Сигурност",
+    "LOGOUT": "Изход"
+  }
+}

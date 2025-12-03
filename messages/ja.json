@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "氏名",
+    "EMAIL_ADDRESS": "メールアドレス",
+    "PASSWORD": "パスワード",
+    "SIGN_IN": "ログイン",
+    "LOGIN": "ログイン",
+    "SIGN_UP": "新規登録",
+    "CREATE_ACCOUNT": "新規登録",
+    "FORGOT_PASSWORD": "パスワードをお忘れですか？",
+    "REMEMBER_ME": "ログイン状態を保持"
+  },
+  "common": {
+    "DISCOVER": "発見",
+    "HOME": "ホーム",
+    "ABOUT": "概要",
+    "LAYOUT": "レイアウト",
+    "CONTAINER_WIDTH": "コンテンツ幅",
+    "FIXED_WIDTH": "固定",
+    "FULL_WIDTH": "全幅",
+    "SAVE": "保存",
+    "SHARE": "共有",
+    "FEATURED": "おすすめ",
+    "SHOW_ALL": "すべて表示",
+    "MORE": "もっと見る",
+    "CATEGORY": "カテゴリー",
+    "ITEMS": "アイテム",
+    "SUBMIT": "送信",
+    "TAG": "タグ",
+    "PRICING": "料金",
+    "BLOG": "ブログ",
+    "HELP": "ヘルプ",
+    "LOADING": "読み込み中...",
+    "CANCEL": "キャンセル",
+    "DELETE": "削除",
+    "SEARCH_ITEMS": "検索..."
+  },
+  "listing": {
+    "ALL": "すべて",
+    "ALL_CATEGORIES": "すべてのカテゴリー",
+    "ALL_TAGS": "すべてのタグ",
+    "CATEGORIES": "カテゴリー",
+    "TAGS": "タグ",
+    "SEARCH": "検索",
+    "NO_ITEMS_FOUND": "アイテムが見つかりません",
+    "NEWEST": "新しい順",
+    "OLDEST": "古い順"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "全著作権所有",
+    "PRODUCT": "製品",
+    "RESOURCES": "リソース",
+    "COMPANY": "会社",
+    "ABOUT_US": "会社概要",
+    "PRIVACY_POLICY": "プライバシーポリシー",
+    "TERMS_OF_SERVICE": "利用規約",
+    "CLIENTS": "クライアント",
+    "REGISTER": "新規登録",
+    "ADMIN": "管理者"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "最適なプランを選択",
+    "MOST_POPULAR": "人気No.1",
+    "GET_STARTED_FREE": "無料で始める"
+  },
+  "billing": {
+    "MONTHLY": "月額",
+    "YEARLY": "年額",
+    "SAVE_UP_TO": "最大25%お得"
+  },
+  "settings": {
+    "SETTINGS": "設定",
+    "PROFILE": "プロフィール",
+    "SECURITY": "セキュリティ",
+    "LOGOUT": "ログアウト"
+  }
+}

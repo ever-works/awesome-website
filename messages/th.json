@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "ชื่อ-นามสกุล",
+    "EMAIL_ADDRESS": "อีเมล",
+    "PASSWORD": "รหัสผ่าน",
+    "SIGN_IN": "เข้าสู่ระบบ",
+    "LOGIN": "เข้าสู่ระบบ",
+    "SIGN_UP": "ลงทะเบียน",
+    "CREATE_ACCOUNT": "ลงทะเบียน",
+    "FORGOT_PASSWORD": "ลืมรหัสผ่าน?",
+    "REMEMBER_ME": "จดจำฉัน"
+  },
+  "common": {
+    "DISCOVER": "สำรวจ",
+    "HOME": "หน้าแรก",
+    "ABOUT": "เกี่ยวกับเรา",
+    "LAYOUT": "เลย์เอาต์",
+    "CONTAINER_WIDTH": "ความกว้างเนื้อหา",
+    "FIXED_WIDTH": "คงที่",
+    "FULL_WIDTH": "เต็มความกว้าง",
+    "SAVE": "บันทึก",
+    "SHARE": "แชร์",
+    "FEATURED": "แนะนำ",
+    "SHOW_ALL": "แสดงทั้งหมด",
+    "MORE": "เพิ่มเติม",
+    "CATEGORY": "หมวดหมู่",
+    "ITEMS": "รายการ",
+    "SUBMIT": "ส่ง",
+    "TAG": "แท็ก",
+    "PRICING": "ราคา",
+    "BLOG": "บล็อก",
+    "HELP": "ช่วยเหลือ",
+    "LOADING": "กำลังโหลด...",
+    "CANCEL": "ยกเลิก",
+    "DELETE": "ลบ",
+    "SEARCH_ITEMS": "ค้นหา..."
+  },
+  "listing": {
+    "ALL": "ทั้งหมด",
+    "ALL_CATEGORIES": "ทุกหมวดหมู่",
+    "ALL_TAGS": "ทุกแท็ก",
+    "CATEGORIES": "หมวดหมู่",
+    "TAGS": "แท็ก",
+    "SEARCH": "ค้นหา",
+    "NO_ITEMS_FOUND": "ไม่พบรายการ",
+    "NEWEST": "ใหม่สุด",
+    "OLDEST": "เก่าสุด"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "สงวนลิขสิทธิ์",
+    "PRODUCT": "ผลิตภัณฑ์",
+    "RESOURCES": "ทรัพยากร",
+    "COMPANY": "บริษัท",
+    "ABOUT_US": "เกี่ยวกับเรา",
+    "PRIVACY_POLICY": "นโยบายความเป็นส่วนตัว",
+    "TERMS_OF_SERVICE": "ข้อกำหนดการใช้งาน",
+    "CLIENTS": "ลูกค้า",
+    "REGISTER": "ลงทะเบียน",
+    "ADMIN": "ผู้ดูแล"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "เลือกแผนที่สมบูรณ์แบบ",
+    "MOST_POPULAR": "ยอดนิยม",
+    "GET_STARTED_FREE": "เริ่มต้นฟรี"
+  },
+  "billing": {
+    "MONTHLY": "รายเดือน",
+    "YEARLY": "รายปี",
+    "SAVE_UP_TO": "ประหยัดสูงสุด 25%"
+  },
+  "settings": {
+    "SETTINGS": "การตั้งค่า",
+    "PROFILE": "โปรไฟล์",
+    "SECURITY": "ความปลอดภัย",
+    "LOGOUT": "ออกจากระบบ"
+  }
+}

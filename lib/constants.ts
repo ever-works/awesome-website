@@ -4,7 +4,7 @@ import { getNextPublicEnv } from '@/env-config';
 // LOCALIZATION
 // ============================================
 export const DEFAULT_LOCALE = 'en';
-export const LOCALES = ['en', 'fr', 'es', 'zh', 'de', 'ar'] as const;
+export const LOCALES = ['en', 'fr', 'es', 'zh', 'de', 'ar', 'he', 'ru', 'uk', 'pt', 'it', 'ja', 'ko', 'nl', 'pl', 'tr', 'vi', 'th', 'hi', 'id', 'bg'] as const;
 export type Locale = (typeof LOCALES)[number];
 
 // ============================================

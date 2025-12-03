@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Полное имя",
+    "EMAIL_ADDRESS": "Электронная почта",
+    "PASSWORD": "Пароль",
+    "SIGN_IN": "Войти",
+    "LOGIN": "Вход",
+    "SIGN_UP": "Регистрация",
+    "CREATE_ACCOUNT": "Регистрация",
+    "FORGOT_PASSWORD": "Забыли пароль?",
+    "REMEMBER_ME": "Запомнить меня"
+  },
+  "common": {
+    "DISCOVER": "Обзор",
+    "HOME": "Главная",
+    "ABOUT": "О нас",
+    "LAYOUT": "Макет",
+    "CONTAINER_WIDTH": "Ширина контента",
+    "FIXED_WIDTH": "Фиксированная",
+    "FULL_WIDTH": "Полная ширина",
+    "SAVE": "Сохранить",
+    "SHARE": "Поделиться",
+    "FEATURED": "Избранное",
+    "SHOW_ALL": "Показать все",
+    "MORE": "Ещё",
+    "CATEGORY": "Категории",
+    "ITEMS": "Элементы",
+    "SUBMIT": "Отправить",
+    "TAG": "Теги",
+    "PRICING": "Цены",
+    "BLOG": "Блог",
+    "HELP": "Помощь",
+    "LOADING": "Загрузка...",
+    "CANCEL": "Отмена",
+    "DELETE": "Удалить",
+    "SEARCH_ITEMS": "Поиск..."
+  },
+  "listing": {
+    "ALL": "Все",
+    "ALL_CATEGORIES": "Все категории",
+    "ALL_TAGS": "Все теги",
+    "CATEGORIES": "Категории",
+    "TAGS": "Теги",
+    "SEARCH": "Поиск",
+    "NO_ITEMS_FOUND": "Ничего не найдено",
+    "NEWEST": "Новые",
+    "OLDEST": "Старые"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Все права защищены",
+    "PRODUCT": "Продукт",
+    "RESOURCES": "Ресурсы",
+    "COMPANY": "Компания",
+    "ABOUT_US": "О нас",
+    "PRIVACY_POLICY": "Политика конфиденциальности",
+    "TERMS_OF_SERVICE": "Условия использования",
+    "CLIENTS": "Клиенты",
+    "REGISTER": "Регистрация",
+    "ADMIN": "Админ"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Выберите идеальный план",
+    "MOST_POPULAR": "Самый популярный",
+    "GET_STARTED_FREE": "Начать бесплатно"
+  },
+  "billing": {
+    "MONTHLY": "Ежемесячно",
+    "YEARLY": "Ежегодно",
+    "SAVE_UP_TO": "Экономия до 25%"
+  },
+  "settings": {
+    "SETTINGS": "Настройки",
+    "PROFILE": "Профиль",
+    "SECURITY": "Безопасность",
+    "LOGOUT": "Выйти"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Ad Soyad",
+    "EMAIL_ADDRESS": "E-posta adresi",
+    "PASSWORD": "Şifre",
+    "SIGN_IN": "Giriş yap",
+    "LOGIN": "Giriş",
+    "SIGN_UP": "Kayıt ol",
+    "CREATE_ACCOUNT": "Kayıt ol",
+    "FORGOT_PASSWORD": "Şifrenizi mi unuttunuz?",
+    "REMEMBER_ME": "Beni hatırla"
+  },
+  "common": {
+    "DISCOVER": "Keşfet",
+    "HOME": "Ana Sayfa",
+    "ABOUT": "Hakkımızda",
+    "LAYOUT": "Düzen",
+    "CONTAINER_WIDTH": "İçerik genişliği",
+    "FIXED_WIDTH": "Sabit",
+    "FULL_WIDTH": "Tam genişlik",
+    "SAVE": "Kaydet",
+    "SHARE": "Paylaş",
+    "FEATURED": "Öne çıkan",
+    "SHOW_ALL": "Tümünü göster",
+    "MORE": "Daha fazla",
+    "CATEGORY": "Kategoriler",
+    "ITEMS": "Öğeler",
+    "SUBMIT": "Gönder",
+    "TAG": "Etiketler",
+    "PRICING": "Fiyatlandırma",
+    "BLOG": "Blog",
+    "HELP": "Yardım",
+    "LOADING": "Yükleniyor...",
+    "CANCEL": "İptal",
+    "DELETE": "Sil",
+    "SEARCH_ITEMS": "Ara..."
+  },
+  "listing": {
+    "ALL": "Tümü",
+    "ALL_CATEGORIES": "Tüm kategoriler",
+    "ALL_TAGS": "Tüm etiketler",
+    "CATEGORIES": "Kategoriler",
+    "TAGS": "Etiketler",
+    "SEARCH": "Ara",
+    "NO_ITEMS_FOUND": "Öğe bulunamadı",
+    "NEWEST": "En yeni",
+    "OLDEST": "En eski"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Tüm hakları saklıdır",
+    "PRODUCT": "Ürün",
+    "RESOURCES": "Kaynaklar",
+    "COMPANY": "Şirket",
+    "ABOUT_US": "Hakkımızda",
+    "PRIVACY_POLICY": "Gizlilik politikası",
+    "TERMS_OF_SERVICE": "Kullanım koşulları",
+    "CLIENTS": "Müşteriler",
+    "REGISTER": "Kayıt ol",
+    "ADMIN": "Yönetici"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Mükemmel planı seçin",
+    "MOST_POPULAR": "En popüler",
+    "GET_STARTED_FREE": "Ücretsiz başla"
+  },
+  "billing": {
+    "MONTHLY": "Aylık",
+    "YEARLY": "Yıllık",
+    "SAVE_UP_TO": "%25'e kadar tasarruf"
+  },
+  "settings": {
+    "SETTINGS": "Ayarlar",
+    "PROFILE": "Profil",
+    "SECURITY": "Güvenlik",
+    "LOGOUT": "Çıkış yap"
+  }
+}

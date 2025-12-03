@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Nama lengkap",
+    "EMAIL_ADDRESS": "Alamat email",
+    "PASSWORD": "Kata sandi",
+    "SIGN_IN": "Masuk",
+    "LOGIN": "Login",
+    "SIGN_UP": "Daftar",
+    "CREATE_ACCOUNT": "Daftar",
+    "FORGOT_PASSWORD": "Lupa kata sandi?",
+    "REMEMBER_ME": "Ingat saya"
+  },
+  "common": {
+    "DISCOVER": "Temukan",
+    "HOME": "Beranda",
+    "ABOUT": "Tentang",
+    "LAYOUT": "Tata letak",
+    "CONTAINER_WIDTH": "Lebar konten",
+    "FIXED_WIDTH": "Tetap",
+    "FULL_WIDTH": "Lebar penuh",
+    "SAVE": "Simpan",
+    "SHARE": "Bagikan",
+    "FEATURED": "Unggulan",
+    "SHOW_ALL": "Tampilkan semua",
+    "MORE": "Selengkapnya",
+    "CATEGORY": "Kategori",
+    "ITEMS": "Item",
+    "SUBMIT": "Kirim",
+    "TAG": "Tag",
+    "PRICING": "Harga",
+    "BLOG": "Blog",
+    "HELP": "Bantuan",
+    "LOADING": "Memuat...",
+    "CANCEL": "Batal",
+    "DELETE": "Hapus",
+    "SEARCH_ITEMS": "Cari..."
+  },
+  "listing": {
+    "ALL": "Semua",
+    "ALL_CATEGORIES": "Semua kategori",
+    "ALL_TAGS": "Semua tag",
+    "CATEGORIES": "Kategori",
+    "TAGS": "Tag",
+    "SEARCH": "Cari",
+    "NO_ITEMS_FOUND": "Tidak ada item ditemukan",
+    "NEWEST": "Terbaru",
+    "OLDEST": "Terlama"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Hak cipta dilindungi",
+    "PRODUCT": "Produk",
+    "RESOURCES": "Sumber daya",
+    "COMPANY": "Perusahaan",
+    "ABOUT_US": "Tentang kami",
+    "PRIVACY_POLICY": "Kebijakan privasi",
+    "TERMS_OF_SERVICE": "Ketentuan layanan",
+    "CLIENTS": "Klien",
+    "REGISTER": "Daftar",
+    "ADMIN": "Admin"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Pilih paket sempurna",
+    "MOST_POPULAR": "Paling populer",
+    "GET_STARTED_FREE": "Mulai gratis"
+  },
+  "billing": {
+    "MONTHLY": "Bulanan",
+    "YEARLY": "Tahunan",
+    "SAVE_UP_TO": "Hemat hingga 25%"
+  },
+  "settings": {
+    "SETTINGS": "Pengaturan",
+    "PROFILE": "Profil",
+    "SECURITY": "Keamanan",
+    "LOGOUT": "Keluar"
+  }
+}

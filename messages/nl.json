@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Volledige naam",
+    "EMAIL_ADDRESS": "E-mailadres",
+    "PASSWORD": "Wachtwoord",
+    "SIGN_IN": "Inloggen",
+    "LOGIN": "Inloggen",
+    "SIGN_UP": "Registreren",
+    "CREATE_ACCOUNT": "Registreren",
+    "FORGOT_PASSWORD": "Wachtwoord vergeten?",
+    "REMEMBER_ME": "Onthoud mij"
+  },
+  "common": {
+    "DISCOVER": "Ontdek",
+    "HOME": "Home",
+    "ABOUT": "Over ons",
+    "LAYOUT": "Lay-out",
+    "CONTAINER_WIDTH": "Inhoudsbreedte",
+    "FIXED_WIDTH": "Vast",
+    "FULL_WIDTH": "Volledige breedte",
+    "SAVE": "Opslaan",
+    "SHARE": "Delen",
+    "FEATURED": "Uitgelicht",
+    "SHOW_ALL": "Alles tonen",
+    "MORE": "Meer",
+    "CATEGORY": "Categorieën",
+    "ITEMS": "Items",
+    "SUBMIT": "Verzenden",
+    "TAG": "Tags",
+    "PRICING": "Prijzen",
+    "BLOG": "Blog",
+    "HELP": "Help",
+    "LOADING": "Laden...",
+    "CANCEL": "Annuleren",
+    "DELETE": "Verwijderen",
+    "SEARCH_ITEMS": "Zoeken..."
+  },
+  "listing": {
+    "ALL": "Alles",
+    "ALL_CATEGORIES": "Alle categorieën",
+    "ALL_TAGS": "Alle tags",
+    "CATEGORIES": "Categorieën",
+    "TAGS": "Tags",
+    "SEARCH": "Zoeken",
+    "NO_ITEMS_FOUND": "Geen items gevonden",
+    "NEWEST": "Nieuwste",
+    "OLDEST": "Oudste"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Alle rechten voorbehouden",
+    "PRODUCT": "Product",
+    "RESOURCES": "Bronnen",
+    "COMPANY": "Bedrijf",
+    "ABOUT_US": "Over ons",
+    "PRIVACY_POLICY": "Privacybeleid",
+    "TERMS_OF_SERVICE": "Servicevoorwaarden",
+    "CLIENTS": "Klanten",
+    "REGISTER": "Registreren",
+    "ADMIN": "Admin"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Kies het perfecte plan",
+    "MOST_POPULAR": "Meest populair",
+    "GET_STARTED_FREE": "Begin gratis"
+  },
+  "billing": {
+    "MONTHLY": "Maandelijks",
+    "YEARLY": "Jaarlijks",
+    "SAVE_UP_TO": "Bespaar tot 25%"
+  },
+  "settings": {
+    "SETTINGS": "Instellingen",
+    "PROFILE": "Profiel",
+    "SECURITY": "Beveiliging",
+    "LOGOUT": "Uitloggen"
+  }
+}

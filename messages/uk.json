@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Повне ім'я",
+    "EMAIL_ADDRESS": "Електронна пошта",
+    "PASSWORD": "Пароль",
+    "SIGN_IN": "Увійти",
+    "LOGIN": "Вхід",
+    "SIGN_UP": "Реєстрація",
+    "CREATE_ACCOUNT": "Реєстрація",
+    "FORGOT_PASSWORD": "Забули пароль?",
+    "REMEMBER_ME": "Запам'ятати мене"
+  },
+  "common": {
+    "DISCOVER": "Огляд",
+    "HOME": "Головна",
+    "ABOUT": "Про нас",
+    "LAYOUT": "Макет",
+    "CONTAINER_WIDTH": "Ширина вмісту",
+    "FIXED_WIDTH": "Фіксована",
+    "FULL_WIDTH": "Повна ширина",
+    "SAVE": "Зберегти",
+    "SHARE": "Поділитися",
+    "FEATURED": "Обране",
+    "SHOW_ALL": "Показати все",
+    "MORE": "Більше",
+    "CATEGORY": "Категорії",
+    "ITEMS": "Елементи",
+    "SUBMIT": "Надіслати",
+    "TAG": "Теги",
+    "PRICING": "Ціни",
+    "BLOG": "Блог",
+    "HELP": "Допомога",
+    "LOADING": "Завантаження...",
+    "CANCEL": "Скасувати",
+    "DELETE": "Видалити",
+    "SEARCH_ITEMS": "Пошук..."
+  },
+  "listing": {
+    "ALL": "Усі",
+    "ALL_CATEGORIES": "Усі категорії",
+    "ALL_TAGS": "Усі теги",
+    "CATEGORIES": "Категорії",
+    "TAGS": "Теги",
+    "SEARCH": "Пошук",
+    "NO_ITEMS_FOUND": "Нічого не знайдено",
+    "NEWEST": "Найновіші",
+    "OLDEST": "Найстаріші"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Усі права захищені",
+    "PRODUCT": "Продукт",
+    "RESOURCES": "Ресурси",
+    "COMPANY": "Компанія",
+    "ABOUT_US": "Про нас",
+    "PRIVACY_POLICY": "Політика конфіденційності",
+    "TERMS_OF_SERVICE": "Умови використання",
+    "CLIENTS": "Клієнти",
+    "REGISTER": "Реєстрація",
+    "ADMIN": "Адмін"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Оберіть ідеальний план",
+    "MOST_POPULAR": "Найпопулярніший",
+    "GET_STARTED_FREE": "Почати безкоштовно"
+  },
+  "billing": {
+    "MONTHLY": "Щомісяця",
+    "YEARLY": "Щороку",
+    "SAVE_UP_TO": "Економія до 25%"
+  },
+  "settings": {
+    "SETTINGS": "Налаштування",
+    "PROFILE": "Профіль",
+    "SECURITY": "Безпека",
+    "LOGOUT": "Вийти"
+  }
+}

@@ -13,7 +13,22 @@ const languageMap = {
   es: { flagSrc: "/flags/es.svg", name: "ES", fullName: "Español", isRTL: false },
   zh: { flagSrc: "/flags/zh.svg", name: "ZH", fullName: "简体中文", isRTL: false },
   de: { flagSrc: "/flags/de.svg", name: "DE", fullName: "Deutsch", isRTL: false },
-  ar: { flagSrc: "/flags/ar.svg", name: "AR", fullName: "العربية", isRTL: false }
+  ar: { flagSrc: "/flags/ar.svg", name: "AR", fullName: "العربية", isRTL: true },
+  he: { flagSrc: "/flags/he.svg", name: "HE", fullName: "עברית", isRTL: true },
+  ru: { flagSrc: "/flags/ru.svg", name: "RU", fullName: "Русский", isRTL: false },
+  uk: { flagSrc: "/flags/uk.svg", name: "UK", fullName: "Українська", isRTL: false },
+  pt: { flagSrc: "/flags/pt.svg", name: "PT", fullName: "Português", isRTL: false },
+  it: { flagSrc: "/flags/it.svg", name: "IT", fullName: "Italiano", isRTL: false },
+  ja: { flagSrc: "/flags/ja.svg", name: "JA", fullName: "日本語", isRTL: false },
+  ko: { flagSrc: "/flags/ko.svg", name: "KO", fullName: "한국어", isRTL: false },
+  nl: { flagSrc: "/flags/nl.svg", name: "NL", fullName: "Nederlands", isRTL: false },
+  pl: { flagSrc: "/flags/pl.svg", name: "PL", fullName: "Polski", isRTL: false },
+  tr: { flagSrc: "/flags/tr.svg", name: "TR", fullName: "Türkçe", isRTL: false },
+  vi: { flagSrc: "/flags/vi.svg", name: "VI", fullName: "Tiếng Việt", isRTL: false },
+  th: { flagSrc: "/flags/th.svg", name: "TH", fullName: "ไทย", isRTL: false },
+  hi: { flagSrc: "/flags/hi.svg", name: "HI", fullName: "हिन्दी", isRTL: false },
+  id: { flagSrc: "/flags/id.svg", name: "ID", fullName: "Indonesia", isRTL: false },
+  bg: { flagSrc: "/flags/bg.svg", name: "BG", fullName: "Български", isRTL: false }
 } as const;
 
 type LocaleKey = keyof typeof languageMap;
@@ -110,7 +125,7 @@ export function LanguageSwitcher({ compact = false }: LanguageSwitcherProps) {
       {isOpen && (
         <div
           id={panelId}
-          className="absolute right-0 mt-2 p-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-xl shadow-xl z-50 min-w-[140px]"
+          className="absolute right-0 mt-2 p-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-xl shadow-xl z-50 min-w-[140px] max-h-[70vh] overflow-y-auto"
         >
           <div className="flex flex-col gap-1">
             {LOCALES.map((locale) => {
@@ -130,7 +145,6 @@ export function LanguageSwitcher({ compact = false }: LanguageSwitcherProps) {
                   onClick={() => changeLanguage(locale)}
                   disabled={isPending || isActive}
                   aria-label={`Switch to ${language.fullName}`}
-                  dir={language.isRTL ? "rtl" : "ltr"}
                 >
                   <div className="relative w-5 h-4 overflow-hidden shadow-xs rounded-xs">
                     <Image

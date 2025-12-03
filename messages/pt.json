@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "Nome completo",
+    "EMAIL_ADDRESS": "Endereço de e-mail",
+    "PASSWORD": "Senha",
+    "SIGN_IN": "Entrar",
+    "LOGIN": "Login",
+    "SIGN_UP": "Cadastrar",
+    "CREATE_ACCOUNT": "Cadastrar",
+    "FORGOT_PASSWORD": "Esqueceu a senha?",
+    "REMEMBER_ME": "Lembrar de mim"
+  },
+  "common": {
+    "DISCOVER": "Descobrir",
+    "HOME": "Início",
+    "ABOUT": "Sobre",
+    "LAYOUT": "Layout",
+    "CONTAINER_WIDTH": "Largura do conteúdo",
+    "FIXED_WIDTH": "Fixa",
+    "FULL_WIDTH": "Largura total",
+    "SAVE": "Salvar",
+    "SHARE": "Compartilhar",
+    "FEATURED": "Destaque",
+    "SHOW_ALL": "Mostrar tudo",
+    "MORE": "Mais",
+    "CATEGORY": "Categorias",
+    "ITEMS": "Itens",
+    "SUBMIT": "Enviar",
+    "TAG": "Tags",
+    "PRICING": "Preços",
+    "BLOG": "Blog",
+    "HELP": "Ajuda",
+    "LOADING": "Carregando...",
+    "CANCEL": "Cancelar",
+    "DELETE": "Excluir",
+    "SEARCH_ITEMS": "Pesquisar..."
+  },
+  "listing": {
+    "ALL": "Todos",
+    "ALL_CATEGORIES": "Todas as categorias",
+    "ALL_TAGS": "Todas as tags",
+    "CATEGORIES": "Categorias",
+    "TAGS": "Tags",
+    "SEARCH": "Pesquisar",
+    "NO_ITEMS_FOUND": "Nenhum item encontrado",
+    "NEWEST": "Mais recentes",
+    "OLDEST": "Mais antigos"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "Todos os direitos reservados",
+    "PRODUCT": "Produto",
+    "RESOURCES": "Recursos",
+    "COMPANY": "Empresa",
+    "ABOUT_US": "Sobre nós",
+    "PRIVACY_POLICY": "Política de privacidade",
+    "TERMS_OF_SERVICE": "Termos de serviço",
+    "CLIENTS": "Clientes",
+    "REGISTER": "Cadastrar",
+    "ADMIN": "Admin"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "Escolha o plano perfeito",
+    "MOST_POPULAR": "Mais popular",
+    "GET_STARTED_FREE": "Comece grátis"
+  },
+  "billing": {
+    "MONTHLY": "Mensal",
+    "YEARLY": "Anual",
+    "SAVE_UP_TO": "Economize até 25%"
+  },
+  "settings": {
+    "SETTINGS": "Configurações",
+    "PROFILE": "Perfil",
+    "SECURITY": "Segurança",
+    "LOGOUT": "Sair"
+  }
+}

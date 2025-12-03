@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "FULL_NAME": "पूरा नाम",
+    "EMAIL_ADDRESS": "ईमेल पता",
+    "PASSWORD": "पासवर्ड",
+    "SIGN_IN": "साइन इन करें",
+    "LOGIN": "लॉगिन",
+    "SIGN_UP": "साइन अप करें",
+    "CREATE_ACCOUNT": "साइन अप करें",
+    "FORGOT_PASSWORD": "पासवर्ड भूल गए?",
+    "REMEMBER_ME": "मुझे याद रखें"
+  },
+  "common": {
+    "DISCOVER": "खोजें",
+    "HOME": "होम",
+    "ABOUT": "हमारे बारे में",
+    "LAYOUT": "लेआउट",
+    "CONTAINER_WIDTH": "सामग्री चौड़ाई",
+    "FIXED_WIDTH": "निश्चित",
+    "FULL_WIDTH": "पूर्ण चौड़ाई",
+    "SAVE": "सहेजें",
+    "SHARE": "साझा करें",
+    "FEATURED": "विशेष",
+    "SHOW_ALL": "सभी दिखाएं",
+    "MORE": "और देखें",
+    "CATEGORY": "श्रेणियाँ",
+    "ITEMS": "आइटम",
+    "SUBMIT": "जमा करें",
+    "TAG": "टैग",
+    "PRICING": "मूल्य निर्धारण",
+    "BLOG": "ब्लॉग",
+    "HELP": "सहायता",
+    "LOADING": "लोड हो रहा है...",
+    "CANCEL": "रद्द करें",
+    "DELETE": "हटाएं",
+    "SEARCH_ITEMS": "खोजें..."
+  },
+  "listing": {
+    "ALL": "सभी",
+    "ALL_CATEGORIES": "सभी श्रेणियाँ",
+    "ALL_TAGS": "सभी टैग",
+    "CATEGORIES": "श्रेणियाँ",
+    "TAGS": "टैग",
+    "SEARCH": "खोजें",
+    "NO_ITEMS_FOUND": "कोई आइटम नहीं मिला",
+    "NEWEST": "नवीनतम",
+    "OLDEST": "सबसे पुराना"
+  },
+  "footer": {
+    "ALL_RIGHTS_RESERVED": "सर्वाधिकार सुरक्षित",
+    "PRODUCT": "उत्पाद",
+    "RESOURCES": "संसाधन",
+    "COMPANY": "कंपनी",
+    "ABOUT_US": "हमारे बारे में",
+    "PRIVACY_POLICY": "गोपनीयता नीति",
+    "TERMS_OF_SERVICE": "सेवा की शर्तें",
+    "CLIENTS": "ग्राहक",
+    "REGISTER": "पंजीकरण",
+    "ADMIN": "व्यवस्थापक"
+  },
+  "pricing": {
+    "CHOOSE_YOUR_PERFECT_PLAN": "सही योजना चुनें",
+    "MOST_POPULAR": "सबसे लोकप्रिय",
+    "GET_STARTED_FREE": "मुफ्त में शुरू करें"
+  },
+  "billing": {
+    "MONTHLY": "मासिक",
+    "YEARLY": "वार्षिक",
+    "SAVE_UP_TO": "25% तक बचाएं"
+  },
+  "settings": {
+    "SETTINGS": "सेटिंग्स",
+    "PROFILE": "प्रोफ़ाइल",
+    "SECURITY": "सुरक्षा",
+    "LOGOUT": "लॉगआउट"
+  }
+}
