@@ -133,6 +133,8 @@
     "MANAGE_TAGS_DESC": "Manage tags",
     "MANAGE_ITEMS_DESC": "Manage items",
     "MANAGE_COMMENTS_DESC": "Manage comments",
+    "REPORTS": "Сигнали",
+    "MANAGE_REPORTS_DESC": "Преглед и обработка на докладвано съдържание",
     "COMPLETED": "Completed",
     "AVAILABLE": "Available",
     "QUESTIONS": "Questions",
@@ -466,6 +468,14 @@
     "DATABASE_MODE_ENABLED": "Database features enabled",
     "DATABASE_MODE_DISABLED": "Database features disabled",
     "SETTINGS_SAVED_AUTOMATICALLY": "Settings saved automatically",
+    "CHECKOUT_PROVIDER": "Доставчик на плащания",
+    "CHECKOUT_PROVIDER_DESC": "Изберете предпочитаното изживяване за плащане на абонаменти",
+    "CHECKOUT_PROVIDER_CHANGED": "Доставчикът на плащания е променен на {provider}",
+    "CHECKOUT_PROVIDER_NOT_CONFIGURED": "{provider} не е конфигуриран",
+    "CHECKOUT_PROVIDER_NOT_CONFIGURED_DESC": "Този доставчик не е настроен. Свържете се с поддръжката или изберете друга опция.",
+    "NO_CHECKOUT_PROVIDERS_CONFIGURED": "Няма конфигурирани доставчици на плащания. Функциите за плащане няма да са налични.",
+    "PROVIDER_NOT_CONFIGURED": "Не е конфигуриран",
+    "NOT_CONFIGURED": "не е конфигуриран",
     "SETTINGS_CARDS": {
       "BASIC_INFO": {
         "TITLE": "Basic Information",
@@ -2171,6 +2181,52 @@
       "SHOWING_RANGE": "Showing {start} to {end} of {total} comments",
       "PAGE_OF": "Page {current} of {total}",
       "PER_PAGE": "per page"
+    },
+    "ADMIN_REPORTS_PAGE": {
+      "TITLE": "Управление на докладите",
+      "SUBTITLE": "Преглед и разрешаване на докладвано съдържание",
+      "PENDING": "изчакващи",
+      "TOTAL_REPORTS": "Общо доклади",
+      "RESOLVED": "Разрешени",
+      "BY_ITEMS": "Доклади за елементи",
+      "SEARCH_PLACEHOLDER": "Търсене в докладите...",
+      "FILTERS": "Филтри",
+      "STATUS": "Статус",
+      "CONTENT_TYPE": "Тип",
+      "REASON": "Причина",
+      "CLEAR_ALL": "Изчисти всичко",
+      "SHOWING_REPORTS": "Показване на {count} от {total} доклада",
+      "FILTERED": "• филтрирано",
+      "REPORTS_TITLE": "Доклади",
+      "REPORTS_TOTAL_COUNT": "общо",
+      "NO_REPORTS_FOUND": "Няма намерени доклади",
+      "NO_REPORTS_DESCRIPTION": "Докладите ще се появят тук, когато потребителите докладват съдържание",
+      "NO_REPORTS_SEARCH_DESCRIPTION": "Опитайте да промените филтрите",
+      "CONTENT_ID": "ID на съдържанието",
+      "REPORTED_BY": "Докладвано от",
+      "DATE": "Дата",
+      "UNKNOWN": "Неизвестно",
+      "REVIEW": "Преглед",
+      "LOADING_REPORTS": "Зареждане на доклади...",
+      "SHOWING_RANGE": "Показване на {start} до {end} от {total} доклада",
+      "PAGE_OF": "Страница {current} от {total}",
+      "PER_PAGE": "на страница",
+      "STATUS_LABELS": {
+        "pending": "Изчакващ",
+        "reviewed": "Прегледан",
+        "resolved": "Разрешен",
+        "dismissed": "Отхвърлен"
+      },
+      "CONTENT_TYPES": {
+        "item": "Елемент",
+        "comment": "Коментар"
+      },
+      "REASONS": {
+        "spam": "Спам",
+        "harassment": "Тормоз",
+        "inappropriate": "Неподходящо",
+        "other": "Друго"
+      }
     },
     "ADMIN_CLIENTS_PAGE": {
       "TITLE": "Client Management",

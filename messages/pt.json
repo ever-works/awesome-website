@@ -133,6 +133,8 @@
     "MANAGE_TAGS_DESC": "Manage tags",
     "MANAGE_ITEMS_DESC": "Manage items",
     "MANAGE_COMMENTS_DESC": "Manage comments",
+    "REPORTS": "Denúncias",
+    "MANAGE_REPORTS_DESC": "Revisar e resolver conteúdo denunciado",
     "COMPLETED": "Completed",
     "AVAILABLE": "Available",
     "QUESTIONS": "Questions",
@@ -466,6 +468,14 @@
     "DATABASE_MODE_ENABLED": "Database features enabled",
     "DATABASE_MODE_DISABLED": "Database features disabled",
     "SETTINGS_SAVED_AUTOMATICALLY": "Settings saved automatically",
+    "CHECKOUT_PROVIDER": "Provedor de pagamento",
+    "CHECKOUT_PROVIDER_DESC": "Escolha sua experiência de pagamento preferida para assinaturas",
+    "CHECKOUT_PROVIDER_CHANGED": "Provedor de pagamento alterado para {provider}",
+    "CHECKOUT_PROVIDER_NOT_CONFIGURED": "{provider} não está configurado",
+    "CHECKOUT_PROVIDER_NOT_CONFIGURED_DESC": "Este provedor não foi configurado. Entre em contato com o suporte ou escolha outra opção.",
+    "NO_CHECKOUT_PROVIDERS_CONFIGURED": "Nenhum provedor de pagamento configurado. Os recursos de pagamento não estarão disponíveis.",
+    "PROVIDER_NOT_CONFIGURED": "Não configurado",
+    "NOT_CONFIGURED": "não configurado",
     "SETTINGS_CARDS": {
       "BASIC_INFO": {
         "TITLE": "Basic Information",
@@ -2171,6 +2181,52 @@
       "SHOWING_RANGE": "Showing {start} to {end} of {total} comments",
       "PAGE_OF": "Page {current} of {total}",
       "PER_PAGE": "per page"
+    },
+    "ADMIN_REPORTS_PAGE": {
+      "TITLE": "Gerenciamento de Denúncias",
+      "SUBTITLE": "Revisar e resolver conteúdo denunciado",
+      "PENDING": "pendente",
+      "TOTAL_REPORTS": "Total de Denúncias",
+      "RESOLVED": "Resolvidas",
+      "BY_ITEMS": "Denúncias de Itens",
+      "SEARCH_PLACEHOLDER": "Pesquisar denúncias...",
+      "FILTERS": "Filtros",
+      "STATUS": "Status",
+      "CONTENT_TYPE": "Tipo",
+      "REASON": "Motivo",
+      "CLEAR_ALL": "Limpar tudo",
+      "SHOWING_REPORTS": "Mostrando {count} de {total} denúncias",
+      "FILTERED": "• filtrado",
+      "REPORTS_TITLE": "Denúncias",
+      "REPORTS_TOTAL_COUNT": "total",
+      "NO_REPORTS_FOUND": "Nenhuma denúncia encontrada",
+      "NO_REPORTS_DESCRIPTION": "Denúncias aparecerão aqui quando usuários reportarem conteúdo",
+      "NO_REPORTS_SEARCH_DESCRIPTION": "Tente ajustar seus filtros",
+      "CONTENT_ID": "ID do Conteúdo",
+      "REPORTED_BY": "Denunciado por",
+      "DATE": "Data",
+      "UNKNOWN": "Desconhecido",
+      "REVIEW": "Revisar",
+      "LOADING_REPORTS": "Carregando denúncias...",
+      "SHOWING_RANGE": "Mostrando {start} a {end} de {total} denúncias",
+      "PAGE_OF": "Página {current} de {total}",
+      "PER_PAGE": "por página",
+      "STATUS_LABELS": {
+        "pending": "Pendente",
+        "reviewed": "Revisado",
+        "resolved": "Resolvido",
+        "dismissed": "Descartado"
+      },
+      "CONTENT_TYPES": {
+        "item": "Item",
+        "comment": "Comentário"
+      },
+      "REASONS": {
+        "spam": "Spam",
+        "harassment": "Assédio",
+        "inappropriate": "Inapropriado",
+        "other": "Outro"
+      }
     },
     "ADMIN_CLIENTS_PAGE": {
       "TITLE": "Client Management",

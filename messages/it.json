@@ -133,6 +133,8 @@
     "MANAGE_TAGS_DESC": "Manage tags",
     "MANAGE_ITEMS_DESC": "Manage items",
     "MANAGE_COMMENTS_DESC": "Manage comments",
+    "REPORTS": "Segnalazioni",
+    "MANAGE_REPORTS_DESC": "Esamina e risolvi i contenuti segnalati",
     "COMPLETED": "Completed",
     "AVAILABLE": "Available",
     "QUESTIONS": "Questions",
@@ -466,6 +468,14 @@
     "DATABASE_MODE_ENABLED": "Database features enabled",
     "DATABASE_MODE_DISABLED": "Database features disabled",
     "SETTINGS_SAVED_AUTOMATICALLY": "Settings saved automatically",
+    "CHECKOUT_PROVIDER": "Fornitore di pagamento",
+    "CHECKOUT_PROVIDER_DESC": "Scegli la tua esperienza di pagamento preferita per gli abbonamenti",
+    "CHECKOUT_PROVIDER_CHANGED": "Fornitore di pagamento cambiato in {provider}",
+    "CHECKOUT_PROVIDER_NOT_CONFIGURED": "{provider} non è configurato",
+    "CHECKOUT_PROVIDER_NOT_CONFIGURED_DESC": "Questo fornitore non è stato configurato. Contatta l'assistenza o scegli un'altra opzione.",
+    "NO_CHECKOUT_PROVIDERS_CONFIGURED": "Nessun fornitore di pagamento configurato. Le funzionalità di pagamento non saranno disponibili.",
+    "PROVIDER_NOT_CONFIGURED": "Non configurato",
+    "NOT_CONFIGURED": "non configurato",
     "SETTINGS_CARDS": {
       "BASIC_INFO": {
         "TITLE": "Basic Information",
@@ -2171,6 +2181,52 @@
       "SHOWING_RANGE": "Showing {start} to {end} of {total} comments",
       "PAGE_OF": "Page {current} of {total}",
       "PER_PAGE": "per page"
+    },
+    "ADMIN_REPORTS_PAGE": {
+      "TITLE": "Gestione Segnalazioni",
+      "SUBTITLE": "Revisiona e risolvi i contenuti segnalati",
+      "PENDING": "in attesa",
+      "TOTAL_REPORTS": "Segnalazioni Totali",
+      "RESOLVED": "Risolte",
+      "BY_ITEMS": "Segnalazioni Elementi",
+      "SEARCH_PLACEHOLDER": "Cerca segnalazioni...",
+      "FILTERS": "Filtri",
+      "STATUS": "Stato",
+      "CONTENT_TYPE": "Tipo",
+      "REASON": "Motivo",
+      "CLEAR_ALL": "Cancella tutto",
+      "SHOWING_REPORTS": "Mostrando {count} di {total} segnalazioni",
+      "FILTERED": "• filtrato",
+      "REPORTS_TITLE": "Segnalazioni",
+      "REPORTS_TOTAL_COUNT": "totale",
+      "NO_REPORTS_FOUND": "Nessuna segnalazione trovata",
+      "NO_REPORTS_DESCRIPTION": "Le segnalazioni appariranno qui quando gli utenti segnaleranno contenuti",
+      "NO_REPORTS_SEARCH_DESCRIPTION": "Prova a modificare i filtri",
+      "CONTENT_ID": "ID Contenuto",
+      "REPORTED_BY": "Segnalato da",
+      "DATE": "Data",
+      "UNKNOWN": "Sconosciuto",
+      "REVIEW": "Revisiona",
+      "LOADING_REPORTS": "Caricamento segnalazioni...",
+      "SHOWING_RANGE": "Mostrando {start} a {end} di {total} segnalazioni",
+      "PAGE_OF": "Pagina {current} di {total}",
+      "PER_PAGE": "per pagina",
+      "STATUS_LABELS": {
+        "pending": "In Attesa",
+        "reviewed": "Revisionato",
+        "resolved": "Risolto",
+        "dismissed": "Respinto"
+      },
+      "CONTENT_TYPES": {
+        "item": "Elemento",
+        "comment": "Commento"
+      },
+      "REASONS": {
+        "spam": "Spam",
+        "harassment": "Molestie",
+        "inappropriate": "Inappropriato",
+        "other": "Altro"
+      }
     },
     "ADMIN_CLIENTS_PAGE": {
       "TITLE": "Client Management",
