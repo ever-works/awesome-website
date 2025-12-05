@@ -8,6 +8,12 @@ import { routing } from "./i18n/routing";
 
 import { NextRequest, NextResponse } from "next/server";
 
+type CookieToSet = {
+  name: string;
+  value: string;
+  options?: Record<string, unknown>;
+};
+
 import { getAuthConfig } from "@/lib/auth/config";
 import { updateSession as supabaseUpdate } from "@/lib/auth/supabase/middleware";
 import { getToken } from 'next-auth/jwt';
@@ -83,7 +89,7 @@ async function supabaseGuard(req: NextRequest, baseRes: NextResponse): Promise<N
     {
       cookies: {
         getAll() { return req.cookies.getAll(); },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: CookieToSet[]) {
           cookiesToSet.forEach((cookie) => baseRes.cookies.set(cookie));
         },
       },
@@ -129,7 +135,7 @@ export default async function proxy(req: NextRequest) {
         {
           cookies: {
             getAll() { return req.cookies.getAll(); },
-            setAll(cookiesToSet) {
+            setAll(cookiesToSet: CookieToSet[]) {
               cookiesToSet.forEach((cookie) => intlResponse.cookies.set(cookie));
             },
           },
