@@ -83,7 +83,8 @@ export async function getEmailConfig() {
     : process.env.EMAIL_SUPPORT;
 
   const companyName = config.company_name || process.env.COMPANY_NAME || "Ever Works";
-  const appUrl = config.app_url || process.env.NEXT_PUBLIC_APP_URL || 'https://demo.ever.works';
+
+  const appUrl =  config.app_url || (process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works"));  
 
   // Validate required values
   if (!supportEmail) {
@@ -99,7 +100,7 @@ export async function getEmailConfig() {
   return {
     supportEmail,
     companyName,
-    companyUrl: appUrl,
+    companyUrl: appUrl, // TODO: This is incorrect, we should use separate appUrl field, while companyUrl is totally different value!
   };
 }
 

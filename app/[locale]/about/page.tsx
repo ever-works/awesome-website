@@ -10,14 +10,19 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const tFooter = await getTranslations({ locale, namespace: 'footer' });
   const tPages = await getTranslations({ locale, namespace: 'pages' });
 
   return {
+    metadataBase: new URL(appUrl),
     title: tFooter('ABOUT_US'),
-    description: tPages('ABOUT_PAGE_META_DESCRIPTION'),
+    description: tPages('ABOUT_PAGE_META_DESCRIPTION')    
   };
 }
 

@@ -11,11 +11,15 @@ import { getSurveysEnabled } from '@/lib/utils/settings';
 
 const logger = Logger.create('SurveysPage');
 
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 export const metadata: Metadata = {
+    metadataBase: new URL(appUrl),
     title: 'Surveys | Ever Works',
     description: 'Browse and complete surveys'
 };
-
 
 export default async function SurveysPage() {
     // Redirect to 404 if surveys are disabled

@@ -11,6 +11,10 @@ import { siteConfig } from "@/lib/config";
 // Disable static generation to prevent MDX compilation errors during build
 export const dynamic = 'force-dynamic';
 
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 /**
  * Generate metadata for item detail pages
  * Includes: title, description, Open Graph, Twitter Cards, canonical URL
@@ -27,6 +31,7 @@ export async function generateMetadata({
 
 		if (!item) {
 			return {
+				metadataBase: new URL(appUrl),
 				title: `Item Not Found | ${siteConfig.name}`,
 				description: "The item you're looking for doesn't exist.",
 				robots: {
@@ -56,6 +61,7 @@ export async function generateMetadata({
 		const fallbackImageUrl = new URL(meta.icon_url ?? siteConfig.logo, siteConfig.url).toString();
 
 		return {
+			metadataBase: new URL(appUrl),
 			title: `${meta.name} | ${siteConfig.name}`,
 			description: metaDescription,
 			keywords,
@@ -91,6 +97,7 @@ export async function generateMetadata({
 	} catch (error) {
 		console.error(`Failed to generate metadata for item ${slug}:`, error);
 		return {
+			metadataBase: new URL(appUrl),
 			title: `Error | ${siteConfig.name}`,
 			description: 'An error occurred while loading this page.',
 			robots: {

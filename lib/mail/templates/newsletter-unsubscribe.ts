@@ -230,7 +230,7 @@ export const getUnsubscribeEmailTemplate = (email: string, appName: string = "Ev
             </div>
             
             <div class="cta-section">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://ever.works'}" class="cta-button">
+              <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works'}" class="cta-button">
                 Visit our website
               </a>
             </div>
@@ -238,7 +238,7 @@ export const getUnsubscribeEmailTemplate = (email: string, appName: string = "Ev
             <div class="resubscribe-section">
               <h3>💡 Changed your mind?</h3>
               <p>If you'd like to receive our news again, you can resubscribe at any time.</p>
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://ever.works'}" class="resubscribe-button">
+              <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works'}" class="resubscribe-button">
                 Resubscribe
               </a>
             </div>
@@ -263,7 +263,7 @@ Unsubscription date: ${new Date().toLocaleDateString('en-US')}
 
 You will no longer receive emails from us regarding news and offers.
 
-Visit our website: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ever.works'}
+Visit our website: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works'}
 
 Changed your mind?
 If you'd like to receive our news again, you can resubscribe at any time on our website.

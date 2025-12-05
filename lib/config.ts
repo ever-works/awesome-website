@@ -26,7 +26,7 @@ export const siteConfig = {
 	 * Should NOT include trailing slash
 	 * @example "https://mydirectory.com"
 	 */
-	url: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
+	url: process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works"),
 
 	/**
 	 * Site logo path (used as fallback for OG images)
@@ -96,6 +96,10 @@ export const siteConfig = {
  */
 export function validateSiteConfig() {
 	const warnings: string[] = [];
+
+	if (!process.env.NEXT_PUBLIC_APP_URL) {
+		warnings.push('NEXT_PUBLIC_APP_URL not set, using default. Set this for production!');
+	}
 
 	if (!process.env.NEXT_PUBLIC_SITE_URL) {
 		warnings.push('NEXT_PUBLIC_SITE_URL not set, using default. Set this for production!');

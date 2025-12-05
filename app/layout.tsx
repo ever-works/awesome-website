@@ -5,6 +5,8 @@ import { LayoutProvider, ThemeProvider } from '@/components/providers';
 import { siteConfig } from '@/lib/config';
 import { ensureBackgroundJobsInitialized } from '@/app/api/cron/jobs/background-jobs-init';
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin']
@@ -16,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL(appUrl),
 	title: `404 - Page Not Found | ${siteConfig.name}`,
 	description: "The page you're looking for doesn't exist.",
 	robots: 'noindex'

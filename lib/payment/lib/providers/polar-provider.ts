@@ -102,6 +102,8 @@ const polarTranslations = {
 	}
 };
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 export class PolarProvider implements PaymentProviderInterface {
 	private polar: Polar;
 	private webhookSecret: string;
@@ -124,7 +126,7 @@ export class PolarProvider implements PaymentProviderInterface {
 		});
 		this.webhookSecret = config.webhookSecret || '';
 		this.organizationId = config.options?.organizationId;
-		this.appUrl = config.options?.appUrl || process.env.NEXT_PUBLIC_APP_URL || '';
+		this.appUrl = config.options?.appUrl || appUrl;
 
 		if (!this.organizationId) {
 			throw new Error('Polar organization ID is required');

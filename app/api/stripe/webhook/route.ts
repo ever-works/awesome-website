@@ -17,6 +17,8 @@ import { WebhookSubscriptionService } from '@/lib/services/webhook-subscription.
 import { getOrCreateStripeProvider } from '@/lib/auth';
 const webhookSubscriptionService = new WebhookSubscriptionService();
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 // Utility function to create email data with secure configuration
 function createEmailData(baseData: any, emailConfig: Awaited<ReturnType<typeof getEmailConfig>>) {
 	return {
@@ -275,8 +277,8 @@ async function handlePaymentFailed(data: any) {
 			paymentMethod: paymentMethod,
 			transactionId: data.id,
 			errorMessage: data.last_payment_error?.message || 'Payment declined',
-			retryUrl: `${emailConfig.companyUrl}/payment/retry?payment_intent=${data.id}`,
-			updatePaymentUrl: `${emailConfig.companyUrl}/settings/payment-methods`
+			retryUrl: `${appUrl || ''}/payment/retry?payment_intent=${data.id}`,
+			updatePaymentUrl: `${appUrl || ''}/settings/payment-methods`
 		};
 
 		const emailData = createEmailData(baseEmailData, emailConfig);
@@ -307,7 +309,7 @@ async function handleSubscriptionCreated(data: any) {
 		const planName = getPlanName(priceId);
 		const amount = formatAmount(data.items?.data?.[0]?.price?.unit_amount || 0, data.currency);
 		const billingPeriod = getBillingPeriod(data.items?.data?.[0]?.price?.recurring?.interval);
-		const emailConfig = await getEmailConfig();
+		const emailConfig = await getEmailConfig();		
 
 		// Prepare email data
 		const emailData = {
@@ -319,7 +321,7 @@ async function handleSubscriptionCreated(data: any) {
 			billingPeriod: billingPeriod,
 			nextBillingDate: data.current_period_end ? formatBillingDate(data.current_period_end) : undefined,
 			subscriptionId: data.id,
-			manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/subscription`,
+			manageSubscriptionUrl: `${appUrl || ''}/settings/subscription`,
 			companyName: emailConfig?.companyName,
 			companyUrl: emailConfig?.companyUrl,
 			supportEmail: process.env.EMAIL_SUPPORT,
@@ -364,7 +366,7 @@ async function handleSubscriptionUpdated(data: any) {
 			billingPeriod: billingPeriod,
 			nextBillingDate: data.current_period_end ? formatBillingDate(data.current_period_end) : undefined,
 			subscriptionId: data.id,
-			manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/subscription`,
+			manageSubscriptionUrl: `${appUrl || ''}/settings/subscription`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
 			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works',
@@ -406,7 +408,7 @@ async function handleSubscriptionCancelled(data: any) {
 			subscriptionId: data.id,
 			cancellationDate: data.canceled_at ? formatBillingDate(data.canceled_at) : undefined,
 			cancellationReason: data.cancellation_details?.reason || 'Cancellation requested by user',
-			reactivateUrl: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/reactivate?subscription=${data.id}`,
+			reactivateUrl: `${appUrl || ''}/subscription/reactivate?subscription=${data.id}`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
 			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'
@@ -499,8 +501,8 @@ async function handleSubscriptionPaymentFailed(data: any) {
 			planName: planName,
 			billingPeriod: billingPeriod,
 			errorMessage: data.last_payment_error?.message || 'Payment declined',
-			retryUrl: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/retry?invoice=${data.id}`,
-			updatePaymentUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/payment-methods`,
+			retryUrl: `${appUrl || ''}/subscription/retry?invoice=${data.id}`,
+			updatePaymentUrl: `${appUrl || ''}/settings/payment-methods`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
 			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'
@@ -544,7 +546,7 @@ async function handleSubscriptionTrialEnding(data: any) {
 			billingPeriod: billingPeriod,
 			nextBillingDate: data.current_period_end ? formatBillingDate(data.current_period_end) : undefined,
 			subscriptionId: data.id,
-			manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/subscription`,
+			manageSubscriptionUrl: `${appUrl || ''}/settings/subscription`,
 			companyName: 'Ever Works',
 			companyUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works',
 			supportEmail: process.env.EMAIL_SUPPORT || 'support@ever.works'

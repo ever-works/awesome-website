@@ -403,7 +403,7 @@ export const getRegularNewsletterTemplate = (
             </div>
             
             <div class="unsubscribe-link">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://ever.works'}/newsletter/unsubscribe">Unsubscribe</a>
+              <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works'}/newsletter/unsubscribe">Unsubscribe</a>
             </div>
           </div>
         </div>
@@ -435,9 +435,9 @@ THIS WEEK'S STATISTICS:
 ` : ''}
 
 This email was sent to ${email}
-© 2024 ${appName}. All rights reserved.
+© 2024-Present ${appName}. All rights reserved.
 
-Unsubscribe: ${process.env.NEXT_PUBLIC_APP_URL || 'https://ever.works'}/newsletter/unsubscribe
+Unsubscribe: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works'}/newsletter/unsubscribe
     `
   };
 }; 

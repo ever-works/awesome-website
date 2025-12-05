@@ -20,12 +20,13 @@ export function cleanUrl(url: string): string {
   return cleaned;
 }
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 /**
  * Get the base URL for API calls with proper cleaning
  */
-export function getBaseUrl(): string {
-  const envUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  return cleanUrl(envUrl);
+export function getBaseUrl(): string {  
+  return cleanUrl(appUrl);
 }
 
 /**

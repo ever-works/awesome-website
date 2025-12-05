@@ -228,6 +228,9 @@ export async function POST(
       })
       .where(eq(subscriptions.subscriptionId, subscriptionId));
 
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
     // Send plan change email
     try {
       const emailData = {
@@ -239,7 +242,7 @@ export async function POST(
         companyName: "Ever Works",
         companyUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ever.works",
         supportEmail: process.env.EMAIL_SUPPORT || "support@ever.works",
-        manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`
+        manageSubscriptionUrl: `${appUrl || ''}/settings/billing`
       };
 
       await paymentEmailService.sendSubscriptionPlanChangedEmail(emailData);

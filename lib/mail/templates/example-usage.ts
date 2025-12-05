@@ -1,12 +1,14 @@
 import { getRegularNewsletterTemplate } from './newsletter-regular';
 import { EmailService } from '../index';
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 // Example usage for sending a regular newsletter
 export const sendRegularNewsletter = async (subscribers: string[]) => {
   const emailConfig = {
     provider: "resend",
     defaultFrom: "newsletter@ever.works",
-    domain: process.env.NEXT_PUBLIC_APP_URL || "https://demo.ever.works",
+    domain: appUrl,
     apiKeys: {
       resend: process.env.RESEND_API_KEY || "",
       novu: process.env.NOVU_API_KEY || "",
@@ -77,7 +79,7 @@ export const sendWelcomeEmail = async (email: string, userName?: string) => {
   const emailConfig = {
     provider: "resend",
     defaultFrom: "welcome@ever.works",
-    domain: process.env.NEXT_PUBLIC_APP_URL || "https://demo.ever.works",
+    domain: appUrl,
     apiKeys: {
       resend: process.env.RESEND_API_KEY || "",
       novu: process.env.NOVU_API_KEY || "",

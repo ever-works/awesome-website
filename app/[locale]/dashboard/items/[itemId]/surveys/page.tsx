@@ -11,8 +11,13 @@ interface DashboardItemSurveysPageProps {
 	}>;
 }
 
-export function generateMetadata(): Metadata {
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
+export function generateMetadata(): Metadata {	
 	return {
+		metadataBase: new URL(appUrl),
 		title: `Item Surveys | Dashboard`,
 		description: 'Manage surveys for your listing'
 	};
@@ -31,4 +36,3 @@ export default async function DashboardItemSurveysPage({ params }: DashboardItem
 
 	return <DashboardItemSurveysClient itemId={itemId} surveysEnabled={surveysEnabled} />;
 }
-

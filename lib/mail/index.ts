@@ -233,10 +233,12 @@ export class EmailService {
   }
 }
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 const emailConfig: EmailServiceConfig = {
   provider: process.env.EMAIL_PROVIDER || "resend", // Default to resend
   defaultFrom: process.env.EMAIL_FROM || "info@ever.works",
-  domain: process.env.NEXT_PUBLIC_APP_URL || 'https://demo.ever.works',
+  domain: appUrl,
   apiKeys: {
     resend: process.env.RESEND_API_KEY || "",
     novu: process.env.NOVU_API_KEY || "",

@@ -118,9 +118,11 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
+		const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 		// Get return URL from request body or use default
 		// Handle both cases: with body (optional) and without body (for compatibility with Stripe)
-		let returnUrl = `${process.env.NEXT_PUBLIC_APP_URL || ''}/settings/billing`;
+		let returnUrl = `${appUrl || ''}/settings/billing`;
 		try {
 			const body = await request.json();
 			if (body?.returnUrl) {

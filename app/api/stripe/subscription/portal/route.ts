@@ -119,9 +119,12 @@ export async function POST() {
         if (!stripeCustomerId) {
             return NextResponse.json({ error: 'Stripe customer ID not found' }, { status: 404 });
         }
+
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+        
         const response = await stripeInstance.billingPortal.sessions.create({
                 customer: stripeCustomerId!,
-                return_url: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`
+                return_url: `${appUrl || ''}/settings/billing`
         });
 
         console.log('response', response);

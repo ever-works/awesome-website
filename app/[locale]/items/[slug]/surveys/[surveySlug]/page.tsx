@@ -13,8 +13,11 @@ interface ItemSurveyPageProps {
 	}>;
 }
 
-const getSurvey = cache((slug: string) => surveyService.getBySlug(slug));
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
 
+const getSurvey = cache((slug: string) => surveyService.getBySlug(slug));
 
 export async function generateMetadata({ params }: ItemSurveyPageProps): Promise<Metadata> {
 	const { surveySlug } = await params;
@@ -22,11 +25,13 @@ export async function generateMetadata({ params }: ItemSurveyPageProps): Promise
 
 	if (!survey) {
 		return {
+			metadataBase: new URL(appUrl),
 			title: 'Survey Not Found'
 		};
 	}
 
 	return {
+		metadataBase: new URL(appUrl),
 		title: `${survey.title} | Survey`,
 		description: survey.description || `Take the ${survey.title} survey`
 	};

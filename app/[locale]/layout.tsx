@@ -36,6 +36,10 @@ import {
 	getHeaderThemeDefault,
 } from '@/lib/utils/settings';
 
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+
 /**
  * Generate metadata dynamically using siteConfig
  */
@@ -46,6 +50,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const { locale } = await params;
 	return {
+		metadataBase: new URL(appUrl),
 		title: `${siteConfig.name} | ${siteConfig.tagline}`,
 		description: siteConfig.description,
 		keywords: siteConfig.keywords,

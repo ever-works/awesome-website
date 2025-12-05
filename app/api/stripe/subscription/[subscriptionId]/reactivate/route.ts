@@ -167,13 +167,15 @@ export async function POST(
       cancelAtPeriodEnd: false
     });
 
- await updateSubscriptionBySubscriptionId({
-    subscriptionId: subscriptionId,
-    cancelAtPeriodEnd: false,
-    cancelledAt: null,
-    updatedAt: new Date(),
-    status: 'active'
-   });
+    await updateSubscriptionBySubscriptionId({
+      subscriptionId: subscriptionId,
+      cancelAtPeriodEnd: false,
+      cancelledAt: null,
+      updatedAt: new Date(),
+      status: 'active'
+    });
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
 
     // Send reactivation email
     try {
@@ -185,7 +187,7 @@ export async function POST(
         companyName: "Ever Works",
         companyUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ever.works",
         supportEmail: process.env.EMAIL_SUPPORT || "support@ever.works",
-        manageSubscriptionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`
+        manageSubscriptionUrl: `${appUrl || ''}/settings/billing`
       };
 
       await paymentEmailService.sendSubscriptionReactivatedEmail(emailData as any);

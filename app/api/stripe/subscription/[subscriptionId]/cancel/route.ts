@@ -162,7 +162,7 @@ export async function POST(
       cancelAtPeriodEnd
     );
 
- await updateSubscriptionBySubscriptionId({
+    await updateSubscriptionBySubscriptionId({
       subscriptionId: subscriptionId,
       cancelAtPeriodEnd: cancelAtPeriodEnd,
       cancelledAt: cancelAtPeriodEnd ? new Date() : null,
@@ -170,6 +170,8 @@ export async function POST(
       status: cancelAtPeriodEnd ? 'cancelled' : 'active',
     });
 
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
+    
     try {
       const emailData = {
         customerName: session.user.name || session.user.email || 'User',
@@ -181,7 +183,7 @@ export async function POST(
         companyName: "Ever Works",
         companyUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ever.works",
         supportEmail: process.env.EMAIL_SUPPORT || "support@ever.works",
-        reactivateUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`
+        reactivateUrl: `${appUrl || ''}/settings/billing`
       };
 
       if (cancelAtPeriodEnd) {

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ever.works';
+	const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
 
 	return {
 		rules: [
@@ -19,6 +19,6 @@ export default function robots(): MetadataRoute.Robots {
 				disallow: ['/admin/*', '/api/*', '/client/settings/*', '/dashboard/*']
 			}
 		],
-		sitemap: `${baseUrl}/sitemap.xml`
+		sitemap: `${appUrl}/sitemap.xml`
 	};
 }

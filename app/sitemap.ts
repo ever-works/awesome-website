@@ -30,7 +30,7 @@ const DEFAULT_CHANGE_FREQUENCIES = {
   MONTHLY: 'monthly',
 } as const
 
-const DEFAULT_BASE_URL = 'https://ever.works'
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://demo.ever.works");
 
 // Configuration
 const STATIC_ROUTES: RouteConfig[] = [
@@ -108,7 +108,7 @@ const PAGINATION_ROUTES = [
 
 // Helper functions
 const getBaseUrl = (): string => {
-  return process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_BASE_URL;
+  return appUrl;
 };
 
 const sanitizeSlug = (slug: string): string => {
