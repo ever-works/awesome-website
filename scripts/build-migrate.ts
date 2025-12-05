@@ -30,6 +30,17 @@ async function main() {
 		process.exit(0);
 	}
 
+	// Skip migrations in CI environments (GitHub Actions, etc.)
+	// CI builds don't have a real database - they just verify the code compiles
+	const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
+	const isVercel = Boolean(process.env.VERCEL);
+	
+	if (isCI && !isVercel) {
+		console.log('[Build Migration] CI environment detected (not Vercel), skipping migrations');
+		console.log('[Build Migration] CI builds verify code compilation, not database state');
+		process.exit(0);
+	}
+
 	// Check if DATABASE_URL is configured
 	if (!process.env.DATABASE_URL) {
 		console.log('[Build Migration] DATABASE_URL not configured, skipping migrations');
