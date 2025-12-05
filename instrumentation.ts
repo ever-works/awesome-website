@@ -21,11 +21,49 @@ export async function register() {
   }
 
   // Auto-initialize database (migrate and seed if needed)
+  // Note: Build-time migrations via scripts/build-migrate.ts are preferred for Vercel
+  // This runtime migration serves as a fallback for preview deployments
   try {
+    console.log('[Instrumentation] Running database initialization...');
     await initializeDatabase();
+    console.log('[Instrumentation] Database initialization completed');
   } catch (error) {
-    console.error('[Instrumentation] Database initialization failed:', error);
-    // Don't throw - allow app to start even if DB init fails
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+    
+    console.error('[Instrumentation] ❌ Database initialization failed:', error);
+    
+    // Log detailed error for debugging in Vercel logs
+    if (error instanceof Error) {
+      console.error('[Instrumentation] Error details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      
+      // Report to Sentry if configured
+      if (SENTRY_DSN.value) {
+        Sentry.captureException(error, {
+          tags: {
+            component: 'instrumentation',
+            phase: 'database_init',
+            environment: process.env.VERCEL_ENV || process.env.NODE_ENV || 'unknown'
+          }
+        });
+      }
+    }
+    
+    // In production, re-throw to signal critical failure
+    // This ensures Vercel health checks can detect the broken state
+    if (isProduction) {
+      console.error('[Instrumentation] ❌ CRITICAL: Production deployment with failed database initialization');
+      console.error('[Instrumentation] ❌ This deployment should not serve traffic');
+      throw error;
+    }
+    
+    // In development/preview, allow app to start for debugging
+    // but log a prominent warning
+    console.warn('[Instrumentation] ⚠️  Non-production: Allowing app to start despite DB init failure');
+    console.warn('[Instrumentation] ⚠️  Database-dependent routes will return errors');
   }
 }
 
