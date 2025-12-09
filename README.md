@@ -8,9 +8,14 @@ This versatile template is an essential component of the [Ever Works Platform](h
 
 ## 🔗 Links
 
-- Demo: [https://demo.ever.works](https://demo.ever.works)
+- Demo: [https://demo.ever.works](https://demo.ever.works) (deployed from `main` branch of this repo)
 - Docs: [https://docs.ever.works](https://docs.ever.works)
 - Ever Works website: [https://ever.works](https://ever.works) (WIP)
+
+### Additional Links
+
+- Demo Dev: [https://demodev.ever.works](https://demodev.ever.works) (deployed from `develop` branch of this repo)
+- Demo Stage: [https://demostage.ever.works](https://demostage.ever.works) (deployed from `stage` branch of this repo)
 
 ## Project Overview
 
