@@ -179,7 +179,7 @@ function HomeTwoLayout({
   const paginatedItems = items.slice((page - 1) * perPage, page * perPage);
 
   return (
-    <div>
+    <Container maxWidth="7xl" padding="default" useGlobalWidth>
       <div className="md:sticky md:top-4 md:self-start pt-6 sm:pt-8 md:pt-11 z-10 flex flex-col">
         {/* Mobile Layout */}
         <div className="block md:hidden space-y-3 px-2">
@@ -242,6 +242,6 @@ function HomeTwoLayout({
         tags={tags}
         config={CardPresets.showViewToggle}
       />
-    </div>
+    </Container>
   );
 }
