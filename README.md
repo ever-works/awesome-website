@@ -2,15 +2,20 @@
 
 ## ⭐️ What is it?
 
-Welcome to the **Ever Works Directory Website Template**, a cutting-edge, full-stack directory website solution built with [Next.js 15](https://nextjs.org/).  
+Welcome to the **Ever Works Directory Website Template**, a cutting-edge, full-stack directory website solution built with [Next.js](https://nextjs.org).  
 
-This versatile template is an essential component of the [Ever Works Platform](https://ever.works), offering seamless integration while maintaining the flexibility to function as a standalone solution.
+This versatile template is an essential component of the [Ever Works Platform](https://ever.works), offering seamless integration while remaining flexible enough to function as a standalone solution.
 
 ## 🔗 Links
 
-- Demo: [https://demo.ever.works](https://demo.ever.works)
+- Demo: [https://demo.ever.works](https://demo.ever.works) (deployed from `main` branch of this repo)
 - Docs: [https://docs.ever.works](https://docs.ever.works)
 - Ever Works website: [https://ever.works](https://ever.works) (WIP)
+
+### Additional Links
+
+- Demo Dev: [https://demodev.ever.works](https://demodev.ever.works) (deployed from `develop` branch of this repo)
+- Demo Stage: [https://demostage.ever.works](https://demostage.ever.works) (deployed from `stage` branch of this repo)
 
 ## Project Overview
 
@@ -18,9 +23,8 @@ This versatile template is an essential component of the [Ever Works Platform](h
 
 - **[TypeScript](https://www.typescriptlang.org)**
 - **[NodeJs](https://nodejs.org)**
-- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
+- **Framework**: [Next.js 16](https://nextjs.org) with App Router
 - **Authentication**: [Auth.js](https://authjs.dev) / [Supabase Auth](https://supabase.com/auth)
-- **API Client**: Secure Axios-based client with httpOnly cookies
 - **ORM**: [Drizzle](https://github.com/drizzle-team/drizzle-orm)
 - **Supported Databases**: [Supabase](https://supabase.com)/PostgreSQL/MySQL/SQLite
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
@@ -29,8 +33,8 @@ This versatile template is an essential component of the [Ever Works Platform](h
 - **Form Validation**: [Zod](https://zod.dev)
 - **Notifications/Emails Services**: [Novu](https://novu.co) / [Resend](https://resend.com)
 - **Hosting**: [Vercel](https://vercel.com)
-- **Payment Processing**: Stripe & LemonSqueezy
-- **Security**: ReCAPTCHA v2
+- **Payment Processing**: [Stripe](https://stripe.com), [Lemon Squeezy](https://www.lemonsqueezy.com), [Polar](https://polar.sh), and [Solidgate](https://solidgate.com)
+- **Security**: [Google ReCAPTCHA v2](https://cloud.google.com/security/products/recaptcha)
 
 ### 📄 Project Structure
 
@@ -224,7 +228,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000/).
 
 ## 💳 Payment Integration
 
-This template supports two payment providers: **Stripe** and **LemonSqueezy**. You can choose one or configure both.
+This template supports different payment providers: [Stripe](https://stripe.com), [Lemon Squeezy](https://www.lemonsqueezy.com), [Polar](https://polar.sh), and [Solidgate](https://solidgate.com).
 
 ### Payment Provider Configuration
 
