@@ -82,7 +82,8 @@ export const credentialsProvider = Credentials({
             throw new Error(AuthErrorCode.PROFILE_NOT_FOUND);
           }
           const clientUser = {
-            id: clientProfile.id,
+            id: clientProfile.userId,
+            clientProfileId: clientProfile.id,
             name: clientProfile.name || clientProfile.displayName,
             email: clientProfile.email,
             image: null,
