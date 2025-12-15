@@ -726,7 +726,10 @@
     "UPGRADE_TO_STANDARD": "Submit Now",
     "GO_PREMIUM": "Subscribe",
     "SUBMIT_FOR_FREE": "Kostenlos einreichen",
-    "SUBSCRIBE_NOW": "Jetzt abonnieren",
+    "SUBSCRIBE_NOW": "Subscribe Now",
+    "SELECT_FREE": "Kostenlos wählen",
+    "SELECT_STANDARD": "Standard wählen",
+    "SELECT_PREMIUM": "Premium wählen",
     "SELECTED": "Ausgewählt",
     "GREAT_CHOICE": "Ausgezeichnete Wahl! Sie haben den",
     "PLAN": "Plan gewählt",
@@ -1728,7 +1731,7 @@
       "FEATURED_HELP": "Empfohlene Elemente erscheinen prominent auf der Website",
       "STATUS_HELP": "Aktueller Status des Elements",
       "STATUS_OPTIONS": {
-        "ALL": "All",
+        "ALL": "Alle",
         "DRAFT": "Entwurf",
         "PENDING": "Ausstehende Überprüfung",
         "APPROVED": "Genehmigt",
@@ -1903,7 +1906,7 @@
       "CANCEL": "Abbrechen",
       "APPLY_FILTERS": "Filter anwenden",
       "STATUS_OPTIONS": {
-        "ALL": "All",
+        "ALL": "Alle",
         "ACTIVE": "Aktiv",
         "INACTIVE": "Inaktiv",
         "SUSPENDED": "Gesperrt",
@@ -2549,7 +2552,14 @@
       "FAILED_TO_LOAD_VERIFICATION": "Sicherheitsverifizierung konnte nicht geladen werden. Bitte aktualisieren Sie die Seite.",
       "VERIFICATION_EXPIRED": "Sicherheitsverifizierung abgelaufen. Bitte vervollständigen Sie sie erneut.",
       "VERIFYING": "Verifizierung...",
-      "PLEASE_COMPLETE_VERIFICATION": "Bitte vervollständigen Sie die Sicherheitsverifizierung"
+      "PLEASE_COMPLETE_VERIFICATION": "Bitte vervollständigen Sie die Sicherheitsverifizierung",
+      "LOGIN_FAILED": "Anmeldung fehlgeschlagen",
+      "ACCOUNT_NOT_FOUND": "Kein Konto mit dieser E-Mail-Adresse gefunden. Bitte überprüfen Sie Ihre E-Mail oder erstellen Sie ein neues Konto.",
+      "INVALID_PASSWORD": "Ungültiges Passwort. Bitte überprüfen Sie Ihr Passwort und versuchen Sie es erneut.",
+      "PROFILE_NOT_FOUND": "Kontoprofil nicht gefunden. Bitte kontaktieren Sie den Support.",
+      "GENERIC_ERROR_MESSAGE": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "RATE_LIMITED": "Zu viele Versuche. Bitte warten Sie einige Minuten, bevor Sie es erneut versuchen.",
+      "USE_OAUTH_PROVIDER": "Dieses Konto verwendet Social Login. Bitte melden Sie sich mit Google oder GitHub an."
     },
     "FORGOT_PASSWORD_PAGE": {
       "TITLE": "Passwort vergessen?",
