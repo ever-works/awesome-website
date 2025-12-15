@@ -715,7 +715,10 @@
     "UPGRADE_TO_STANDARD": "Submit Now",
     "GO_PREMIUM": "Subscribe",
     "SUBMIT_FOR_FREE": "Enviar Gratis",
-    "SUBSCRIBE_NOW": "Suscribirse Ahora",
+    "SUBSCRIBE_NOW": "Subscribe Now",
+    "SELECT_FREE": "Seleccionar Gratis",
+    "SELECT_STANDARD": "Seleccionar Estándar",
+    "SELECT_PREMIUM": "Seleccionar Premium",
     "SELECTED": "Seleccionado",
     "GREAT_CHOICE": "¡Excelente elección! Has seleccionado el plan",
     "PLAN": "plan",
@@ -1717,7 +1720,7 @@
       "FEATURED_HELP": "Los elementos destacados aparecen prominentemente en el sitio",
       "STATUS_HELP": "Estado actual del elemento",
       "STATUS_OPTIONS": {
-        "ALL": "All",
+        "ALL": "Todo",
         "DRAFT": "Borrador",
         "PENDING": "Pendiente de Revisión",
         "APPROVED": "Aprobado",
@@ -1892,7 +1895,7 @@
       "CANCEL": "Cancelar",
       "APPLY_FILTERS": "Aplicar Filtros",
       "STATUS_OPTIONS": {
-        "ALL": "All",
+        "ALL": "Todo",
         "ACTIVE": "Activo",
         "INACTIVE": "Inactivo",
         "SUSPENDED": "Suspendido",
@@ -2538,7 +2541,14 @@
       "FAILED_TO_LOAD_VERIFICATION": "Error al cargar la verificación de seguridad. Por favor, actualiza la página.",
       "VERIFICATION_EXPIRED": "La verificación de seguridad expiró. Por favor, complétala de nuevo.",
       "VERIFYING": "Verificando...",
-      "PLEASE_COMPLETE_VERIFICATION": "Por favor, completa la verificación de seguridad"
+      "PLEASE_COMPLETE_VERIFICATION": "Por favor, completa la verificación de seguridad",
+      "LOGIN_FAILED": "Error de inicio de sesión",
+      "ACCOUNT_NOT_FOUND": "No se encontró ninguna cuenta con esta dirección de correo electrónico. Por favor, verifica tu correo o crea una nueva cuenta.",
+      "INVALID_PASSWORD": "Contraseña incorrecta. Por favor, verifica tu contraseña e inténtalo de nuevo.",
+      "PROFILE_NOT_FOUND": "Perfil de cuenta no encontrado. Por favor, contacta al soporte.",
+      "GENERIC_ERROR_MESSAGE": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+      "RATE_LIMITED": "Demasiados intentos. Por favor, espera unos minutos antes de intentarlo de nuevo.",
+      "USE_OAUTH_PROVIDER": "Esta cuenta usa inicio de sesión social. Por favor, inicia sesión con Google o GitHub."
     },
     "FORGOT_PASSWORD_PAGE": {
       "TITLE": "¿Olvidaste tu Contraseña?",
